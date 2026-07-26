@@ -13,7 +13,8 @@ body {
   font-family: var(--font-family-base);
   letter-spacing: -0.03em;
   color: var(--color-gray-50);
-  background-color: var(--color-dark);
+  // background-color: var(--color-dark);
+  background-image: var(--background-gradient);
 }
 
 main {
@@ -44,7 +45,7 @@ h3,
 }
 
 h1,
-.h1{
+.h1 {
   font-family: var(--font-family-accent);
   font-weight: 500;
 }
