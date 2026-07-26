@@ -12,10 +12,12 @@
 
     &-text {
         font-family: var(--font-family-accent);
-        font-weight: 400;
+        font-weight: 300;
         font-size: rem(14);
         text-transform: uppercase;
-        text-decoration: underline;
+        text-decoration: underline !important;
+        text-underline-offset: 2px;
+        text-decoration-skip-ink: none;
         color: #8c8c8c;
 
         &:not(:last-of-type) {
