@@ -8,7 +8,7 @@ export default function Profile() {
 
 
     return (
-        <div className={s.profilePage}>
+        <div>
             <ProfileContacts email={email} phone={phone} />
         </div>
     )
