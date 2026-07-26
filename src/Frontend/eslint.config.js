@@ -36,6 +36,10 @@ export default defineConfig([
       'comma-dangle': ['error', 'only-multiline'],
       'arrow-parens': ['error', 'always'],
       'object-curly-spacing': ['error', 'always'],
+      'no-console': 'warn',
+      'eqeqeq': 'warn',
+      'curly': 'warn',
+      'no-else-return': 'warn'
     },
   },
 
