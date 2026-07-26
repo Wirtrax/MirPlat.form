@@ -131,3 +131,14 @@ button {
     }
   }
 }
+
+input {
+  outline: none;
+  border: none;
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+}

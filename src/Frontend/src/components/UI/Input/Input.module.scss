@@ -1,0 +1,50 @@
+.inputField {
+    margin-bottom: rem(22);
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    width: rem(298);
+    height: rem(42);
+
+    box-shadow: 0 0 4px 0 rgba(20, 66, 204, 0.3);
+    background: var(--color-light);
+    border-radius: rem(8);
+
+    font-family: var(--font-family-base);
+    font-weight: 400;
+    font-size: rem(14);
+    line-height: 120%;
+    text-align: center;
+    color: #888;
+
+    &::placeholder {
+        font-family: var(--font-family-base);
+        font-weight: 400;
+        font-size: rem(14);
+        line-height: 120%;
+        text-align: center;
+        color: #888;
+    }
+}
+
+.label {
+    margin-bottom: rem(5);
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: rem(14);
+    color: var(--color-light);    
+}
+
+.error {
+    margin-bottom: rem(2);
+    text-align: center;
+
+    font-family: var(--font-family-base);
+    font-weight: 400;
+    font-size: rem(10);
+    text-transform: lowercase;
+    text-align: center;
+    color: var(--color-red);
+}
