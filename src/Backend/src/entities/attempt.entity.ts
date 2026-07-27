@@ -10,6 +10,9 @@ export enum AttemptStatus {
 
 @Entity()
 export class Attempt {
+  @PrimaryGeneratedColumn()
+  id: number;
+  
   @ManyToOne(() => User, (user) => user.attempts)
   user: User;
 
