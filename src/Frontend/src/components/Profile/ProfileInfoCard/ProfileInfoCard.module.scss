@@ -1,11 +1,6 @@
 .card {
     padding: rem(19) rem(27);
 
-    border-radius: rem(25);
-    backdrop-filter: blur(rem(9.1));
-    box-shadow: 0 0 rem(6) 0 rgba(21, 67, 205, 0.2);
-    background: linear-gradient(246.19deg, rgba(255, 255, 255, 0.2) 19.96%, rgba(69, 156, 236, 0.2) 93.8%);
-
     &-title {
         font-size: rem(14);
         margin-bottom: rem(13);
@@ -25,7 +20,7 @@
     gap: rem(16);
 }
 
-.details{
+.details {
     display: flex;
     flex-direction: column;
 }
