@@ -2,17 +2,17 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Purchase } from './purchase.entity';
 import { Attempt } from './attempt.entity';
 
-export enum UserProgrammingLevel{
-  SENIOR = "senior",
-  MIDDLE = "middle",
-  JUNIOR = "junior",
-  TEAM_LEAD = "team_lead",
-  CTO = "cto",
-  OTHER = "other"  
+export enum UserProgrammingLevel {
+  SENIOR = 'senior',
+  MIDDLE = 'middle',
+  JUNIOR = 'junior',
+  TEAM_LEAD = 'team_lead',
+  CTO = 'cto',
+  OTHER = 'other',
 }
 
 @Entity()
-export class User{
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -31,7 +31,7 @@ export class User{
   @Column()
   specialization: string; // TODO: change to enum
 
-  @Column({type:"enum", enum: UserProgrammingLevel})
+  @Column({ type: 'enum', enum: UserProgrammingLevel })
   programming_level: UserProgrammingLevel;
 
   @Column()
@@ -45,7 +45,7 @@ export class User{
 
   @Column()
   send_notifications: boolean;
-  
+
   @Column()
   balance: number;
 

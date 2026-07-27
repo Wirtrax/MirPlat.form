@@ -3,9 +3,9 @@ import { User } from './user.entity';
 import { Item } from './item.entity';
 
 export enum PurchaseStatus {
-  WAITING = "waiting",
-  RECEIVED = "received",
-  CANCELED = "canceled"  
+  WAITING = 'waiting',
+  RECEIVED = 'received',
+  CANCELED = 'canceled',
 }
 
 @Entity()
@@ -19,7 +19,7 @@ export class Purchase {
   @ManyToOne(() => Item, (item) => item.purchases)
   item: Item;
 
-  @Column({type: "enum", enum: PurchaseStatus})
+  @Column({ type: 'enum', enum: PurchaseStatus })
   status: PurchaseStatus;
 
   @Column()
