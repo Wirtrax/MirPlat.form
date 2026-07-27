@@ -1,0 +1,41 @@
+.card-contacts {
+    margin-top: rem(10);
+    margin-bottom: fluid(30, 20);
+    padding: rem(19) rem(27);
+
+    border-radius: rem(25);
+    width: rem(315);
+    backdrop-filter: blur(rem(9.1));
+    box-shadow: 0 0 rem(6) 0 rgba(21, 67, 205, 0.2);
+    background: linear-gradient(246.19deg, rgba(255, 255, 255, 0.2) 19.96%, rgba(69, 156, 236, 0.2) 93.8%);
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+    gap: rem(19);
+
+    &-title {
+        font-size: rem(14);
+        margin-bottom: rem(13);
+    }
+
+    &-email,
+    &-phone {
+        display: flex;
+        align-items: center;
+        gap: rem(16);
+    }
+}
+
+.details {
+    font-weight: 400;
+    font-size: rem(14);
+    line-height: 120%;
+    color: #a5dafb;
+}
+
+.email,
+.phone {
+    color: #fff;
+}
