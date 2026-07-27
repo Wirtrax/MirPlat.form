@@ -9,12 +9,21 @@ export default function Footer() {
     return (
         <div className={s.footer}>
             <img src={footerLogo} className={s['footer-logo']} />
-            <Link to={'/'} className={s['footer-text']}>MirEvent@nspk.ru</Link>
+            <Link to={'https://mir-platform.ru/'} className={s['footer-text']}>MirEvent@nspk.ru</Link>
             <Link to={'/'} className={s['footer-text']}>пользовательское соглашение</Link>
             <div className={s['footer-contacts']}>
-                <VK_Icon />
-                <TG_Icon />
-                <Splash_Icon />
+                <Link to={'https://vk.com/mir_plat.form'}>
+                    <VK_Icon />
+                </Link>
+                <Link to={'https://t.me/mir_platform'}>
+                    <TG_Icon />
+                </Link>
+                <Link to={'https://habr.com/ru/specials/978610/'}>
+                    <Splash_Icon />
+                </Link>
+
+
+
             </div>
         </div>
     )
