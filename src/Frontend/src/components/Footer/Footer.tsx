@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
-import s from './Footer.module.scss'
-import footerLogo from '../../assets/interface/plat.formFooter.webp'
-import VK_Icon from '../../assets/footer/vk.svg?react'
-import TG_Icon from '../../assets/footer/tg.svg?react'
-import Splash_Icon from '../../assets/footer/splash.svg?react'
+import { Link } from 'react-router-dom';
+import s from './Footer.module.scss';
+import footerLogo from '../../assets/interface/plat.formFooter.webp';
+import VK_Icon from '../../assets/footer/vk.svg?react';
+import TG_Icon from '../../assets/footer/tg.svg?react';
+import Splash_Icon from '../../assets/footer/splash.svg?react';
 
 export default function Footer() {
     return (
