@@ -21,9 +21,6 @@ export default function Footer() {
                 <Link to={'https://habr.com/ru/specials/978610/'}>
                     <Splash_Icon />
                 </Link>
-
-
-
             </div>
         </div>
     )

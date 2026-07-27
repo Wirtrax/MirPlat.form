@@ -1,15 +1,15 @@
 import s from './Profile.module.scss'
-import ProfileContacts from './ProfileContacts/ProfileContacts'
-
+import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard'
+import { aboutCardMock, contactCardMock } from '../../mock/profileCard'
 
 export default function Profile() {
-    const email = 'rrrr'
-    const phone = '6895086954'
-
 
     return (
         <div>
-            <ProfileContacts email={email} phone={phone} />
+            <div className={s.cardsWrapper}>
+                <ProfileInfoCard {...aboutCardMock} />
+                <ProfileInfoCard {...contactCardMock} />
+            </div>
         </div>
-    )
+    )  
 }
