@@ -14,7 +14,7 @@ export default function Input({ className, label, error, ...props }: InputProps)
                 className={`${s.input} ${className ?? ''}`}
                 {...props}
             />
-            {error && <p className={s.error}>{error}</p>}
+            {error ? (<p className={s.error}>{error}</p>) : (<p className={s.errorPlaceholder}></p>)}
         </div>
     )
 }

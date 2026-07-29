@@ -1,0 +1,41 @@
+.resultCard {
+    display: flex;
+    flex-direction: column;
+    padding: rem(119) rem(37) rem(96) rem(37);
+    gap: rem(12);
+
+    text-align: center;
+    border-radius: 25px;
+    
+    backdrop-filter: blur(9.100000381469727px);
+    box-shadow: 0 0 6px 0 rgba(21, 67, 205, 0.2);
+    background: linear-gradient(246.19deg, rgba(255, 255, 255, 0.2) 21.22%, rgba(69, 156, 236, 0.2) 102.5%);
+}
+
+.resultTitle {
+    font-size: rem(32);
+    line-height: 90%;
+    text-align: center;
+    color: var(--color-light);
+}
+
+.resultDescription {
+    font-family: var(--font-family-base);
+    font-weight: 500;
+    font-size: rem(14);
+    line-height: 120%;
+    text-align: center;
+    color: var(--color-light);
+}
+
+.btnSkip {
+    margin-top: rem(38);
+    font-family: var(--font-family-base);
+    font-weight: 500;
+    font-size: rem(14);
+    line-height: 120%;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    text-align: center;
+    color: var(--color-light);
+}

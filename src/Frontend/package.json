@@ -24,6 +24,7 @@
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.18.1",
     "sass": "^1.102.0",
+    "swiper": "^14.0.7",
     "yup": "^1.7.1"
   },
   "devDependencies": {

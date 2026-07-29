@@ -4,10 +4,11 @@ import ArrowIсonSelect from '../../../assets/interface/arrowIconSelect.svg?reac
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     label?: string;
+    error?: string;
     children?: ReactNode;
 }
 
-export default function Select({ className, label, children, ...props }: SelectProps) {
+export default function Select({ className, label, error, children, ...props }: SelectProps) {
     return (
         <div className={s.selectField}>
             {label && <label className={s.label}>{label}</label>}

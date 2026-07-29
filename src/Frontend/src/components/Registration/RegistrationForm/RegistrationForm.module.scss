@@ -1,0 +1,33 @@
+.wrapper {
+    margin-top: rem(49);
+    margin-bottom: rem(52);
+}
+
+.title {
+    font-family: var(--font-family-accent);
+    font-weight: 700;
+    font-size: rem(32);
+    text-align: center;
+    color: var(--color-light);
+
+    margin-bottom: rem(20);
+}
+
+.btn {
+    display: block;
+    margin-inline: auto;
+    font-size: rem(16);
+}
+
+.radioBtns {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    margin-top: rem(13);
+    margin-bottom: rem(30);
+}
+
+.textRadio {
+    margin-top: rem(2);
+    border: 1px solid var(--color-red);
+}
