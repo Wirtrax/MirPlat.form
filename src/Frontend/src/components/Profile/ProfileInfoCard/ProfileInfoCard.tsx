@@ -1,4 +1,4 @@
-import Substrate from '../../Substrate/Substrate';
+import Substrate from '../../UI/Substrate/Substrate';
 import s from './ProfileInfoCard.module.scss';
 import type { ProfileInfoCardProps } from './ProfileInfoCard.types';
 

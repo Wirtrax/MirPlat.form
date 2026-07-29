@@ -5,6 +5,9 @@
     border: none;
     border: 1px solid var(--color-accent);
     color: var(--color-light);
+    font-size: rem(16);
+
+    z-index: 999;
 
     &:hover {
         background-color: var(--color-light);
@@ -13,7 +16,7 @@
 
     &--disable {
         background-color: var(--color-accent-inactive);
+        border-color: var(--color-accent-inactive);
         user-select: none;
-        cursor: not-allowed;
     }
 }

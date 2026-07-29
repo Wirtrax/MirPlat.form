@@ -7,6 +7,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
   disabled = false,
+  inactive,
   className = '',
   type = 'button',
   ariaLabel,
@@ -16,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={clsx(s.button, disabled ? s['button--disable'] : '', className)}
+      className={clsx(s.button, disabled && s['button--disable'], inactive && s['button--disable'], className)}
       type={type}
       aria-label={ariaLabel}
       style={style}>

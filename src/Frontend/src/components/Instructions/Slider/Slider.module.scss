@@ -1,0 +1,77 @@
+.embla {
+
+    --dot-color: #F9FAF9;
+
+
+    &__viewport {
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    &__container {
+        display: flex;
+        align-items: flex-start;
+
+    }
+
+    &__slide {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        user-select: none;
+        min-width: 0;
+        overflow: hidden;
+
+
+        img,
+        video,
+        picture {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+
+    &__dots {
+        display: flex;
+        gap: rem(8);
+        justify-content: center;
+        margin-top: rem(12);
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+
+
+            filter: blur(25.0999984741211px);
+            background: #418FE9;
+
+            left: 0;
+            right: 0;
+            top: rem(-110);
+            height: rem(200);
+            z-index: 1;
+        }
+    }
+
+    &__dot {
+        padding: 0;
+        border: none;
+        z-index: 10;
+        width: rem(10);
+        height: rem(10);
+        border-radius: 50%;
+
+        background: var(--dot-color);
+        cursor: pointer;
+        opacity: 0.5;
+
+
+
+        &--selected {
+            background: var(--dot-color);
+            opacity: 1;
+        }
+    }
+}
