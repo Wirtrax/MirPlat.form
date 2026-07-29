@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMA Auth</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .app {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .user-profile {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            color: white;
+            display: none;
+        }
+        
+        .user-profile.visible {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0 auto 16px;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+        
+        .user-name {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        
+        .user-username {
+            text-align: center;
+            opacity: 0.9;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .user-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 13px;
+        }
+        
+        .user-details .label {
+            opacity: 0.7;
+        }
+        
+        .user-details .value {
+            font-weight: 500;
+            text-align: right;
+        }
+        
+        .status {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        .status.loading {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .debug-info {
+            margin-top: 16px;
+            padding: 12px;
+            background: #1e1e1e;
+            border-radius: 8px;
+            color: #d4d4d4;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            max-height: 150px;
+            overflow: auto;
+        }
+        
+        .debug-info strong {
+            color: #4fc3f7;
+        }
+        
+        .debug-info pre {
+            margin-top: 8px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+        }
+        
+        .btn:active {
+            transform: scale(0.96);
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #38a169;
+        }
+        
+        .btn-danger {
+            background: #fc8181;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #f56565;
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .btn.hidden {
+            display: none;
+        }
+        
+        .flex {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .error-info {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .input-group input:focus {
+            border-color: #667eea;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .badge-online {
+            background: #48bb78;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <h1>🔐 Telegram Mini App</h1>
+        
+        <!-- Профиль пользователя -->
+        <div id="userProfile" class="user-profile">
+            <div class="user-avatar" id="userAvatar">👤</div>
+            <div class="user-name" id="userFullName">Имя Фамилия</div>
+            <div class="user-username" id="userUsername">@username</div>
+            <div class="user-details">
+                <span class="label">🆔 ID</span>
+                <span class="value" id="userId">—</span>
+                <span class="label">📅 Регистрация</span>
+                <span class="value" id="userRegistered">—</span>
+                <span class="label">🕐 Последний вход</span>
+                <span class="value" id="userLastLogin">—</span>
+            </div>
+        </div>
+        
+        <div id="status" class="status loading">⏳ Загрузка...</div>
+        
+        <div class="flex">
+            <button id="checkBtn" class="btn btn-primary">🔍 Проверить</button>
+            <button id="authBtn" class="btn btn-success hidden">📱 Войти</button>
+            <button id="logoutBtn" class="btn btn-danger hidden">🚪 Выйти</button>
+        </div>
+        
+        <!-- Ручной ввод initData -->
+        <div id="manualAuth" class="hidden" style="margin-top: 12px;">
+            <div class="input-group">
+                <input type="text" id="initDataInput" placeholder="Вставьте initData...">
+                <button id="manualAuthBtn" class="btn btn-primary" style="flex: 0 0 auto;">Отправить</button>
+            </div>
+        </div>
+
+        <!-- Отладка -->
+        <div class="debug-info">
+            <strong>📊 Отладка:</strong>
+            <pre id="debugLog">Загрузка...</pre>
+        </div>
+    </div>
+
+    <script>
+        // ============ ОТЛАДКА ============
+        function debug(message, data = null) {
+            const logEl = document.getElementById('debugLog');
+            const timestamp = new Date().toISOString();
+            let text = `[${timestamp}] ${message}`;
+            if (data) {
+                text += `\n${JSON.stringify(data, null, 2)}`;
+            }
+            logEl.textContent = text;
+            console.log(message, data);
+        }
+
+        // ============ КОНФИГ ============
+        const API = 'https://moneywise-badass-gusty.ngrok-free.dev';
+
+        // ============ DOM ============
+        const statusEl = document.getElementById('status');
+        const userProfile = document.getElementById('userProfile');
+        const userAvatar = document.getElementById('userAvatar');
+        const userFullName = document.getElementById('userFullName');
+        const userUsername = document.getElementById('userUsername');
+        const userId = document.getElementById('userId');
+        const userRegistered = document.getElementById('userRegistered');
+        const userLastLogin = document.getElementById('userLastLogin');
+        const authBtn = document.getElementById('authBtn');
+        const checkBtn = document.getElementById('checkBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const manualAuth = document.getElementById('manualAuth');
+        const initDataInput = document.getElementById('initDataInput');
+        const manualAuthBtn = document.getElementById('manualAuthBtn');
+
+        let currentUser = null;
+
+        // ============ HELPERS ============
+        function setStatus(text, type = 'loading') {
+            statusEl.textContent = text;
+            statusEl.className = `status ${type}`;
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '—';
+            try {
+                const date = new Date(dateStr);
+                return date.toLocaleString('ru-RU', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch {
+                return dateStr;
+            }
+        }
+
+        function getInitials(firstName, lastName) {
+            if (!firstName && !lastName) return '👤';
+            if (firstName && lastName) return `${firstName[0]}${lastName[0]}`.toUpperCase();
+            return firstName ? firstName[0].toUpperCase() : lastName[0].toUpperCase();
+        }
+
+        function updateUI(user) {
+            currentUser = user;
+            
+            if (user) {
+                // Показываем профиль
+                userProfile.classList.add('visible');
+                
+                // Имя и фамилия
+                const firstName = user.first_name || 'Имя';
+                const lastName = user.last_name || '';
+                const fullName = lastName ? `${firstName} ${lastName}` : firstName;
+                userFullName.textContent = fullName;
+                
+                // Аватар (инициалы)
+                userAvatar.textContent = getInitials(firstName, lastName);
+                
+                // Username
+                userUsername.textContent = user.username ? `@${user.username}` : 'Без username';
+                
+                // Детали
+                userId.textContent = user.id || '—';
+                userRegistered.textContent = formatDate(user.registered_at);
+                userLastLogin.textContent = formatDate(user.last_login);
+                
+                // Статус
+                setStatus(`✅ Привет, ${firstName}!`, 'success');
+                
+                // Кнопки
+                authBtn.classList.add('hidden');
+                logoutBtn.classList.remove('hidden');
+                manualAuth.classList.add('hidden');
+                
+                debug('UI обновлён для пользователя', user);
+            } else {
+                // Скрываем профиль
+                userProfile.classList.remove('visible');
+                
+                setStatus('❌ Не авторизован', 'error');
+                
+                authBtn.classList.remove('hidden');
+                logoutBtn.classList.add('hidden');
+                manualAuth.classList.remove('hidden');
+            }
+        }
+
+        // ============ API ============
+        async function fetchAPI(endpoint, options = {}) {
+            try {
+                const res = await fetch(`${API}${endpoint}`, {
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    ...options
+                });
+                
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.error || `HTTP ${res.status}`);
+                }
+                
+                return res.json();
+            } catch (error) {
+                debug('Ошибка API:', error.message);
+                throw error;
+            }
+        }
+
+        // ============ ДЕЙСТВИЯ ============
+        async function signIn(initData) {
+            setStatus('🔄 Авторизация...', 'loading');
+            debug('signIn', { initDataLength: initData?.length });
+
+            try {
+                const data = await fetchAPI('/auth/signin', {
+                    method: 'POST',
+                    body: JSON.stringify({ initData })
+                });
+                
+                debug('signIn успех', data.user);
+                updateUI(data.user);
+            } catch (err) {
+                debug('signIn ошибка', err.message);
+                setStatus(`❌ ${err.message}`, 'error');
+                updateUI(null);
+            }
+        }
+
+        async function checkSession() {
+            setStatus('🔄 Проверка...', 'loading');
+            debug('checkSession');
+
+            try {
+                const data = await fetchAPI('/auth/me');
+                debug('session активна', data.user);
+                updateUI(data.user);
+            } catch (err) {
+                debug('session не активна', err.message);
+                updateUI(null);
+            }
+        }
+
+        async function logout() {
+            setStatus('🔄 Выход...', 'loading');
+            debug('logout');
+
+            try {
+                await fetchAPI('/auth/logout', { method: 'POST' });
+                debug('logout успех');
+                updateUI(null);
+                setStatus('👋 Вы вышли', 'success');
+            } catch (err) {
+                debug('logout ошибка', err.message);
+                setStatus(`❌ ${err.message}`, 'error');
+            }
+        }
+
+        // ============ ИНИЦИАЛИЗАЦИЯ ============
+        async function init() {
+            try {
+                debug('Инициализация приложения');
+                
+                // Проверяем наличие Telegram WebApp
+                const hasTelegram = !!window.Telegram?.WebApp;
+                debug('Telegram WebApp доступен?', hasTelegram);
+                
+                if (!hasTelegram) {
+                    setStatus('⚠️ Запущено вне Telegram', 'error');
+                }
+
+                // Если есть Telegram - сообщаем о готовности
+                if (window.Telegram?.WebApp) {
+                    window.Telegram.WebApp.ready();
+                    window.Telegram.WebApp.expand();
+                    debug('Telegram готов');
+                }
+
+                // Проверяем сессию
+                await checkSession();
+
+                // Если нет сессии, пытаемся авто-вход
+                if (!currentUser && window.Telegram?.WebApp?.initData) {
+                    debug('Пробуем авто-вход');
+                    await signIn(window.Telegram.WebApp.initData);
+                }
+
+                // Если всё ещё нет пользователя — показываем кнопку
+                if (!currentUser) {
+                    authBtn.classList.remove('hidden');
+                    manualAuth.classList.remove('hidden');
+                }
+
+                // ============ СОБЫТИЯ ============
+                authBtn.onclick = () => {
+                    manualAuth.classList.toggle('hidden');
+                    if (!manualAuth.classList.contains('hidden')) {
+                        initDataInput.focus();
+                    }
+                };
+
+                manualAuthBtn.onclick = () => {
+                    const input = initDataInput.value.trim();
+                    if (input) {
+                        signIn(input);
+                        initDataInput.value = '';
+                    } else {
+                        setStatus('❌ Введите initData', 'error');
+                    }
+                };
+
+                initDataInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        manualAuthBtn.click();
+                    }
+                });
+
+                checkBtn.onclick = checkSession;
+                logoutBtn.onclick = logout;
+
+                // Автопроверка каждые 30 секунд
+                setInterval(checkSession, 30000);
+                
+                debug('Инициализация завершена');
+                
+            } catch (error) {
+                debug('Ошибка инициализации:', error.message);
+                setStatus('❌ Ошибка инициализации', 'error');
+            }
+        }
+
+        // Запуск
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
