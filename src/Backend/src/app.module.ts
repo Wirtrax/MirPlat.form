@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -14,9 +15,10 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DBUSERNAME,
       password: process.env.DBPASSWORD,
       database: process.env.DBNAME,
-      entities: [__dirname + '/entities/*.entity.ts'],
+      autoLoadEntities: true,
       synchronize: true, // TODO: Remove this before release to production
     }),
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
