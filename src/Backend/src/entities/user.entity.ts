@@ -25,7 +25,7 @@ export class User {
   @Column()
   last_name: string;
 
-  @Column()
+  @Column({nullable: true})
   patronym: string;
 
   @Column()
@@ -40,16 +40,16 @@ export class User {
   @Column()
   phone_number: string;
 
-  @Column()
+  @Column({default:"WIP"}) // TODO: talk with front about pp
   profile_picture: string;
 
   @Column()
   send_notifications: boolean;
 
-  @Column()
+  @Column({default:0})
   balance: number;
 
-  @Column()
+  @Column({default:false})
   is_admin: boolean;
 
   @OneToMany(() => Purchase, (purchase) => purchase.user)
