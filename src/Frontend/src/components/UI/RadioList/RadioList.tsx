@@ -10,18 +10,31 @@ export const EXPERIENCE_LEVELS = [
     { label: 'Другой', value: 'other' },
 ]
 
-export default function RadioList() {
+interface RadioListProps {
+    name: string;
+    value: string;
+    onChange: React.ChangeEventHandler<HTMLInputElement>;
+    error?: string;
+}
+export default function RadioList({ name, value, error, onChange }: RadioListProps) {
     return (
-        <>
+        <div className={s.wrapper}>
             <span className={s.radioTitle}>Выбери уровень</span>
             <div className={s.radioList}>
                 {
                     EXPERIENCE_LEVELS.map(level => (
-                        <Radio text={level.label} />
+                        <Radio
+                            text={level.label}
+                            key={level.value}
+                            name={name}
+                            value={level.value}
+                            checked={value === level.value}
+                            onChange={onChange}
+                        />
                     ))
                 }
             </div>
-        </>
-
+            {error && <p className={s.error}>{error}</p>}
+        </div>
     )
 }
