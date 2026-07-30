@@ -11,6 +11,7 @@ import IOSTPage from '.././../assets/instructions/ios/step3I.webp';
 
 import AndroidFPage from '.././../assets/instructions/android/step1A.webp';
 import AndroidSPage from '.././../assets/instructions/android/step2A.webp';
+import clsx from 'clsx';
 
 type Platform = 'ios' | 'android';
 
@@ -36,31 +37,33 @@ function Instruction() {
   };
 
   return (
-    <section className={s['instruction']}>
-      <h1 className={s['instruction__title']}>Инструкция</h1>
-      <div className={s['instruction__button-block']}>
-        <Button inactive={platform !== 'ios'} onClick={() => handlePlatformChange('ios')}>
-          IOS
-        </Button>
-        <Button inactive={platform !== 'android'} onClick={() => handlePlatformChange('android')}>
-          Android
-        </Button>
-      </div>
-      <ol className={s['instruction__list']}>
-        <li className={s['instruction__list-item']}>Нажми на три точки в правом нижнем углу. </li>
-        <li className={s['instruction__list-item']}>Нажми «Поделиться» и выбери пункт «Добавить на экран «Домой».</li>
-        <li className={s['instruction__list-item']}>Нажми кнопку «Добавить».</li>
-      </ol>
+    <section className={clsx(s['instruction'], 'container')}>
+      <div>
+        <h1 className={s['instruction__title']}>Инструкция</h1>
+        <div className={s['instruction__button-block']}>
+          <Button inactive={platform !== 'ios'} onClick={() => handlePlatformChange('ios')}>
+            IOS
+          </Button>
+          <Button inactive={platform !== 'android'} onClick={() => handlePlatformChange('android')}>
+            Android
+          </Button>
+        </div>
+        <ol className={s['instruction__list']}>
+          <li className={s['instruction__list-item']}>Нажми на три точки в правом нижнем углу. </li>
+          <li className={s['instruction__list-item']}>Нажми «Поделиться» и выбери пункт «Добавить на экран «Домой».</li>
+          <li className={s['instruction__list-item']}>Нажми кнопку «Добавить».</li>
+        </ol>
 
-      <div className={s['instruction__slider']}>
-        <Slider ref={sliderRef} options={{ loop: false }} slidesPerView={1} showDots={true}>
-          {images[platform].map((src, index) => (
-            <img key={index} src={src} alt="" className={s['instruction__image']} />
-          ))}
-        </Slider>
-      </div>
+        <div className={s['instruction__slider']}>
+          <Slider ref={sliderRef} options={{ loop: false }} slidesPerView={1} showDots={true}>
+            {images[platform].map((src, index) => (
+              <img key={index} src={src} alt="" className={s['instruction__image']} />
+            ))}
+          </Slider>
+        </div>
 
-      <Button onClick={handleNext}>ГОТОВО</Button>
+        <Button onClick={handleNext}>ГОТОВО</Button>
+      </div>
     </section>
   );
 }

@@ -53,7 +53,7 @@ function Background({ children, variant = 'default' }: backgroundT) {
     <>
       <span className={s['filter']}></span>
       {renderBackground()}
-      <section className={s['main']}>{children}</section>
+      <div className={s['main']}>{children}</div>
     </>
   );
 }

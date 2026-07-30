@@ -1,17 +1,9 @@
 .embla {
-
     --dot-color: #F9FAF9;
-
 
     &__viewport {
         overflow: hidden;
         z-index: 0;
-    }
-
-    &__container {
-        display: flex;
-        align-items: flex-start;
-
     }
 
     &__slide {
@@ -20,16 +12,6 @@
         cursor: pointer;
         user-select: none;
         min-width: 0;
-        overflow: hidden;
-
-
-        img,
-        video,
-        picture {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
     }
 
     &__dots {
@@ -42,16 +24,17 @@
         &::after {
             content: "";
             position: absolute;
+            pointer-events: none;
 
-
-            filter: blur(25.0999984741211px);
-            background: #418FE9;
-
-            left: 0;
-            right: 0;
-            top: rem(-110);
+            left: rem(-20);
+            right: rem(-20);
+            top: rem(-150);
             height: rem(200);
             z-index: 1;
+
+            background: linear-gradient(rgba(22, 116, 228, 0),
+                    rgb(22, 116, 228)40%);
+            filter: blur(15px);
         }
     }
 

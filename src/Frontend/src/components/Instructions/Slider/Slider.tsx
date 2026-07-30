@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react';
-import useEmblaCarousel from 'embla-carousel-react';
-import type { EmblaCarouselType } from 'embla-carousel';
+import { useState, useCallback, forwardRef, useImperativeHandle } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperType } from 'swiper';
+import 'swiper/css';
 import s from './Slider.module.scss';
 import clsx from 'clsx';
 import type { sliderPropsI, sliderHandleI } from './sliderProps';
@@ -9,61 +10,57 @@ const Slider = forwardRef<sliderHandleI, sliderPropsI>(function Slider(
   { children, options, slidesPerView = 1, showDots = true },
   ref
 ) {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-  const [selectedSnap, setSelectedSnap] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [slidesCount, setSlidesCount] = useState(children.length);
 
-  const goTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi]);
-
-  const setupSnaps = useCallback((api: EmblaCarouselType) => {
-    setScrollSnaps(api.scrollSnapList());
-  }, []);
-
-  const setActiveSnap = useCallback((api: EmblaCarouselType) => {
-    setSelectedSnap(api.selectedScrollSnap());
-  }, []);
+  const goTo = useCallback(
+    (index: number) => {
+      swiperInstance?.slideTo(index);
+    },
+    [swiperInstance]
+  );
 
   useImperativeHandle(
     ref,
     () => ({
-      scrollNext: () => emblaApi?.scrollNext(),
-      scrollPrev: () => emblaApi?.scrollPrev(),
-      scrollTo: (index: number) => emblaApi?.scrollTo(index),
-      canScrollNext: () => emblaApi?.canScrollNext() ?? false,
-      selectedIndex: () => emblaApi?.selectedScrollSnap() ?? 0,
+      scrollNext: () => swiperInstance?.slideNext(),
+      scrollPrev: () => swiperInstance?.slidePrev(),
+      scrollTo: (index: number) => swiperInstance?.slideTo(index),
+      canScrollNext: () => (swiperInstance ? !swiperInstance.isEnd : false),
+      selectedIndex: () => swiperInstance?.activeIndex ?? 0,
     }),
-    [emblaApi]
+    [swiperInstance]
   );
-
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    setupSnaps(emblaApi);
-    setActiveSnap(emblaApi);
-
-    emblaApi.on('reInit', setupSnaps);
-    emblaApi.on('reInit', setActiveSnap);
-    emblaApi.on('select', setActiveSnap);
-  }, [emblaApi, setupSnaps, setActiveSnap]);
 
   return (
     <div className={s['embla']}>
-      <div className={s['embla__viewport']} ref={emblaRef}>
-        <div className={s['embla__container']}>
-          {children.map((slide, index) => (
-            <div key={index} className={s['embla__slide']} style={{ flex: `0 0 ${100 / slidesPerView}%` }}>
-              {slide}
-            </div>
-          ))}
-        </div>
-      </div>
+      <Swiper
+        {...options}
+        slidesPerView={slidesPerView}
+        className={clsx(s['embla__viewport'])}
+        onSwiper={(swiper) => {
+          setSwiperInstance(swiper);
+          setSlidesCount(swiper.slides.length);
+        }}
+        onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
+        onUpdate={(swiper) => setSlidesCount(swiper.slides.length)}>
+        {children.map((slide, index) => (
+          <SwiperSlide key={index} className={clsx(s['embla__slide'])}>
+            {slide}
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
       {showDots && (
         <div className={s['embla__dots']}>
-          {scrollSnaps.map((_, index) => (
+          {Array.from({ length: slidesCount }).map((_, index) => (
             <button
-              className={clsx(s['embla__dot'], index === selectedSnap && s['embla__dot--selected'])}
+              type="button"
+              className={clsx(s['embla__dot'], index === selectedIndex && s['embla__dot--selected'])}
               key={index}
-              onClick={() => goTo(index)}></button>
+              onClick={() => goTo(index)}
+            />
           ))}
         </div>
       )}

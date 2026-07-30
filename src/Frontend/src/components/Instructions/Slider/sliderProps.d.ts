@@ -1,9 +1,9 @@
-import type { EmblaOptionsType } from 'embla-carousel';
+import type { SwiperOptions } from 'swiper/types';
 import type { ReactNode } from 'react';
 
 export interface sliderPropsI {
   children: ReactNode[];
-  options?: EmblaOptionsType;
+  options?: SwiperOptions;
   slidesPerView?: number;
   showDots?: boolean;
 }

@@ -9,10 +9,8 @@ export default function Root() {
   return (
     <>
       <Background>
-        <div className="container">
-          {/* <Outlet /> */}
-          <Instruction />
-        </div>
+        {/* <Outlet /> */}
+        <Instruction />
       </Background>
     </>
   );
