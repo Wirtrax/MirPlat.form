@@ -15,15 +15,9 @@ export class AuthController {
         const user = await this.authService.findOrCreateUser(tgUser);
         const token = this.authService.generateToken(user.id);
 
-        res.cookie('auth_token', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-        });
-
         return res.json({
             success: true,
+            token: token,
             user: {
                 id: user.id,
                 first_name: user.first_name,
@@ -35,36 +29,29 @@ export class AuthController {
     @Get('me')
     @UseGuards(JwtGuard)
     async me(@Req() req: Request, @Res() res: Response) {
-        const userId = req['id']?.userId;
+        const userId = req['payload']?.userId;
         const user = await this.authService.getUserById(userId);
         
         if (!user) {
-        return res.status(401).json({ error: 'Пользователь не найден' });
+            return res.status(401).json({ error: 'Пользователь не найден' });
         }
 
         return res.json({
-        authenticated: true,
-        user: {
-            id: user.id,
-            first_name: user.first_name,
-            last_name: user.last_name,
-        }
+            authenticated: true,
+            user: {
+                id: user.id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+            }
         });
     }
 
     @Post('logout')
     @UseGuards(JwtGuard)
-    async logout(@Req() req: Request, @Res() res: Response) {
-        res.clearCookie('auth_token', {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-        });
-
+    async logout(@Res() res: Response) {
         return res.json({
             success: true,
             message: 'Успешно вышли из системы'
         })
     }
-
 }

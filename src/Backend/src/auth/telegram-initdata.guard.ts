@@ -2,6 +2,7 @@ import { BadRequestException, CanActivate, ExecutionContext, Injectable, Unautho
 import { Observable } from 'rxjs';
 import { isValid, parse } from '@telegram-apps/init-data-node';
 import { Request } from 'express';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class TelegramInitdataGuard implements CanActivate {
@@ -13,13 +14,29 @@ export class TelegramInitdataGuard implements CanActivate {
     
     const request = context.switchToHttp().getRequest<Request>();
 
-    const initData = request.body;
+    // const initData = request.body;
 
-    if(!initData) {
-      throw new BadRequestException('initData обязателен');
+    // if(!initData) {
+    //   throw new BadRequestException('initData обязателен');
+    // }
+
+    const authHeader = request.headers.authorization;
+
+    if(!authHeader) {
+      throw new UnauthorizedException('Нет хэдера')
     }
 
-    const isValidData = isValid(initData, this.botToken); //???
+    const [authType, initData = ''] = authHeader.split(' ');
+
+    if (authType !== 'tma') {
+      throw new UnauthorizedException('Неподдерживаемый тип авторизации. Необходим "tma"');
+    }
+
+    if (!initData) {
+      throw new UnauthorizedException('initData отсутствует')
+    }
+
+    const isValidData = isValid(initData, this.botToken);
 
     if (!isValidData) {
       throw new UnauthorizedException('Невалидные данные');
@@ -38,7 +55,7 @@ export class TelegramInitdataGuard implements CanActivate {
 
       return true;
     } catch (error) {
-      throw new UnauthorizedException('Ошибка парсинга данных');
+      throw new UnauthorizedException(`Ошибка авторизации`);
     }
   }
 }
