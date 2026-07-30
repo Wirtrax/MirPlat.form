@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { ItemModule } from './item/item.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { UserModule } from './user/user.module';
       autoLoadEntities: true,
       synchronize: true, // TODO: Remove this before release to production
     }),
-    UserModule
+    UserModule,
+    ItemModule
   ],
   controllers: [AppController],
   providers: [AppService],
