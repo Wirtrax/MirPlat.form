@@ -18,7 +18,11 @@ export class UserService {
   }
 
   isTelegramIdExists(telegram_id: number): Promise<boolean> {
-    return this.usersRepo.existsBy({telegram_id})
+    return this.usersRepo.existsBy({telegram_id});
+  }
+
+  findOneByTelegramId(telegramId: number): Promise<User | null> {
+    return this.usersRepo.findOneBy({ telegram_id: telegramId });
   }
 
   create(createUserDto: CreateUserDto, telegram_id: number): Promise<User>{
