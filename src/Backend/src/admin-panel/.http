@@ -1,0 +1,21 @@
+GET http://localhost:3000/admin/users
+###
+POST http://localhost:3000/admin/addUser
+Content-Type: application/json
+
+{
+    "telegram_id": 123456789,
+    "first_name": "Иван",
+    "last_name": "Иванов",
+    "patronym": "test",
+    "specialization": "test",
+    "programming_level": "senior",
+    "email": "test",
+    "phone_number": "test",
+    "profile_picture": "test",
+    "send_notifications": false,
+    "balance": 0,
+    "is_admin": true
+}
+###
+DELETE  http://localhost:3000/admin/deleteUser/5
