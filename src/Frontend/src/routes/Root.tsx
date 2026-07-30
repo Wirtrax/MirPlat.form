@@ -9,7 +9,7 @@ export default function Root() {
     <>
       <Background>
         {/* <Header /> */}
-        <Outlet />
+          <Outlet />
         {/* <Footer /> */}
       </Background>
     </>
