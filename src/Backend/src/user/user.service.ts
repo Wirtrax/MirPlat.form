@@ -17,15 +17,15 @@ export class UserService {
      return this.usersRepo.findOneBy({id});
   }
 
-  isTelegramIdExists(telegram_id: number): Promise<boolean> {
+  isTelegramIdExists(telegram_id: string): Promise<boolean> {
     return this.usersRepo.existsBy({telegram_id});
   }
 
-  findOneByTelegramId(telegramId: number): Promise<User | null> {
-    return this.usersRepo.findOneBy({ telegram_id: telegramId });
+  findOneByTelegramId(telegram_id: string): Promise<User | null> {
+    return this.usersRepo.findOneBy({ telegram_id});
   }
 
-  create(createUserDto: CreateUserDto, telegram_id: number): Promise<User>{
+  create(createUserDto: CreateUserDto, telegram_id: string): Promise<User>{
     const user = this.usersRepo.create({...createUserDto, telegram_id});
     return this.usersRepo.save(user);
   }

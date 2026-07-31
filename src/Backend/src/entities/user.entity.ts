@@ -17,7 +17,7 @@ export class User {
   id: number;
 
   @Column()
-  telegram_id: number;
+  telegram_id: string;
 
   @Column()
   first_name: string;
