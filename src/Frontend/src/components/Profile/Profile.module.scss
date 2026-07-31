@@ -1,8 +1,7 @@
 .cardsWrapper {
-    margin-top: rem(20);
-    margin-bottom: rem(30); 
+    margin-block: rem(22) rem(30);
 
     display: flex;
     flex-direction: column;
-    gap: rem(10);
+    row-gap: rem(10);
 }
