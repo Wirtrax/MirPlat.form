@@ -19,17 +19,8 @@ import { TelegramInitdataGuard } from './telegram-initdata.guard';
   providers: [
     AuthService, 
     JwtGuard,
-    {
-      provide: TelegramInitdataGuard,
-      useFactory: () => {
-        const botToken = process.env.TELEGRAM_BOT_TOKEN;
-        if (!botToken) {
-          throw new Error('TELEGRAM_BOT_TOKEN не задан в .env')
-        }
-        return new TelegramInitdataGuard(botToken)
-      }
-    }
+    TelegramInitdataGuard    
   ],
-  exports: [JwtGuard, AuthService]
+  exports: [JwtGuard,TelegramInitdataGuard]
 })
 export class AuthModule {}

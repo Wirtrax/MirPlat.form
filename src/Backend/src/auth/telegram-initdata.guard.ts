@@ -1,12 +1,19 @@
 import { BadRequestException, CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { isValid, parse } from '@telegram-apps/init-data-node';
+import { isValid, parse } from '@tma.js/init-data-node';
 import { Request } from 'express';
-import { validate } from 'class-validator';
 
 @Injectable()
 export class TelegramInitdataGuard implements CanActivate {
-  constructor(private readonly botToken: string) {}
+  private readonly botToken: string;
+
+  constructor() {
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    if (!botToken) {
+       throw new Error('TELEGRAM_BOT_TOKEN не задан в .env')
+    }
+    this.botToken = botToken;
+  }
 
   canActivate(
     context: ExecutionContext,
@@ -14,32 +21,25 @@ export class TelegramInitdataGuard implements CanActivate {
     
     const request = context.switchToHttp().getRequest<Request>();
 
-    // const initData = request.body;
-
-    // if(!initData) {
-    //   throw new BadRequestException('initData обязателен');
-    // }
-
     const authHeader = request.headers.authorization;
 
     if(!authHeader) {
-      throw new UnauthorizedException('Нет хэдера')
+      throw new UnauthorizedException('Authrorization is requered')
     }
 
     const [authType, initData = ''] = authHeader.split(' ');
 
     if (authType !== 'tma') {
-      throw new UnauthorizedException('Неподдерживаемый тип авторизации. Необходим "tma"');
+      throw new UnauthorizedException('Only tma authorization is supported');
     }
 
     if (!initData) {
-      throw new UnauthorizedException('initData отсутствует')
+      throw new UnauthorizedException('Invalid token')
     }
 
     const isValidData = isValid(initData, this.botToken);
-
     if (!isValidData) {
-      throw new UnauthorizedException('Невалидные данные');
+      throw new UnauthorizedException('Invalid token');
     }
 
     try {
@@ -47,15 +47,13 @@ export class TelegramInitdataGuard implements CanActivate {
       const tgUser = parsed.user;
 
       if(!tgUser?.id) {
-        throw new BadRequestException('Нет id пользователя');
+        throw new BadRequestException('User id is required');
       }
-
-      request['tgUser'] = tgUser;
-      request['parsedInitData'] = parsed;
-
+      request['tgUserId'] = tgUser.id;
+      
       return true;
     } catch (error) {
-      throw new UnauthorizedException(`Ошибка авторизации`);
+      throw new UnauthorizedException(`Authentication error`);
     }
   }
 }
