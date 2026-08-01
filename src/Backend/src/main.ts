@@ -11,6 +11,14 @@ async function bootstrap() {
   app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('MirPlat.form API')
+    .addBearerAuth({
+      type: "http",
+      bearerFormat:"JWT"
+    }, 'jwt')
+    .addBearerAuth({
+      type: "http",
+      bearerFormat:"initData"
+    }, "tma")
     .build();
   SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config))
   await app.listen(process.env.PORT ?? 3000);

@@ -5,6 +5,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { TelegramInitdataGuard } from 'src/auth/telegram-initdata.guard';
 import type { Request } from 'express';
 import { JwtGuard } from 'src/auth/jwt.guard';
+import { JWTAuth } from 'src/auth/jwt.decorator';
+import { TelegramInitDataAuth } from 'src/auth/tma.decorator';
 
 @Controller('api/user')
 export class UserController {
@@ -13,24 +15,24 @@ export class UserController {
   ) {}
 
   @Get()
-  @UseGuards(JwtGuard)
+  @JWTAuth()
   findOneById(@Req() req: Request){
     return this.userService.findOneById(req['userId'])  
   }
 
   @Post()
-  @UseGuards(TelegramInitdataGuard)
+  @TelegramInitDataAuth()
   create(@Req() req: Request, @Body() createUserDto: CreateUserDto){
     return this.userService.create(createUserDto, req['tgUserId']);
   }
 
   @Delete()
-  @UseGuards(JwtGuard)
+  @JWTAuth()
   delete(@Req() req: Request){
     return this.userService.delete(req['userId']);
   }
   @Patch()
-  @UseGuards(JwtGuard)
+  @JWTAuth()
   update(@Req() req: Request, @Body() updateUserDto: UpdateUserDto){
     return this.userService.update(updateUserDto, req['userId']);
   }

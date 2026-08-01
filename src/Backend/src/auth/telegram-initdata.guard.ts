@@ -29,8 +29,8 @@ export class TelegramInitdataGuard implements CanActivate {
 
     const [authType, initData = ''] = authHeader.split(' ');
 
-    if (authType !== 'tma') {
-      throw new UnauthorizedException('Only tma authorization is supported');
+    if (authType !== 'Bearer') {
+      throw new UnauthorizedException('Only Bearer authorization is supported');
     }
 
     if (!initData) {
