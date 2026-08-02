@@ -3,6 +3,7 @@ import LotteryCountdown from './LotteryCountdown/LotteryCountdown';
 import s from './LotterySection.module.scss';
 import clsx from 'clsx';
 
+
 export default function LotterySection() {
   return (
     <section className={clsx(s.lottery, 'container')}>
@@ -13,7 +14,6 @@ export default function LotterySection() {
         <span> — <br /> MacBook Neo!</span>
       </p>
       <h3 className={s.titleCards}>Условия участия:</h3>
-
       <CardLottery />
 
       <p className={s.results}>

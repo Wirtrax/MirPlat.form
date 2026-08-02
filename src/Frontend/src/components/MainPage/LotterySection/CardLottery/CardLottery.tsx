@@ -1,9 +1,11 @@
 import { lotteryCardMock } from '../../../../mock/lotteryCard';
 import s from './CardLottery.module.scss';
+import avatar from '../../../../assets/avatar/default.webp'
 
 export default function CardLottery() {
   return (
     <div className={s.cardList}>
+      <img src={avatar} alt="fox" className={s.lotteryFox} />
       {
         lotteryCardMock.map(card => (
           <div key={card.id} className={s.cardItem}>

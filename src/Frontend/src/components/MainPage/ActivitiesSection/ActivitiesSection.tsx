@@ -17,7 +17,6 @@ export default function ActivitiesSection() {
                 </Link>
             </div>
             <ActivitiesCard openCard={openCard} setOpenCard={setOpenCard} />
-
         </section>
     )
 }
