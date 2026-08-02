@@ -27,7 +27,7 @@ export class UsersService {
             return { success: true };
         }
     
-        async updateUser(id: number, changes) {
+        async updateUser(id: number, changes: Partial<User>) {
             const result = await this.usersRepo.update(id, changes);
             if(result.affected === 0) {
                 throw new NotFoundException('Пользователь не найден');
