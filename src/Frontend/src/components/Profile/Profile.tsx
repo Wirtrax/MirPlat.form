@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import s from './Profile.module.scss';
 import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard';
 import { userMock } from '../../mock/profileCard';
@@ -11,10 +12,17 @@ import { useEffect, useState } from 'react';
 import avatra from '../../assets/avavtar/default.png';
 import editPen from '../../assets/ico/profile/pen.svg';
 import ProductCard from '../UI/ProductCard/ProductCard';
+=======
+import s from './Profile.module.scss'
+import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard'
+import { aboutCardMock, contactCardMock } from '../../mock/profileCard'
+import clsx from 'clsx'
+>>>>>>> frontend-main
 
 export default function Profile() {
   console.log('Рендер компонента Profile');
 
+<<<<<<< HEAD
   const [data, setData] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -54,6 +62,14 @@ export default function Profile() {
           <p className={s['profile__user-id']}>
             ID: <span className={s['profile__user-id-value']}>{data.uniqId}</span>
           </p>
+=======
+    return (
+        <div>
+            <div className={clsx(s.cardsWrapper, 'container')}>
+                <ProfileInfoCard {...aboutCardMock} />
+                <ProfileInfoCard {...contactCardMock} />
+            </div>
+>>>>>>> frontend-main
         </div>
 
         <div className={s['profile__balance']}>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Button from '../../UI/Button/Button';
 import Input from '../../UI/Input/Input';
 import Radio from '../../UI/Radio/Radio';
@@ -8,6 +9,18 @@ import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import clsx from 'clsx';
 import Background from '../../UI/Background/Background';
+=======
+import Button from "../../UI/Button/Button";
+import Input from '../../UI/Input/Input'
+import Radio from '../../UI/Radio/Radio'
+import RadioList from '../../UI/RadioList/RadioList'
+import Select from '../../UI/Select/Select'
+import s from './RegistrationForm.module.scss'
+import * as Yup from 'yup';
+import { Formik, Form } from 'formik';
+import clsx from 'clsx'
+
+>>>>>>> frontend-main
 
 interface RegistrationFormProps {
   onSuccess: () => void;
@@ -39,6 +52,7 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
     'Я даю согласие на обработку персональных данных и ознакомлен с Политикой обработки и защиты персональных данных в АО «НСПК»';
   const textNews = 'Я хочу получать новости о вакансиях и предстоящих мероприятиях';
 
+<<<<<<< HEAD
   return (
     <Background variant="minimal">
       <Formik
@@ -118,6 +132,21 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
                 checked={values.personalAgreement}
                 onChange={(e) => {
                   setFieldValue('personalAgreement', e.target.checked);
+=======
+    return (
+        <>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={(values) => {
+                    try {
+                        // throw new Error('Test');
+                        console.log(values)
+                        onSuccess()
+                    } catch {
+                        onError()
+                    }
+>>>>>>> frontend-main
                 }}
                 error={touched.personalAgreement ? errors.personalAgreement : undefined}
               />
@@ -130,6 +159,7 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
               />
             </div>
 
+<<<<<<< HEAD
             <Button type="submit" className={s.btn}>
               ЗАРЕГИСТРИРОВАТЬСЯ
             </Button>
@@ -138,4 +168,88 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
       </Formik>
     </Background>
   );
+=======
+                            <Select
+                                label='Специализация'
+                                name='specialization'
+                                value={values.specialization}
+                                onChange={handleChange}
+                                error={touched.specialization ? errors.specialization : undefined}
+                            >
+                                <option value="ml">ML-инженер</option>
+                                <option value="frontend">Frontend-разработчик</option>
+                                <option value="backend">Backend-разработчик</option>
+                                <option value="fullstack">Fullstack-разработчик</option>
+                                <option value="mobile">Mobile-разработчик</option>
+                                <option value="qa">QA-инженер</option>
+                                <option value="data">Data Scientist</option>
+                            </Select>
+
+                            <RadioList
+                                name='level'
+                                value={values.level}
+                                onChange={handleChange}
+                                error={touched.level ? errors.level : undefined}
+                            />
+
+                            <Input
+                                label='*Номер телефона'
+                                placeholder='+7 999-999-99-99 '
+                                name="phone"
+                                onBlur={handleBlur}
+                                value={values.phone}
+                                onChange={handleChange}
+                                error={touched.phone ? errors.phone : undefined}
+                            />
+
+                            <Input
+                                label='*Почта'
+                                placeholder='name@example.ru'
+                                name="email"
+                                value={values.email}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={touched.email ? errors.email : undefined}
+                            />
+
+                            <div className={s.radioBtns}>
+                                <Radio
+                                    type='checkbox'
+                                    text={textPersonal}
+                                    className={clsx(
+                                        touched.personalAgreement &&
+                                        errors.personalAgreement &&
+                                        s.textRadio
+                                    )}
+                                    name="personalAgreement"
+                                    checked={values.personalAgreement}
+                                    onChange={(e) => {
+                                        setFieldValue('personalAgreement', e.target.checked)
+                                    }}
+                                    error={touched.personalAgreement ? errors.personalAgreement : undefined}
+                                />
+
+                                <Radio
+                                    text={textNews}
+                                    name="news"
+                                    checked={values.news}
+                                    onChange={(e) =>
+                                        setFieldValue(
+                                            'news',
+                                            e.target.checked
+                                        )
+                                    }
+                                />
+                            </div>
+
+                            <Button type='submit' className={s.btn}>ЗАРЕГИСТРИРОВАТЬСЯ</Button>
+                        </Form>
+                    )
+                }
+            </Formik>
+        </>
+
+
+    )
+>>>>>>> frontend-main
 }

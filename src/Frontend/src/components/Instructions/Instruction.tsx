@@ -30,7 +30,7 @@ function Instruction() {
     if (sliderRef.current?.canScrollNext()) {
       sliderRef.current.scrollNext();
     } else {
-      // navigate('/');
+      navigate('/main');
     }
   };
 

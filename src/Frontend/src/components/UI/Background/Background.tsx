@@ -51,9 +51,15 @@ function Background({ children, variant = 'default' }: backgroundT) {
 
   return (
     <>
-      <span className={s['filter']}></span>
-      {renderBackground()}
-      <div className={s['main']}>{children}</div>
+      <div className={s.wrapper}>
+        <span className={s.filter}></span>
+
+        {renderBackground()}
+
+        <div className={s.main}>
+          {children}
+        </div>
+      </div>
     </>
   );
 }

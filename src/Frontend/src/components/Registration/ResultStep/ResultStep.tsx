@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 import type { ResultStepProps } from './ResultStep.type';
 import Background from '../../UI/Background/Background';
 import s from './ResultStep.module.scss';
 import Button from '../../UI/Button/Button';
+=======
+import type { ResultStepProps } from "./ResultStep.type";
+import s from './ResultStep.module.scss'
+import Background from "../../UI/Background/Background";
+import Button from "../../UI/Button/Button";
+
+>>>>>>> frontend-main
 
 export default function ResultStep({ title, description, buttonText, onButtonClick, children }: ResultStepProps) {
   return (
