@@ -5,20 +5,20 @@ import type { ProfileInfoCardProps } from './ProfileInfoCard.types';
 export default function ProfileInfoCard({ title, items }: ProfileInfoCardProps) {
   return (
     <Substrate>
-      <div className={s['card']}>
+      <section className={s['card']}>
         <h3 className={s['card-title']}>{title}</h3>
-        <div className={s['cardDetails']}>
+        <dl className={s['cardDetails']}>
           {items.map((item) => (
             <div className={s.item} key={item.id}>
               <div className={s.iconWrapper}>{item.icon}</div>
               <div className={s.details}>
-                <span className={s.label}>{item.label}</span>
-                <span className={s.value}>{item.value}</span>
+                <dt className={s.label}>{item.label}</dt>
+                <dd className={s.value}>{item.value}</dd>
               </div>
             </div>
           ))}
-        </div>
-      </div>
+        </dl>
+      </section>
     </Substrate>
   );
 }

@@ -15,7 +15,7 @@ export default function Header() {
       </div>
 
       <nav className={`${s.menu} ${open ? s.open : ''}`}>
-        <Link to={'/'} onClick={() => setOpen(false)} className={s['menu-item']}>
+        <Link to={'/main'} onClick={() => setOpen(false)} className={s['menu-item']}>
           Главная
         </Link>
         <Link to={'profile'} onClick={() => setOpen(false)} className={s['menu-item']}>

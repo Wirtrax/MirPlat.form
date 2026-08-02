@@ -1,0 +1,15 @@
+.wrapper {
+    margin-top: rem(30);
+    margin-bottom: rem(53);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-weight: 700;
+    font-size: rem(24);
+}

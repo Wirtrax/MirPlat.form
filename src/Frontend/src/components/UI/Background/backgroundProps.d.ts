@@ -1,4 +1,4 @@
 export type backgroundT = {
   children: React.ReactNode;
-  variant?: 'default' | 'minimal' | 'alternative';
+  variant?: 'default' | 'minimal' | 'alternative' | 'main';
 };

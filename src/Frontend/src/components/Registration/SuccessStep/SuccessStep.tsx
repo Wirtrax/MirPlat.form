@@ -9,9 +9,9 @@ export default function SuccessStep() {
             title='Ты в игре!'
             description='Чтобы приложение было всегда под рукой, добавь его на экран телефона'
             buttonText='ДОБАВИТЬ НА ЭКРАН'
-            onButtonClick={() => navigate('/')}
+            onButtonClick={() => navigate('/instruction')}
         >
-            <Link to={'/'}>ПРОПУСТИТЬ</Link>
+            <Link to={'/main'}>ПРОПУСТИТЬ</Link>
         </ResultStep>
     )
 }

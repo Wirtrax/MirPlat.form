@@ -1,4 +1,4 @@
-import Button from '../../Button/Button'
+import Button from "../../UI/Button/Button";
 import Input from '../../UI/Input/Input'
 import Radio from '../../UI/Radio/Radio'
 import RadioList from '../../UI/RadioList/RadioList'
@@ -7,7 +7,7 @@ import s from './RegistrationForm.module.scss'
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import clsx from 'clsx'
-import Background from '../../Background/Background'
+
 
 interface RegistrationFormProps {
     onSuccess: () => void;
@@ -44,13 +44,13 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
     const textNews = 'Я хочу получать новости о вакансиях и предстоящих мероприятиях'
 
     return (
-        <Background variant='minimal' >
+        <>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                     try {
-                        throw new Error('Test');
+                        // throw new Error('Test');
                         console.log(values)
                         onSuccess()
                     } catch {
@@ -153,7 +153,7 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
                     )
                 }
             </Formik>
-        </Background>
+        </>
 
 
     )

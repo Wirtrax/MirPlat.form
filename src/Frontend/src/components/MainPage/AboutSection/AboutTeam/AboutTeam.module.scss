@@ -1,0 +1,35 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-top: rem(50);
+    padding-bottom: rem(44);
+}
+
+.title {
+    font-weight: 700;
+    font-size: rem(24);
+    margin-bottom: rem(20);
+}
+
+.description {
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.icons {
+    display: flex;
+    align-self: center;
+    gap: rem(16);
+    margin-top: rem(44);
+
+    svg {
+        width: rem(54);
+        height: rem(54);
+        color: var(--color-accent);
+        transition: color 0.2s ease-in;
+
+        &:hover {
+            color: var(--color-gray-70);
+        }
+    }
+}

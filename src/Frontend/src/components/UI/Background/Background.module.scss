@@ -1,15 +1,23 @@
+.wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
 .background {
     background-image: var(--background-gradient);
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: -2;
     pointer-events: none;
 }
 
-.main {}
+.main {
+    position: relative;
+    z-index: 1;
+}
 
 .filter {
-    position: fixed;
+    position: absolute;
     inset: 0;
     backdrop-filter: blur(3.199999809265137px);
     background: rgba(255, 255, 255, 0.1);
@@ -27,4 +35,5 @@
         left: var(--accent-width);
         translate: 0 -20%;
     }
+
 }

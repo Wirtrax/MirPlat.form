@@ -2,6 +2,8 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Root from "./routes/Root"
 import Profile from "./components/Profile/Profile"
 import Registration from "./components/Registration/Registration"
+import Instruction from "./components/Instructions/Instruction"
+import MainPage from "./components/MainPage/MainPage"
 
 
 const router = createBrowserRouter(
@@ -9,8 +11,9 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<Root />}>
         <Route index element={<Registration />} />
+        <Route path="main" element={<MainPage />} />
         <Route path="registration" element={<Registration />} />
-        <Route element={<Profile />} />
+        <Route path="instruction" element={<Instruction/>} />
         <Route path="profile" element={<Profile />} />
       </Route>
     </>
