@@ -1,0 +1,58 @@
+.product {
+    padding-block: rem(12) rem(8);
+    position: relative;
+
+    &__state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        padding-inline: rem(8);
+
+        &-title {
+            text-align: center;
+            margin-top: rem(8);
+            font-weight: 500;
+        }
+
+        &-price {
+            margin-block: rem(14);
+            font-size: rem(16);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            column-gap: rem(5);
+        }
+
+        &-image {
+            height: rem(82);
+        }
+
+        &-icon--check {
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                height: rem(8);
+                width: 2px;
+                right: rem(20);
+                top: rem(19);
+                background-color: var(--color-light);
+                border-radius: var(--border-radius);
+            }
+
+            &::before {
+                transform: rotate(45deg) translate(-70%, -55%);
+                height: rem(12);
+            }
+
+            &::after {
+                transform: rotate(-45deg) translate(0%, -40%);
+
+            }
+        }
+    }
+}

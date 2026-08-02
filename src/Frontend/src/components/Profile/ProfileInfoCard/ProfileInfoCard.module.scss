@@ -1,37 +1,38 @@
-.card {
+.profile-info-card {
     padding: rem(19) rem(27);
 
-    &-title {
+    &__title {
         font-size: rem(14);
         margin-bottom: rem(13);
     }
-}
 
-.cardDetails {
-    display: flex;
-    flex-direction: column;
-    gap: rem(19);
-}
+    &__details {
+        display: flex;
+        flex-direction: column;
+        gap: rem(19);
+    }
 
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: rem(16);
+    }
 
-.item {
-    display: flex;
-    align-items: center;
-    gap: rem(16);
-}
+    &__icon-wrapper {}
 
-.details {
-    display: flex;
-    flex-direction: column;
-}
+    &__item-content {
+        display: flex;
+        flex-direction: column;
+    }
 
-.label {
-    font-weight: 400;
-    font-size: rem(14);
-    line-height: 120%;
-    color: #a5dafb;
-}
+    &__label {
+        font-weight: 400;
+        font-size: rem(14);
+        line-height: 120%;
+        color: #a5dafb;
+    }
 
-.value {
-    color: #fff;
+    &__value {
+        color: #fff;
+    }
 }
