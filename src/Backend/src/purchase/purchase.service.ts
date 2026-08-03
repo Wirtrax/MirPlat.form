@@ -73,7 +73,7 @@ export class PurchaseService {
     
     purchase.status = PurchaseStatus.CANCELED;  
     user.balance += purchase.item.price;
-
+    purchase.item.quantity += 1;
     this.userRepo.save(user);
     return this.purchaseRepo.save(purchase);
   }
