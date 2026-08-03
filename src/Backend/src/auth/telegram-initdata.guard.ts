@@ -36,7 +36,10 @@ export class TelegramInitdataGuard implements CanActivate {
     if (!initData) {
       throw new UnauthorizedException('Invalid token')
     }
-
+    if (initData.startsWith('devtest')){
+      request['tgUserId'] = initData;  // WARNING: MOCK AUTH DELETE BEFORE LAUNCH
+      return true;
+    }
     const isValidData = isValid(initData, this.botToken);
     if (!isValidData) {
       throw new UnauthorizedException('Invalid token');
