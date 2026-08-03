@@ -23,7 +23,7 @@ export class AuthController {
         const user = await this.userService.findOneByTelegramId(tgUserId);
         
         if (user === null){
-            return new ForbiddenException("User is not registred");
+            throw new ForbiddenException("User is not registred");
         }
 
         return {token:this.authService.generateToken(user.id)};
