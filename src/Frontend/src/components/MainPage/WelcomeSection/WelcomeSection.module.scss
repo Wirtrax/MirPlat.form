@@ -74,13 +74,13 @@
 
 .square {
     &--top-right {
-        top: rem(62);
+        top: rem(-1);
         left: auto;
         right: rem(-2);
     }
 
     &--top-left {
-        top: rem(80);
+        top: rem(30);
         left: rem(30);
     }
 
