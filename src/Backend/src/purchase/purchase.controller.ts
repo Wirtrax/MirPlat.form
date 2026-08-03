@@ -1,10 +1,9 @@
 import { Controller, Get, Post, Body,  Param,  Req } from '@nestjs/common';
 import { PurchaseService } from './purchase.service';
-import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import type { Request } from 'express';
 
-@Controller('purchase')
+@Controller('api/purchase')
 export class PurchaseController {
   constructor(private readonly purchaseService: PurchaseService) {}
 

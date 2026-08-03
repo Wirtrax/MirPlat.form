@@ -6,7 +6,7 @@ import { PurchaseService } from 'src/purchase/purchase.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import type { Request } from 'express';
 
-@Controller('item')
+@Controller('api/item')
 export class ItemController {
   constructor(
     private readonly itemService: ItemService,
