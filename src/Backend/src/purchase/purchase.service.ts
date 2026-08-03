@@ -1,6 +1,4 @@
 import { ForbiddenException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { CreatePurchaseDto } from './dto/create-purchase.dto';
-import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
