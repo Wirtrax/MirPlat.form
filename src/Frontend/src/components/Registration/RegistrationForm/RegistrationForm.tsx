@@ -25,8 +25,18 @@ const initialValues = {
 }
 
 const validationSchema = Yup.object({
-    fio: Yup.string().required('Введите ФИО'),
+    fio: Yup.string()
+        .matches(
+            /^[А-ЯЁа-яё\s-]+$/,
+            'ФИО может содержать только буквы'
+        )
+        .min(5, 'Введите полное ФИО')
+        .required('Введите ФИО'),
     phone: Yup.string()
+        .matches(
+            /^\+7 \d{3}-\d{3}-\d{2}-\d{2}$/,
+            'Введите корректный номер телефона'
+        )
         .required('Введите номер телефона'),
 
     email: Yup.string()
@@ -100,7 +110,9 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
 
                             <Input
                                 label='*Номер телефона'
-                                placeholder='+7 999-999-99-99 '
+                                placeholder='+7 999-999-99-99'
+                                mask="+7 000-000-00-00"
+                              
                                 name="phone"
                                 onBlur={handleBlur}
                                 value={values.phone}
