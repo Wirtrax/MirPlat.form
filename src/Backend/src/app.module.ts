@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { ItemModule } from './item/item.module';
 import { AuthModule } from './auth/auth.module';
+import { PurchaseModule } from './purchase/purchase.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -22,7 +24,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     ItemModule,
-    AuthModule
+    AuthModule,
+    PurchaseModule
   ],
   controllers: [AppController],
   providers: [AppService],
