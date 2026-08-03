@@ -5,6 +5,7 @@ import { UpdateItemDto } from './dto/update-item.dto';
 import { PurchaseService } from 'src/purchase/purchase.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import type { Request } from 'express';
+import { ApiForbiddenResponse, ApiNotFoundResponse, ApiPaymentRequiredResponse } from '@nestjs/swagger';
 
 @Controller('api/item')
 export class ItemController {
@@ -20,6 +21,9 @@ export class ItemController {
 
   @Post(':id/purchase')
   @JWTAuth()
+  @ApiPaymentRequiredResponse({description:"User has insufficient funds"})
+  @ApiNotFoundResponse({description:"User or Item not found"})
+  @ApiForbiddenResponse({description:"Item is sold out or not for sale"})
   purchase(@Param('id') itemId: number, @Req() req: Request){
     return this.purchaseService.create(itemId, req['userId'])
   }
