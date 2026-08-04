@@ -7,6 +7,8 @@ import s from './RegistrationForm.module.scss'
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import clsx from 'clsx'
+import { useAppDispatch } from "../../../hooks/redux";
+import { createUser } from "../../../service/features/user/userSlice";
 
 
 interface RegistrationFormProps {
@@ -16,7 +18,7 @@ interface RegistrationFormProps {
 
 const initialValues = {
     fio: '',
-    specialization: 'ml',
+    specialization: '',
     level: '',
     phone: '',
     email: '',
@@ -30,26 +32,28 @@ const validationSchema = Yup.object({
             /^[А-ЯЁа-яё\s-]+$/,
             'ФИО может содержать только буквы'
         )
-        .min(5, 'Введите полное ФИО')
-        .required('Введите ФИО'),
+        .min(5, 'введите полное ФИО')
+        .required('введите ФИО'),
     phone: Yup.string()
         .matches(
             /^\+7 \d{3}-\d{3}-\d{2}-\d{2}$/,
-            'Введите корректный номер телефона'
+            'введите корректный номер телефона'
         )
-        .required('Введите номер телефона'),
+        .required('введите номер телефона'),
 
     email: Yup.string()
-        .email('Некорректная почта')
-        .required('Введите почту'),
+        .email('некорректная почта')
+        .required('введите почту'),
     personalAgreement: Yup.boolean().oneOf([true], 'это поле обязательно'),
     level: Yup.string()
-        .required('Выберите уровень'),
+        .required('выберите уровень'),
     specialization: Yup.string()
-        .required('Выберите специализацию'),
+        .required('выберите специализацию'),
 })
 
 export default function RegistrationForm({ onSuccess, onError }: RegistrationFormProps) {
+    const dispatch = useAppDispatch()
+
     const textPersonal = 'Я даю согласие на обработку персональных данных и ознакомлен с Политикой обработки и защиты персональных данных в АО «НСПК»'
     const textNews = 'Я хочу получать новости о вакансиях и предстоящих мероприятиях'
 
@@ -58,15 +62,32 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
+
                 onSubmit={(values) => {
-                    try {
-                        // throw new Error('Test');
-                        console.log(values)
-                        onSuccess()
-                    } catch {
-                        onError()
+                    const [last_name, first_name, patronym] = values.fio.trim().split(/\s+/)
+                    const cleanPhone = values.phone.replace(/[^\d+]/g, '');
+
+                    const userData = {
+                        first_name,
+                        last_name,
+                        patronym,
+                        specialization: values.specialization,
+                        programming_level: values.level,
+                        email: values.email,
+                        phone_number: cleanPhone,
+                        send_notifications: values.news
                     }
+                    console.log('Отправлено:', userData)
+                    dispatch(createUser(userData))
+                        .unwrap()
+                        .then(() => {
+                            onSuccess()
+                        })
+                        .catch(() => {
+                            onError()
+                        })
                 }}
+
             >
                 {
                     ({
@@ -92,13 +113,15 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
                                 onChange={handleChange}
                                 error={touched.specialization ? errors.specialization : undefined}
                             >
-                                <option value="ml">ML-инженер</option>
-                                <option value="frontend">Frontend-разработчик</option>
-                                <option value="backend">Backend-разработчик</option>
-                                <option value="fullstack">Fullstack-разработчик</option>
-                                <option value="mobile">Mobile-разработчик</option>
-                                <option value="qa">QA-инженер</option>
-                                <option value="data">Data Scientist</option>
+                                <option value="" disabled>
+                                    Выберите специализацию
+                                </option>
+                                <option value="android">Android developer</option>
+                                <option value="teamlead">Teamlead engineering lead</option>
+                                <option value="ios">iOS developer</option>
+                                <option value="hr">HR</option>
+                                <option value="ml_dl_ai">ML DL AI</option>
+                                <option value="manual_tester">Manual tester</option>
                             </Select>
 
                             <RadioList
@@ -112,7 +135,7 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
                                 label='*Номер телефона'
                                 placeholder='+7 999-999-99-99'
                                 mask="+7 000-000-00-00"
-                              
+
                                 name="phone"
                                 onBlur={handleBlur}
                                 value={values.phone}

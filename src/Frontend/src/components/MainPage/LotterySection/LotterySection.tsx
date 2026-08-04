@@ -22,7 +22,7 @@ export default function LotterySection() {
         билет. <span>Удачи!</span>
       </p>
 
-      <LotteryCountdown endDate="2026-08-04T15:00:00+03:00" />
+      <LotteryCountdown endDate="2026-08-09T15:00:00+03:00" />
     </section>
   )
 }
