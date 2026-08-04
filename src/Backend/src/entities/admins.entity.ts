@@ -3,7 +3,6 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 export enum AdminRole {
   ADMIN = 'admin',
   SUPER_ADMIN = 'super_admin',
-  DECLINED = 'declined',
 }
 
 @Entity()
