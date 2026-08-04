@@ -28,7 +28,7 @@ export default function Profile() {
   // const [data, setData] = useState<User | null>(null);
   // const [loading, setLoading] = useState(true);
 
-  const purchases: any[] = (user as any).purchases || [];
+
   // useEffect(() => {
   //   setTimeout(() => {
   //     setData(userMock);
@@ -45,6 +45,7 @@ export default function Profile() {
   if (!user) {
     return <div>Данные не найдены</div>;
   }
+  const purchases: any[] = (user as any).purchases || [];
 
   const fullName = `${user?.last_name} ${user?.first_name} ${user?.patronym}`.trim();
   const contactCardData: ProfileInfoCardProps = {
