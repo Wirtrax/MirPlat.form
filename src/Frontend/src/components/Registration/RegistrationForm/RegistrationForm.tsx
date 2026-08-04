@@ -157,6 +157,7 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
                 />
 
                 <Radio
+                  type="checkbox"
                   text={textNews}
                   name="news"
                   checked={values.news}
