@@ -25,16 +25,6 @@ export default function Profile() {
   const dispatch = useAppDispatch()
   const { user, status } = useAppSelector(state => state.user)
 
-  // const [data, setData] = useState<User | null>(null);
-  // const [loading, setLoading] = useState(true);
-
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setData(userMock);
-  //     setLoading(false);
-  //   }, 100);
-  // }, []);
   useEffect(() => {
     dispatch(fetchUser())
   }, [dispatch])

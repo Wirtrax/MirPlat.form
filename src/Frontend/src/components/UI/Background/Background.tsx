@@ -56,9 +56,7 @@ function Background({ children, variant = 'default' }: backgroundT) {
 
         {renderBackground()}
 
-        <div className={s.main}>
-          {children}
-        </div>
+        <div className={s.main}>{children}</div>
       </div>
     </>
   );

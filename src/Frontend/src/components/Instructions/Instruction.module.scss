@@ -3,6 +3,8 @@
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    height: 100vh;
 
     &__title {
         font-weight: 700;
@@ -20,7 +22,7 @@
         width: 100%;
         text-align: center;
         list-style-position: inside;
-        margin: 0 auto; // список тоже центрируем так же
+        margin: 0 auto;
 
         display: grid;
         row-gap: rem(15);
