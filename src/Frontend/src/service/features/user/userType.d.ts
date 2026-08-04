@@ -1,27 +1,26 @@
 export interface CreateUser {
-    first_name: string;
-    last_name: string;
-    patronym: string;
-    specialization: string;
-    programming_level: string;
-    email: string;
-    phone_number: string;
-    send_notifications: boolean;
+  first_name: string;
+  last_name: string;
+  patronym: string;
+  specialization: string;
+  programming_level: string;
+  email: string;
+  phone_number: string;
+  send_notifications: boolean;
 }
 
 export interface User extends CreateUser {
-    id: number;
-    telegram_id: string;
-    balance: number;
-    is_admin: boolean;
-    profile_picture: string;
+  id: number;
+  telegram_id: string;
+  balance: number;
+  is_admin: boolean;
+  profile_picture: string;
 }
 
 export interface UserState {
-    user: User | null;
-    token: string | null;
-    isRegistered: boolean;
-    status: 'idle' | 'loading' | 'success' | 'failed';
-    error: string | null;
+  user: User | null;
+  token: string | null;
+  isRegistered: boolean;
+  status: 'idle' | 'loading' | 'success' | 'failed';
+  error: string | null;
 }
-

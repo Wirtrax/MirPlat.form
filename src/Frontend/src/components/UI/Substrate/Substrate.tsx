@@ -1,5 +1,7 @@
-import clsx from 'clsx';
 import s from './Substrate.module.scss';
+
+import clsx from 'clsx';
+
 import type { substrateT } from './substrateProps';
 
 function Substrate({ children, className, ...props }: substrateT) {

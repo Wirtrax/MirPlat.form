@@ -1,5 +1,7 @@
-import Substrate from '../../UI/Substrate/Substrate';
 import s from './ProfileInfoCard.module.scss';
+
+import Substrate from '../../UI/Substrate/Substrate';
+
 import type { ProfileInfoCardProps } from './ProfileInfoCard.types';
 
 export default function ProfileInfoCard({ title, items }: ProfileInfoCardProps) {

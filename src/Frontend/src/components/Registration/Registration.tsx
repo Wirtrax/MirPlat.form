@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import s from './Registration.module.scss';
+
+import { useAppDispatch } from '../../hooks/redux';
+import { loginUser } from '../../service/features/user/userSlice';
+
 import RegistrationForm from './RegistrationForm/RegistrationForm';
 import SuccessStep from './SuccessStep/SuccessStep';
 import ErrorStep from './ErrorStep/ErrorStep';
-import clsx from 'clsx';
-import Background from '../UI/Background/Background';
-import { useAppDispatch } from '../../hooks/redux';
-import { loginUser } from '../../service/features/user/userSlice';
 
 export default function Registration() {
   const [step, setStep] = useState<'form' | 'success' | 'error'>('form');

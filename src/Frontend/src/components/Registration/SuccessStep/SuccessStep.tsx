@@ -1,8 +1,10 @@
+import s from './SuccessStep.module.scss';
+
 import { Link, useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+
 import ResultStep from '../ResultStep/ResultStep';
 import Background from '../../UI/Background/Background';
-import s from './SuccessStep.module.scss';
-import clsx from 'clsx';
 
 export default function SuccessStep() {
   const navigate = useNavigate();

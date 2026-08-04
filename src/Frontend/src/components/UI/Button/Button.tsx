@@ -1,7 +1,9 @@
-import React from 'react';
-import type { ButtonProps } from './buttonProps';
 import s from './Button.module.scss';
+
+import React from 'react';
 import clsx from 'clsx';
+
+import type { ButtonProps } from './buttonProps';
 
 const Button: React.FC<ButtonProps> = ({
   children,

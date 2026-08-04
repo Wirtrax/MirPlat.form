@@ -1,7 +1,9 @@
+import s from './LotterySection.module.scss';
+
+import clsx from 'clsx';
+
 import CardLottery from './CardLottery/CardLottery';
 import LotteryCountdown from './LotteryCountdown/LotteryCountdown';
-import s from './LotterySection.module.scss';
-import clsx from 'clsx';
 
 export default function LotterySection() {
   return (

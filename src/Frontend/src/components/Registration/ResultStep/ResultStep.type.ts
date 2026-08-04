@@ -1,9 +1,9 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
 export interface ResultStepProps {
-    title: string;
-    description: string;
-    buttonText: string;
-    onButtonClick: () => void;
-    children?: ReactNode;
+  title: string;
+  description: string;
+  buttonText: string;
+  onButtonClick: () => void;
+  children?: ReactNode;
 }

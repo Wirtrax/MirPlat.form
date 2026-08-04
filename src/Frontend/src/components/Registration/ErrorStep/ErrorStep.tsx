@@ -1,6 +1,7 @@
+import s from './ErrorStep.module.scss';
+
 import Background from '../../UI/Background/Background';
 import ResultStep from '../ResultStep/ResultStep';
-import s from './ErrorStep.module.scss';
 
 interface ErrorStepProps {
   onRetry: () => void;

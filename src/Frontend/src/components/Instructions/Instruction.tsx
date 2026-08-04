@@ -1,12 +1,3 @@
-import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
-
-import Button from '../UI/Button/Button';
-import Slider from './Slider/Slider';
-
-import type { sliderHandleI } from './Slider/sliderProps';
-
 import s from './Instruction.module.scss';
 
 import IOSFPage from '.././../assets/instructions/ios/step1I.webp';
@@ -14,7 +5,16 @@ import IOSSPage from '.././../assets/instructions/ios/step2I.webp';
 import IOSTPage from '.././../assets/instructions/ios/step3I.webp';
 import AndroidFPage from '.././../assets/instructions/android/step1A.webp';
 import AndroidSPage from '.././../assets/instructions/android/step2A.webp';
+
+import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+
+import Button from '../UI/Button/Button';
+import Slider from './Slider/Slider';
 import Background from '../UI/Background/Background';
+
+import type { sliderHandleI } from './Slider/sliderProps';
 
 type Platform = 'ios' | 'android';
 
