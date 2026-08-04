@@ -1,4 +1,4 @@
-import { ForbiddenException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
@@ -73,9 +73,15 @@ export class PurchaseService {
     purchase.status = PurchaseStatus.CANCELED;
     user.balance += item.price;
     item.quantity += 1;
-    this.itemRepo.save(item);
-    this.userRepo.save(user);
-    return this.purchaseRepo.save(purchase);
+    this.itemRepo.save(item).catch((err) => {
+      throw new InternalServerErrorException(err);
+    });
+    this.userRepo.save(user).catch((err) => {
+      throw new InternalServerErrorException(err);
+    });
+    return this.purchaseRepo.save(purchase).catch((err) => {
+      throw new InternalServerErrorException(err);
+    });
   }
 
   async receive(code: string) {
