@@ -11,8 +11,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="registration" element={<Registration />} />
-      <Route path="instruction" element={<Instruction />} />
+
       <Route element={<ProtectedRoute />}>
+        <Route path="instruction" element={<Instruction />} />
         <Route path="/" element={<Root />}>
           <Route index element={<MainPage />} />
           <Route path="main" element={<MainPage />} />

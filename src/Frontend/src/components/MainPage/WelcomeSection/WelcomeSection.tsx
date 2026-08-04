@@ -1,5 +1,7 @@
 import s from './WelcomeSection.module.scss';
 
+import clsx from 'clsx';
+
 import avatarIcon from '../../../assets/avatar/avatarIcon.webp';
 
 import BackgroundMain from './BackgroundMain';
@@ -7,7 +9,7 @@ import BackgroundMain from './BackgroundMain';
 export default function WelcomeSection() {
   return (
     <section className={s.section}>
-      <div className={s.wrapper}>
+      <div className={clsx(s.wrapper, 'container')}>
         <h1 className={s.title}>
           Привет! <br />
           Это веб-апп от Мир Plat.Form

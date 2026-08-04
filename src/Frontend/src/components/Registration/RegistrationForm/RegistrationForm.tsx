@@ -78,7 +78,8 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
               .then(() => {
                 onSuccess();
               })
-              .catch(() => {
+              .catch((err) => {
+                console.log('error: ', err);
                 onError();
               });
           }}>
