@@ -1,11 +1,11 @@
 GET http://localhost:3000/admin/users
 ###
-POST http://localhost:3000/admin/addUser
+POST http://localhost:3000/admin/users
 Content-Type: application/json
 
 {
     "telegram_id": 123456789,
-    "first_name": "Иван",
+    "first_name": "Ванька",
     "last_name": "Иванов",
     "patronym": "test",
     "specialization": "test",
@@ -18,4 +18,50 @@ Content-Type: application/json
     "is_admin": true
 }
 ###
-DELETE  http://localhost:3000/admin/deleteUser/5
+DELETE  http://localhost:3000/admin/users/6
+###
+PATCH http://localhost:3000/admin/users/4
+Content-Type: application/json
+
+{
+    "first_name": "Ванесса"
+}
+###
+POST http://localhost:3000/admin/items
+Content-Type: application/json
+
+{
+    "name": "test",
+    "description": "test",
+    "image": "link",
+    "quantity": 10,
+    "price": 100,
+    "is_active": true
+}
+###
+PATCH http://localhost:3000/admin/items/1/hide
+###
+GET http://localhost:3000/admin/items
+###
+PATCH http://localhost:3000/admin/items/1
+Content-Type: application/json
+
+{
+    "name": "test2",
+    "description": "test2",
+    "image": "link2",
+    "quantity": 20,
+    "price": 200,
+    "is_active": false
+}
+###
+GET http://localhost:3000/admin/orders
+### 
+PATCH http://localhost:3000/admin/orders/status
+Content-Type: application/json
+
+{
+    "status": "canceled"
+}
+### 
+GET http://localhost:3000/admin/orders/1/details?userId=4&itemId=1

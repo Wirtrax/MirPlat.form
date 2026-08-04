@@ -21,7 +21,7 @@ export class ItemsController {
         return this.itemsService.hideItem(id);
     }
 
-    @Post('add')
+    @Post()
     addItem(@Body()item: Item){
         return this.itemsService.addItem(item);
     }

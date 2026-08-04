@@ -11,7 +11,7 @@ export class UsersController {
             return this.usersService.getAllUsers();
         }
     
-        @Post('add')
+        @Post()
         addNewUser(@Body() user: User) {
             return this.usersService.addNewUser(user);
         }

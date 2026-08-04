@@ -27,12 +27,18 @@ export class OrderService {
         .getRawMany();
     }
     async getPurchaseDetails(userId: number, itemId: number) {
-    return this.purchasesRepo.find({
-        where: {
-            user: { id: userId },
-            item: { id: itemId },
-        },
-    });
+        return this.purchasesRepo.find({
+            where: {
+                user: { id: userId },
+                item: { id: itemId },
+            },
+            relations: { item: true},
+            select: {
+                id: true,
+                status: true,
+                item: { name: true}
+            }
+        });
     }
     
     async updateStatus(id: number, status: PurchaseStatus) {
