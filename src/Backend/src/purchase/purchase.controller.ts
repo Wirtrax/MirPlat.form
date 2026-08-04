@@ -16,6 +16,7 @@ export class PurchaseController {
     if(purchase == null){
       throw new NotFoundException("Purchase not found");
     }
+    return purchase;
   }
 
   @Post(':code/receive')

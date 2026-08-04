@@ -20,13 +20,13 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       password: process.env.DBPASSWORD,
       database: process.env.DBNAME,
       autoLoadEntities: true,
+      logging:['query','error'],
       synchronize: true, // TODO: Remove this before release to production
     }),
     UserModule,
     ItemModule,
     AuthModule,
-    PurchaseModule
-  ],
+    ],
   controllers: [AppController],
   providers: [AppService],
 })

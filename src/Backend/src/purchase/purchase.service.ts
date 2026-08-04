@@ -15,39 +15,39 @@ export class PurchaseService {
     private readonly itemRepo: Repository<Item>,
     @InjectRepository(Purchase)
     private readonly purchaseRepo: Repository<Purchase>
-    
-  ){}
+  ) {}
+
   async create(itemId: number, userId: number) {
-    const user = await this.userRepo.findOneBy({id: userId});
-    if (user === null){
-      throw new NotFoundException("User not found")
-    }
-    
-    const item = await this.itemRepo.findOneBy({id: itemId});
-    if (item === null){
-      throw new NotFoundException("Item not found");
+    const user = await this.userRepo.findOneBy({ id: userId });
+    if (user === null) {
+      throw new NotFoundException('User not found');
     }
 
-    if (!item.is_active){
-      throw new ForbiddenException("This item is not for sale");
+    const item = await this.itemRepo.findOneBy({ id: itemId });
+    if (item === null) {
+      throw new NotFoundException('Item not found');
     }
 
-    if (item.quantity <= 0){
-      throw new ForbiddenException("Sorry, this item is sold out");
+    if (!item.is_active) {
+      throw new ForbiddenException('This item is not for sale');
     }
 
-    if (user.balance < item.price){
+    if (item.quantity <= 0) {
+      throw new ForbiddenException('Sorry, this item is sold out');
+    }
+
+    if (user.balance < item.price) {
       throw new HttpException('The user has insufficient funds.', HttpStatus.PAYMENT_REQUIRED);
     }
 
     const code = randomBytes(8).toString('hex');
-    const purchase = this.purchaseRepo.create({item, user, code})
+    const purchase = this.purchaseRepo.create({ item, user, code });
 
     user.balance -= item.price;
     item.quantity -= 1;
     this.userRepo.save(user);
     this.itemRepo.save(item);
-    return this.purchaseRepo.save(purchase);  
+    return this.purchaseRepo.save(purchase);
   }
 
   findAll() {
@@ -55,37 +55,39 @@ export class PurchaseService {
   }
 
   findOne(code: string) {
-    return this.purchaseRepo.findOneBy({code})
+    return this.purchaseRepo.findOneBy({ code });
   }
 
   async cancel(code: string) {
-    const purchase = await this.purchaseRepo.findOneBy({code});
-    if (purchase == null){
-      throw new NotFoundException("Purchase not found");
+    const purchase = await this.purchaseRepo.findOne({ where: { code }, relations: { item: true, user: true } });
+    if (purchase == null) {
+      throw new NotFoundException('Purchase not found');
     }
-    if (purchase.status != PurchaseStatus.WAITING){
-      throw new ForbiddenException("Purchase already received or cancelled");
+    if (purchase.status != PurchaseStatus.WAITING) {
+      throw new ForbiddenException('Purchase already received or cancelled');
     }
 
     const user = purchase.user;
-    
-    purchase.status = PurchaseStatus.CANCELED;  
-    user.balance += purchase.item.price;
-    purchase.item.quantity += 1;
+    const item = purchase.item;
+
+    purchase.status = PurchaseStatus.CANCELED;
+    user.balance += item.price;
+    item.quantity += 1;
+    this.itemRepo.save(item);
     this.userRepo.save(user);
     return this.purchaseRepo.save(purchase);
   }
 
   async receive(code: string) {
-    const purchase = await this.purchaseRepo.findOneBy({code});
-    if (purchase == null){
-      throw new NotFoundException("Purchase not found");
+    const purchase = await this.purchaseRepo.findOneBy({ code });
+    if (purchase == null) {
+      throw new NotFoundException('Purchase not found');
     }
-    if (purchase.status != PurchaseStatus.WAITING){
-      throw new ForbiddenException("Purchase already received or cancelled");
+    if (purchase.status != PurchaseStatus.WAITING) {
+      throw new ForbiddenException('Purchase already received or cancelled');
     }
 
     purchase.status = PurchaseStatus.RECEIVED;
-    return this.purchaseRepo.save(purchase);  
+    return this.purchaseRepo.save(purchase);
   }
 }
