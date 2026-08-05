@@ -9,3 +9,14 @@ declare module '*.svg?react' {
 
     export default ReactComponent
 }
+
+interface Window {
+    Telegram: {
+        WebApp?: {
+            initData: string;
+            initDataUnsafe?: Record<string, unknown>;
+            ready: () => void;
+            expand: () => void;
+        }
+    }
+}

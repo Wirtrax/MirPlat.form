@@ -3,22 +3,25 @@ import type { CreateUser, User } from './features/user/userType';
 
 import { request } from './utils/query';
 
+const getInitData = (): string => {
+  return window.Telegram?.WebApp?.initData || 'devtest2'
+}
+
 export const login = () => {
   return request<{ token: string }>('/auth/signin', {
     method: 'POST',
     headers: {
-      Authorization: 'Bearer devtest2',
+      Authorization: `Bearer ${getInitData()}`,
     },
   });
 };
 
 export const postUser = (data: CreateUser) => {
-  const token = 'devtest2';
+
   return request('/user', {
     method: 'POST',
     headers: {
-      // Authorization: `Bearer ${auth.getToken()}`,
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${auth.getToken()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
