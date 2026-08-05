@@ -14,10 +14,10 @@ import Button from '../../UI/Button/Button';
 
 
 export default function ActivityLayout({
-    title = 'Тестовый заголовок',
+    title,
     description,
     timer,
-    children = <div>Контент активности</div>,
+    children,
     buttonText,
     onButtonClick,
 }: ActivityProps) {

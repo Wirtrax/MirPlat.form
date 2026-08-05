@@ -1,10 +1,13 @@
 import s from './ActivitiesCard.module.scss';
 
+import { Link } from 'react-router-dom';
+
 import Coin from '../../../../assets/interface/coin.svg?react';
 
 import Button from '../../../UI/Button/Button';
 
 import type { ActivityDetailsProps } from './ActivitiesCard.types';
+
 
 export default function ActivityDetails({ card }: ActivityDetailsProps) {
   return (
@@ -20,9 +23,9 @@ export default function ActivityDetails({ card }: ActivityDetailsProps) {
 
         <p className={s.secondParagraph}>{card.description[1]}</p>
 
-        <div className={s.buttonWrapper}>
+        <Link to={card.link} className={s.buttonWrapper}>
           <Button className={s.btn}>{card.buttonText}</Button>
-        </div>
+        </Link>
       </div>
     </div>
   );

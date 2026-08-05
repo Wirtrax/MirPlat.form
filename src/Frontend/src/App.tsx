@@ -6,6 +6,7 @@ import Registration from './components/Registration/Registration';
 import Instruction from './components/Instructions/Instruction';
 import MainPage from './components/MainPage/MainPage';
 import ProtectedRoute from './routes/ProtectedRoute';
+import Tetris from './components/Activity/Tetris/Tetris';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -14,6 +15,9 @@ const router = createBrowserRouter(
 
       <Route element={<ProtectedRoute />}>
         <Route path="instruction" element={<Instruction />} />
+        
+        <Route path='tetris' element={<Tetris />} />
+
         <Route path="/" element={<Root />}>
           <Route index element={<MainPage />} />
           <Route path="main" element={<MainPage />} />

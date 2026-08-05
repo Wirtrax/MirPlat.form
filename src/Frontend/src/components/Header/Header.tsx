@@ -23,7 +23,7 @@ export default function Header() {
         <Link to={'profile'} onClick={() => setOpen(false)} className={s['menu-item']}>
           Профиль
         </Link>
-        <Link to={'/'} onClick={() => setOpen(false)} className={s['menu-item']}>
+        <Link to={'/main#activities'} onClick={() => setOpen(false)} className={s['menu-item']}>
           Активности
         </Link>
         <Link to={'/'} onClick={() => setOpen(false)} className={s['menu-item']}>

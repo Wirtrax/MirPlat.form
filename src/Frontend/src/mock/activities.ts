@@ -8,6 +8,8 @@ export interface Activity {
   description: string[];
   buttonText: string;
   gameAvatar: string;
+  link: string;
+
   positionSquare: CornerPositionT;
   mainSize: number;
   accentHeight: number;
@@ -25,6 +27,8 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'загрузить фото',
     gameAvatar: gameAvatar,
+    link: '/tetris',
+
     positionSquare: 'top-left',
     mainSize: 64,
     accentHeight: 24,
@@ -40,6 +44,8 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'загрузить фото',
     gameAvatar: gameAvatar,
+    link: '/transactions',
+
     positionSquare: 'top-right',
     mainSize: 64,
     accentHeight: 24,
@@ -55,6 +61,8 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'загрузить фото',
     gameAvatar: gameAvatar,
+    link: '/photo_booth',
+
     positionSquare: 'bottom-left',
     mainSize: 67,
     accentHeight: 25,
@@ -70,6 +78,8 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'загрузить фото',
     gameAvatar: gameAvatar,
+    link: '/qr',
+
     positionSquare: 'top-left',
     mainSize: 76,
     accentHeight: 29,
@@ -85,6 +95,8 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'загрузить фото',
     gameAvatar: gameAvatar,
+    link: '/quiz',
+
     positionSquare: 'bottom-right',
     mainSize: 95,
     accentHeight: 35,

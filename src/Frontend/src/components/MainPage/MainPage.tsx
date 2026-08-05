@@ -1,6 +1,7 @@
 import s from './MainPage.module.scss';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import Background from '../UI/Background/Background';
 import AboutSection from './AboutSection/AboutSection';
@@ -8,7 +9,23 @@ import ActivitiesSection from './ActivitiesSection/ActivitiesSection';
 import LotterySection from './LotterySection/LotterySection';
 import WelcomeSection from './WelcomeSection/WelcomeSection';
 
+
 export default function MainPage() {
+  const { hash, pathname } = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (hash) {
+      const element = document.getElementById(hash.replace('#', ''))
+      if (element) element.scrollIntoView({ behavior: 'smooth' })
+
+      const timer = setTimeout(() => {
+        navigate(pathname, { replace: true })
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [hash, pathname, navigate])
+
   return (
     <Background variant="minimal">
       <main>
