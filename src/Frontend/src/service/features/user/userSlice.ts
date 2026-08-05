@@ -1,14 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { getUser, login, postUser } from '../../api';
-import { auth } from '../../auth';
+
 import type { CreateUser, UserState } from './userType';
 
 export const loginUser = createAsyncThunk('user/loginUser', async () => {
   const data = await login();
-
-  auth.setToken(data.token);
-
-  return data.token;
+  return data;
 });
 
 export const createUser = createAsyncThunk('user/createUser', async (user: CreateUser) => {
@@ -22,7 +20,6 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
 
 const initialState: UserState = {
   user: null,
-  token: auth.getToken() || null,
   isRegistered: false,
   status: 'idle',
   error: null,
@@ -34,11 +31,10 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(loginUser.fulfilled, (state) => {
         state.status = 'success';
-        state.token = action.payload;
       })
-      .addCase(createUser.fulfilled, (state, action) => {
+      .addCase(createUser.fulfilled, (state) => {
         state.status = 'success';
         state.isRegistered = true;
       })
