@@ -1,6 +1,9 @@
-import Substrate from '../Substrate/Substrate';
-import currency from '../../../assets/ico/interface/currency.svg';
 import s from './ProductCard.module.scss';
+
+import currency from '../../../assets/ico/interface/currency.svg';
+
+import Substrate from '../Substrate/Substrate';
+
 import type { productCardType } from './productCardType';
 
 function ProductCard({ purchase, withPrice, hasBuy }: productCardType) {

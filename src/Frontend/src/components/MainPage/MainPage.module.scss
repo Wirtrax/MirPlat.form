@@ -1,17 +1,15 @@
- .titleRules {
-     font-weight: 700;
-     font-size: rem(24);
+.titleRules {
+    font-weight: 700;
+    font-size: rem(24);
+    margin-top: rem(41);
+    margin-bottom: rem(6);
+}
 
-     margin-top: rem(41);
-     margin-bottom: rem(6);
- }
-
- .linkRules {
-     font-weight: 400;
-     line-height: 120%;
-     text-transform: uppercase;
-     text-decoration: underline !important;
-     color: var(--color-light);
-
-     margin-bottom: rem(44);
- }
+.linkRules {
+    font-weight: 400;
+    line-height: 120%;
+    text-transform: uppercase;
+    text-decoration: underline !important;
+    color: var(--color-light);
+    margin-bottom: rem(44);
+}

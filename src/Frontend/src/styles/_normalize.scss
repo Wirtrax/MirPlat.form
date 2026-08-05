@@ -147,6 +147,12 @@ a {
   text-decoration: none;
 }
 
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  /* убрать подсветку */
+}
+
 /**
   Курсор-рука при наведении на элемент
  */

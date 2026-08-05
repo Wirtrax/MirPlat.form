@@ -1,46 +1,39 @@
 import s from './Profile.module.scss';
-import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard';
-import { userMock } from '../../mock/profileCard';
-import type { ProfileInfoCardProps, User } from './profileType';
-import { Link } from 'react-router-dom';
-import Button from '../UI/Button/Button';
-import clsx from 'clsx';
-import { useEffect, useState } from 'react';
-// import Background from '../UI/Background/Background';
+
 import avatra from '../../assets/avatar/default.png';
 import editPen from '../../assets/ico/profile/pen.svg';
-import ProductCard from '../UI/ProductCard/ProductCard';
-import Background from '../UI/Background/Background';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchUser } from '../../service/features/user/userSlice';
-import Loader from '../UI/Loader/Loader';
 import EmailIcon from '../../assets/profile/contacts/email.svg?react';
 import PhoneIcon from '../../assets/profile/contacts/phone.svg?react';
 import SpecializationIcon from '../../assets/profile/contacts/specialization.svg?react';
 import LevelIcon from '../../assets/profile/contacts/level.svg?react';
 
+import { Link } from 'react-router-dom';
+import clsx from 'clsx';
+import { useEffect } from 'react';
+
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { fetchUser } from '../../service/features/user/userSlice';
+
+import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard';
+import Button from '../UI/Button/Button';
+import ProductCard from '../UI/ProductCard/ProductCard';
+import Background from '../UI/Background/Background';
+import Loader from '../UI/Loader/Loader';
+
+import type { ProfileInfoCardProps } from './profileType';
+
 export default function Profile() {
   console.log('Рендер компонента Profile');
 
-  const dispatch = useAppDispatch()
-  const { user, status } = useAppSelector(state => state.user)
+  const dispatch = useAppDispatch();
+  const { user, status } = useAppSelector((state) => state.user);
 
-  // const [data, setData] = useState<User | null>(null);
-  // const [loading, setLoading] = useState(true);
-
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setData(userMock);
-  //     setLoading(false);
-  //   }, 100);
-  // }, []);
   useEffect(() => {
-    dispatch(fetchUser())
-  }, [dispatch])
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   if (status === 'loading' || status === 'idle') {
-    return <Loader />
+    return <Loader />;
   }
   if (!user) {
     return <div>Данные не найдены</div>;
@@ -85,7 +78,7 @@ export default function Profile() {
   };
 
   return (
-    <Background variant='minimal'>
+    <Background variant="minimal">
       <main className={clsx(s['profile'], 'container')}>
         <nav className={s['profile__nav']}>
           <Link to={'/'}>

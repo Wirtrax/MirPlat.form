@@ -1,6 +1,8 @@
-import React from 'react';
 import styles from './CornerSquare.module.scss';
+
+import React from 'react';
 import clsx from 'clsx';
+
 import type { CornerSquarePropsI } from './cornerSquareProps';
 
 export const CornerSquare: React.FC<CornerSquarePropsI> = ({

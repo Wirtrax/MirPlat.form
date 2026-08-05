@@ -1,21 +1,25 @@
-import ResultStep from '../ResultStep/ResultStep'
-import s from './ErrorStep.module.scss'
+import s from './ErrorStep.module.scss';
+
+import Background from '../../UI/Background/Background';
+import ResultStep from '../ResultStep/ResultStep';
 
 interface ErrorStepProps {
-    onRetry: () => void;
+  onRetry: () => void;
 }
 
 export default function ErrorStep({ onRetry }: ErrorStepProps) {
-
-    return (
+  return (
+    <Background variant="alternative">
+      <div className="container">
         <div className={s.wrapper}>
-            <ResultStep
-                title='Что-то пошло не так...'
-                description='Попробуй ещё раз'
-                buttonText='РЕГИСТРАЦИЯ'
-                onButtonClick={onRetry}
-            >
-            </ResultStep>
+          <span className={s.errorPage}></span>
+          <ResultStep
+            title="Что-то пошло не так..."
+            description="Попробуй ещё раз"
+            buttonText="РЕГИСТРАЦИЯ"
+            onButtonClick={onRetry}></ResultStep>
         </div>
-    )
+      </div>
+    </Background>
+  );
 }

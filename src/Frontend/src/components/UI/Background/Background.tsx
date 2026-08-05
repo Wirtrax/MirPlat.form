@@ -1,6 +1,9 @@
-import clsx from 'clsx';
-import { CornerSquare } from '../CornerSquare/CornerSquare';
 import s from './Background.module.scss';
+
+import clsx from 'clsx';
+
+import { CornerSquare } from '../CornerSquare/CornerSquare';
+
 import type { backgroundT } from './backgroundProps';
 
 function Background({ children, variant = 'default' }: backgroundT) {
@@ -56,9 +59,7 @@ function Background({ children, variant = 'default' }: backgroundT) {
 
         {renderBackground()}
 
-        <div className={s.main}>
-          {children}
-        </div>
+        <div className={s.main}>{children}</div>
       </div>
     </>
   );
