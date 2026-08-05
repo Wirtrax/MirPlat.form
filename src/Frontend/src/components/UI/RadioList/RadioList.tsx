@@ -6,7 +6,7 @@ export const EXPERIENCE_LEVELS = [
   { label: 'Джун (junior)', value: 'junior' },
   { label: 'Мидл (middle)', value: 'middle' },
   { label: 'Сеньор (senior)', value: 'senior' },
-  { label: 'Тимлид (team lead)', value: 'teamlead' },
+  { label: 'Тимлид (team lead)', value: 'team_lead' },
   { label: 'СТО', value: 'cto' },
   { label: 'Другой', value: 'other' },
 ];
