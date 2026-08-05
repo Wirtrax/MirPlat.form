@@ -59,7 +59,11 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
           validationSchema={validationSchema}
 
           onSubmit={(values) => {
-            const [last_name, first_name, patronym] = values.fio.trim().split(/\s+/);
+            const parts = values.fio.trim().split(/\s+/);
+            const last_name = parts[0] || '';
+            const first_name = parts[1] || '';
+            const patronym = parts[2] || '';
+
             const cleanPhone = values.phone.replace(/[^\d+]/g, '');
 
             const userData = {

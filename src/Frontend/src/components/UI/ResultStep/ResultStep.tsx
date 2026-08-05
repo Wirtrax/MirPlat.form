@@ -1,6 +1,6 @@
 import s from './ResultStep.module.scss';
 
-import Button from '../../UI/Button/Button';
+import Button from '../Button/Button';
 
 import type { ResultStepProps } from './ResultStep.type';
 

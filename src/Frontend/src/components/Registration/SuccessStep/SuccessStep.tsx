@@ -3,7 +3,7 @@ import s from './SuccessStep.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
-import ResultStep from '../ResultStep/ResultStep';
+import ResultStep from '../../UI/ResultStep/ResultStep';
 import Background from '../../UI/Background/Background';
 
 export default function SuccessStep() {

@@ -1,0 +1,50 @@
+.wrapper {
+    padding-top: rem(70);
+    position: relative;
+}
+
+.title {
+    margin-bottom: rem(20);
+
+    font-weight: 700;
+    font-size: rem(32);
+    text-align: center;
+}
+
+.close {
+    &-icon {
+        position: absolute;
+        top: rem(25);
+        right: rem(25);
+
+        cursor: pointer;
+
+        transition: opacity 0.2s ease, transform 0.2s ease;
+
+        &:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+
+        svg {
+            display: block;
+
+        }
+    }
+}
+
+.description {
+    line-height: 120%;
+
+    margin-bottom: rem(20);
+}
+
+.timer {
+    font-weight: 500;
+    font-size: rem(20);
+    text-align: center;
+}
