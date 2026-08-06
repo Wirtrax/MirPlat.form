@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Admin } from 'src/entities/admins.entity';
@@ -11,33 +11,54 @@ export class AuthService {
     constructor(
         @InjectRepository(Admin)
         private readonly adminRepo: Repository<Admin>,
-        
         private readonly jwtService: JwtService
     ) {}
 
     async register(login: string, password: string) {
-        const hash = await bcrypt.hash(password, 10);
-        const admin = this.adminRepo.create({ 
-            login: login, 
-            password_hash: hash,
-            role: AdminRole.ADMIN});
+        const isAdminExist = await this.adminRepo.existsBy({login});
 
-        await this.adminRepo.save(admin);
+        if (isAdminExist) {
+            throw new ConflictException('Админ с таким логином уже существует')
+        }
 
-        return { id: admin.id, login: admin.login, role: admin.role };
+        try {
+            const hash = await bcrypt.hash(password, 10);
+            const admin = this.adminRepo.create({ 
+                login: login, 
+                password_hash: hash,
+                role: AdminRole.ADMIN});
+
+            await this.adminRepo.save(admin);
+
+            return { 
+                id: admin.id, 
+                login: admin.login, 
+                role: admin.role};    
+
+        } catch {
+            throw new UnauthorizedException('Ошибка во время создания нового админа')
+        }
+
     }
 
     async login(login: string, password: string) {
         const admin = await this.adminRepo.findOne({ where: {login}});
-        if (!admin) throw new UnauthorizedException("Неверный логин или пароль");
 
+        if (!admin) {
+            throw new UnauthorizedException("Неверный логин или пароль");
+        }
+           
         const valid = await bcrypt.compare(password, admin.password_hash);
-        if(!valid) throw new UnauthorizedException("Неверный логин или пароль");
 
+        if (!valid) {
+            throw new UnauthorizedException("Неверный логин или пароль");
+        }
+            
         const token = await this.jwtService.signAsync({
             sub: admin.id,
             role: admin.role,
         });
+
         return { access_token: token }
     }
 }

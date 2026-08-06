@@ -1,5 +1,5 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, ForbiddenException } from '@nestjs/common';
-import { Admin } from '../../../entities/admins.entity';
+import { Admin } from 'src/entities/admins.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -12,27 +12,11 @@ export class RolesGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const adminId = request['userId'];
+    const adminRole = request['role'];
 
-    if(!adminId) {
+    if(!adminRole) {
       throw new UnauthorizedException('Админ не авторизован')
     }
-
-    const admin = await this.adminsRepository.findOne({
-      where: { id: adminId}
-    })
-
-    if (!admin) {
-      throw new UnauthorizedException('Админ не найден')
-    }
-
-    const role = admin.role;
-
-    if (!role) {
-      throw new ForbiddenException('Недостаточно прав для доступа');
-    }
-
-    request['role'] = role;
 
     return true;
   }
