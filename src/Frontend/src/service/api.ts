@@ -36,8 +36,5 @@ export const postUser = (data: CreateUser) => {
 export const getUser = () => {
   return request<User>('/user', {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${getInitData()}`,
-    },
   });
 };
