@@ -1,14 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { getUser, login, postUser } from '../../api';
-import { auth } from '../../auth';
+
 import type { CreateUser, UserState } from './userType';
 
 export const loginUser = createAsyncThunk('user/loginUser', async () => {
   const data = await login();
-
-  auth.setToken(data.token);
-
-  return data.token;
+  return data;
 });
 
 export const createUser = createAsyncThunk('user/createUser', async (user: CreateUser) => {
@@ -22,8 +20,6 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
 
 const initialState: UserState = {
   user: null,
-  token: auth.getToken() || null,
-  isRegistered: false,
   status: 'idle',
   error: null,
 };
@@ -34,18 +30,32 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.status = 'success';
-        state.token = action.payload;
+      .addCase(loginUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(createUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchUser.pending, (state) => {
+        state.status = 'loading';
+      })
+
+      .addCase(loginUser.fulfilled, (state) => {
+    
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.status = 'success';
-        state.isRegistered = true;
+        state.user = action.payload;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.status = 'success';
         state.user = action.payload;
-      });
+      })
+
+      .addCase(fetchUser.rejected, (state) => {
+        state.status = 'success';
+        state.user = null;
+      })
   },
 });
 

@@ -4,5 +4,6 @@ export interface ActivityProps {
     description?: string;
     timer?: React.ReactNode;
     buttonText?: string;
+    buttonDisabled?: boolean;
     onButtonClick?: () => void;
 }

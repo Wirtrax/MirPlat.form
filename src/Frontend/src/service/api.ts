@@ -1,24 +1,35 @@
-import { auth } from './auth';
 import type { CreateUser, User } from './features/user/userType';
 
 import { request } from './utils/query';
 
-export const login = () => {
-  return request<{ token: string }>('/auth/signin', {
+const getInitData = (): string => {
+  return window.Telegram?.WebApp?.initData || 'devtest2'
+}
+
+export const login = async () => {
+  const data = await request<{ token: string }>('/auth/signin', {
     method: 'POST',
     headers: {
-      Authorization: 'Bearer devtest2',
+      Authorization: `Bearer ${getInitData()}`,
+      'Content-Type': 'application/json',
     },
+  });
+
+  document.cookie = `token=${data.token}; path=/`
+  return data
+};
+
+export const logout = () => {
+  return request('/auth/logout', {
+    method: 'POST',
   });
 };
 
 export const postUser = (data: CreateUser) => {
-  const token = 'devtest2';
-  return request('/user', {
+  return request<User>('/user', {
     method: 'POST',
     headers: {
-      // Authorization: `Bearer ${auth.getToken()}`,
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getInitData()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
@@ -28,8 +39,5 @@ export const postUser = (data: CreateUser) => {
 export const getUser = () => {
   return request<User>('/user', {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${auth.getToken()}`,
-    },
   });
 };

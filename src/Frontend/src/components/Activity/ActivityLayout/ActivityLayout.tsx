@@ -10,15 +10,13 @@ import Background from '../../UI/Background/Background';
 import type { ActivityProps } from './activityLayoutType';
 import Button from '../../UI/Button/Button';
 
-
-
-
 export default function ActivityLayout({
     title,
     description,
     timer,
     children,
     buttonText,
+    buttonDisabled,
     onButtonClick,
 }: ActivityProps) {
 
@@ -33,12 +31,11 @@ export default function ActivityLayout({
                 <span className={s['close-icon']} onClick={handleClose}>
                     <CloseIcon />
                 </span>
-
                 <h1 className={s['title']}>{title}</h1>
                 {description && <p className={s['description']}>{description}</p>}
                 {children}
                 {timer && <p className={s['timer']}>{timer}</p>}
-                <Button onClick={onButtonClick}>{buttonText}</Button>
+                <Button disabled={buttonDisabled} onClick={onButtonClick}>{buttonText}</Button>
             </section>
         </Background>
     )

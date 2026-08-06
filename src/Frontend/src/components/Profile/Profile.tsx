@@ -9,10 +9,9 @@ import LevelIcon from '../../assets/profile/contacts/level.svg?react';
 
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { useEffect } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchUser } from '../../service/features/user/userSlice';
+import { useAppSelector } from '../../hooks/redux';
+
 
 import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard';
 import Button from '../UI/Button/Button';
@@ -25,12 +24,7 @@ import type { ProfileInfoCardProps } from './profileType';
 export default function Profile() {
   console.log('Рендер компонента Profile');
 
-  const dispatch = useAppDispatch();
   const { user, status } = useAppSelector((state) => state.user);
-
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
 
   if (status === 'loading' || status === 'idle') {
     return <Loader />;

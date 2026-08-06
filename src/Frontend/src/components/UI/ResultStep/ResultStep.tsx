@@ -4,7 +4,9 @@ import Button from '../Button/Button';
 
 import type { ResultStepProps } from './ResultStep.type';
 
-export default function ResultStep({ title, description, buttonText, onButtonClick, children }: ResultStepProps) {
+
+export default function ResultStep({ title, description, buttonText, onButtonClick, children}: ResultStepProps) {
+
   return (
     <div className={s['resultCard']}>
       <h2 className={s.resultTitle}>{title}</h2>

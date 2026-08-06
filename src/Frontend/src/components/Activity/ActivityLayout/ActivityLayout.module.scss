@@ -1,6 +1,10 @@
 .wrapper {
     padding-top: rem(70);
     position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .title {
