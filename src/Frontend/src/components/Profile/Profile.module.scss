@@ -1,4 +1,5 @@
 .profile {
+    margin-block: rem(21) rem(35);
 
     &__nav {
         width: fit-content;
@@ -134,7 +135,7 @@
 
     &__shop-btn {
         display: block;
-        margin: rem(20) auto rem(36) auto;
+        margin: rem(20) auto 0 auto;
     }
 
     &__cards {

@@ -13,6 +13,7 @@ import Radio from '../../UI/Radio/Radio';
 import RadioList from '../../UI/RadioList/RadioList';
 import Select from '../../UI/Select/Select';
 import Background from '../../UI/Background/Background';
+import { options } from './specializationOptions';
 
 interface RegistrationFormProps {
   onSuccess: () => void;
@@ -59,7 +60,7 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
           validationSchema={validationSchema}
 
           onSubmit={(values) => {
-            const [last_name, first_name, patronym] = values.fio.trim().split(/\s+/);
+            const [last_name = '', first_name = '', patronym = ''] = values.fio.trim().split(/\s+/);
             const cleanPhone = values.phone.replace(/[^\d+]/g, '');
 
             const userData = {
@@ -102,17 +103,9 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
                 name="specialization"
                 value={values.specialization}
                 onChange={handleChange}
-                error={touched.specialization ? errors.specialization : undefined}>
-                <option value="" disabled>
-                  Выберите специализацию
-                </option>
-                <option value="android">Android developer</option>
-                <option value="teamlead">Teamlead engineering lead</option>
-                <option value="ios">iOS developer</option>
-                <option value="hr">HR</option>
-                <option value="ml_dl_ai">ML DL AI</option>
-                <option value="manual_tester">Manual tester</option>
-              </Select>
+                options={options}
+                error={touched.specialization ? errors.specialization : undefined}
+              />
 
               <RadioList
                 name="level"
@@ -157,6 +150,7 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
                 />
 
                 <Radio
+                  type="checkbox"
                   text={textNews}
                   name="news"
                   checked={values.news}

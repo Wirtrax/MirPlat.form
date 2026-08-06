@@ -19,7 +19,6 @@ export interface User extends CreateUser {
 
 export interface UserState {
   user: User | null;
-  token: string | null;
   isRegistered: boolean;
   status: 'idle' | 'loading' | 'success' | 'failed';
   error: string | null;
