@@ -23,7 +23,7 @@ export const logout = () => {
 };
 
 export const postUser = (data: CreateUser) => {
-  return request('/user', {
+  return request<User>('/user', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getInitData()}`,
