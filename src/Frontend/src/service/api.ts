@@ -6,14 +6,17 @@ const getInitData = (): string => {
   return window.Telegram?.WebApp?.initData || 'devtest2'
 }
 
-export const login = () => {
-  return request('/auth/signin', {
+export const login = async () => {
+  const data = await request<{ token: string }>('/auth/signin', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getInitData()}`,
       'Content-Type': 'application/json',
     },
   });
+
+  document.cookie = `token=${data.token}; path=/`
+  return data
 };
 
 export const logout = () => {
