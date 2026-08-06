@@ -10,11 +10,9 @@ export const login = () => {
   return request('/auth/signin', {
     method: 'POST',
     headers: {
+      Authorization: `Bearer ${getInitData()}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      initData: getInitData(),
-    }),
   });
 };
 
