@@ -34,7 +34,7 @@ export const postUser = (data: CreateUser) => {
 };
 
 export const getUser = () => {
-  return request<User>('/auth/me', {
+  return request<User>('/user', {
     method: 'GET',
   });
 };
