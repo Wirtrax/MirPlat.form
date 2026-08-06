@@ -31,6 +31,16 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(loginUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(createUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchUser.pending, (state) => {
+        state.status = 'loading';
+      })
+
       .addCase(loginUser.fulfilled, (state) => {
         state.status = 'success';
       })
@@ -41,6 +51,7 @@ const userSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.status = 'success';
         state.user = action.payload;
+        state.isRegistered = true;
       });
   },
 });
