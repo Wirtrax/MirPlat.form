@@ -1,5 +1,5 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, ForbiddenException } from '@nestjs/common';
-import { Admin } from 'src/entities/admins.entity';
+import { Admin, AdminRole } from 'src/entities/admins.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -16,6 +16,10 @@ export class RolesGuard implements CanActivate {
 
     if(!adminRole) {
       throw new UnauthorizedException('Админ не авторизован')
+    }
+
+    if (adminRole !== AdminRole.ADMIN && adminRole !== AdminRole.SUPER_ADMIN) {
+      throw new ForbiddenException('Недостаточно прав')
     }
 
     return true;
