@@ -26,6 +26,7 @@ export const postUser = (data: CreateUser) => {
   return request('/user', {
     method: 'POST',
     headers: {
+      Authorization: `Bearer ${getInitData()}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
