@@ -13,7 +13,7 @@ function ProductCard({ purchase, withPrice, hasBuy }: productCardType) {
         {hasBuy && <span className={s['product__state-icon--check']}></span>}
 
         <img className={s['product__state-image']} src={purchase.image} alt="Нет покупок" />
-        <p className={s['product__state-title']}>{purchase.title}</p>
+        <p className={s['product__state-title']}>{purchase.name}</p>
 
         {withPrice && (
           <span className={s['product__state-price']}>

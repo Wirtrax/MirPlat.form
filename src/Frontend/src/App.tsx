@@ -11,6 +11,7 @@ import Instruction from './components/Instructions/Instruction';
 import MainPage from './components/MainPage/MainPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
+import Shop from './components/Shop/Shop';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
           <Route index element={<MainPage />} />
           <Route path="main" element={<MainPage />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="shop" element={<Shop />} />
         </Route>
       </Route>
     </>
@@ -32,20 +34,20 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const initApp = async () => {
       try {
-        await dispatch(loginUser()).unwrap()
-        await dispatch(fetchUser()).unwrap()
+        await dispatch(loginUser()).unwrap();
+        await dispatch(fetchUser()).unwrap();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
 
-    initApp()
-  }, [dispatch])
+    initApp();
+  }, [dispatch]);
 
   return <RouterProvider router={router}></RouterProvider>;
 }

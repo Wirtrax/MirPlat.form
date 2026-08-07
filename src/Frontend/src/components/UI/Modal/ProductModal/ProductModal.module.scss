@@ -1,0 +1,31 @@
+.product {
+    max-width: rem(214);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    &__image--modal {}
+
+    &__title--modal {
+        color: inherit;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        word-break: break-all;
+        text-align: center;
+    }
+
+    &__price-block--modal {
+        display: flex;
+        align-items: center;
+        column-gap: rem(5);
+
+        margin-block: rem(7);
+    }
+
+    &__price-value--modal {}
+
+    &__deficit--modal {
+        text-align: center;
+        margin-bottom: rem(25);
+    }
+}

@@ -12,7 +12,6 @@ import clsx from 'clsx';
 
 import { useAppSelector } from '../../hooks/redux';
 
-
 import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard';
 import Button from '../UI/Button/Button';
 import ProductCard from '../UI/ProductCard/ProductCard';
@@ -123,7 +122,7 @@ export default function Profile() {
             <p className={s['profile__empty-text']}>Пока тут ничего нет...</p>
           )}
 
-          <Link to={'/'}>
+          <Link to={'/shop'}>
             <Button className={s['profile__shop-btn']}>В МАГАЗИН</Button>
           </Link>
         </div>

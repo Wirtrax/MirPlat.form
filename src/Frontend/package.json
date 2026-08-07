@@ -23,6 +23,7 @@
     "react-dom": "^19.2.7",
     "react-hook-form": "^7.83.0",
     "react-imask": "^7.6.1",
+    "react-qr-code": "^2.2.0",
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.18.1",
     "sass": "^1.102.0",
