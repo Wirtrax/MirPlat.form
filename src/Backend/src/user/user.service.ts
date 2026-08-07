@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -27,7 +27,9 @@ export class UserService {
 
   create(createUserDto: CreateUserDto, telegram_id: string): Promise<User>{
     const user = this.usersRepo.create({...createUserDto, telegram_id});
-    return this.usersRepo.save(user);
+    return this.usersRepo.save(user).catch((err) =>{
+      throw new InternalServerErrorException("Failed to create a user")
+    });
   }
 
   async delete(id: number): Promise<void> {
