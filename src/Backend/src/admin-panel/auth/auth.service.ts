@@ -17,10 +17,10 @@ export class AuthService {
     async register(login: string, password: string) {
         const isAdminExist = await this.adminRepo.existsBy({login});
 
-        if (isAdminExist) {
-            throw new ConflictException('Админ с таким логином уже существует')
+            if (isAdminExist) {
+                throw new ConflictException('Админ с таким логином уже существует')
         }
-
+        
         try {
             const hash = await bcrypt.hash(password, 10);
             const admin = this.adminRepo.create({ 
