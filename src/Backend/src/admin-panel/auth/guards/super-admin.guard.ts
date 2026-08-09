@@ -8,7 +8,7 @@ export class SuperAdminGuard implements CanActivate {
         const adminRole = request['role'];
         
         if(adminRole !== AdminRole.SUPER_ADMIN) {
-            throw new ForbiddenException('Недостаточно прав, требуется superAdmin');
+            throw new ForbiddenException('Недостаточно прав');
         }
         return true;
     }
