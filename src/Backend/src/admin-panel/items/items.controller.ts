@@ -27,7 +27,7 @@ export class ItemsController {
     }
 
     @Delete(':id')
-    deleteUser(@Param('id', ParseIntPipe) id: number) {
+    deleteItem(@Param('id', ParseIntPipe) id: number) {
         return this.itemsService.deleteItem(id);
     }
 }
