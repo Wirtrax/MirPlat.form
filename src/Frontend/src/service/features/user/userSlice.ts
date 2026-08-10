@@ -56,6 +56,11 @@ const userSlice = createSlice({
         state.status = 'success';
         state.user = null;
       })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.user = null;
+        state.error = action.error.message ?? null;
+      })
   },
 });
 
