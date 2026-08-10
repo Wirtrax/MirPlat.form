@@ -14,7 +14,7 @@ export class UserService {
   ) {}
 
   findOneById(id: number): Promise<User | null> {
-     return this.usersRepo.findOneBy({id});
+     return this.usersRepo.findOne({where: {id}, relations: {purchases:true, attempts: true}});
   }
 
   isTelegramIdExists(telegram_id: string): Promise<boolean> {
