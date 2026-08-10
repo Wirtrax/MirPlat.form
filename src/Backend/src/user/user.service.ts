@@ -32,6 +32,10 @@ export class UserService {
     });
   }
 
+  getOneRandom(){
+    return this.usersRepo.createQueryBuilder('user').select().orderBy('RANDOM()').getOne();
+  }
+
   async delete(id: number): Promise<void> {
     await this.usersRepo.delete(id);
   }
