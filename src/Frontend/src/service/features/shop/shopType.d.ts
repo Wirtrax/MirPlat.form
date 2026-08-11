@@ -1,4 +1,6 @@
-type Product = {
+import type { User } from '../user/userType';
+
+export type Product = {
   id: number;
   name: string;
   description: string;
@@ -12,4 +14,12 @@ export type productState = {
   products: Product[];
   status: 'idle' | 'loading' | 'success' | 'failed';
   error: string | null;
+};
+
+export type createOrderResponse = {
+  code: string;
+  id: number;
+  item: Product;
+  status: string;
+  user: User;
 };

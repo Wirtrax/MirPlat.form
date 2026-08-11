@@ -1,14 +1,14 @@
-import type { Product } from './features/shop/shopType';
+import type { createOrderResponse, Product } from './features/shop/shopType';
 import type { CreateUser, User } from './features/user/userType';
 
-import { request, setAuthToken } from './utils/query';
+import { getAuthToken, request, setAuthToken } from './utils/query';
 
 interface AuthResponse {
   token: string;
 }
 
 const getInitData = (): string => {
-  return window.Telegram?.WebApp?.initData || 'devtest2';
+  return window.Telegram?.WebApp?.initData || 'devtest1';
 };
 
 export const login = async () => {
@@ -54,5 +54,14 @@ export const devLogin = async () => {
 export const getProducts = () => {
   return request<Product[]>('/item', {
     method: 'GET',
+  });
+};
+
+export const createOrder = (id: number): Promise<createOrderResponse> => {
+  return request(`/item/${id}/purchase`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
   });
 };

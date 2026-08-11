@@ -22,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
   return ReactDOM.createPortal(
     <ModalOverlay onClose={onClose}>
       <div className={s.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={s['modal__btn']} onClick={onClose}>
+        <button className={s['modal__btn']} onClick={onClose} type="button">
           <span className={s['modal__btn-icon-close']}></span>
         </button>
         {children}

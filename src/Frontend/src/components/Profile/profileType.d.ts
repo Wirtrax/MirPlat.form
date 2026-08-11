@@ -3,6 +3,8 @@ export interface Purchase {
   image: string;
   title: string;
   price: number;
+  uid: string;
+  received: boolean;
 }
 
 export interface User {

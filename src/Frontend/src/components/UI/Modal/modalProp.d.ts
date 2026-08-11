@@ -6,11 +6,16 @@ export interface ModalProps {
   children: React.ReactNode;
   onClose: () => void;
 }
-
-interface ProductModalProps {
+export interface ProductModalProps {
   src: string;
   title: string;
-  price: number;
+  price?: number;
+  onClick?: () => void;
   userBalance?: number;
-  onClick: () => void;
+  code?: string;
+  isLoading?: boolean;
+  errorMessage?: string;
+}
+export interface PurchaseSuccessContentProps {
+  qrValue: string;
 }

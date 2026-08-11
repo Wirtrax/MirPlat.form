@@ -4,4 +4,6 @@ export type productCardType = {
   purchase: Product;
   withPrice?: boolean;
   hasBuy?: boolean;
+  received?: boolean;
+  onClick?: () => void;
 };
