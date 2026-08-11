@@ -2,7 +2,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 
 import { useEffect } from 'react';
 import { useAppDispatch } from './hooks/redux';
-import { fetchUser, loginUser } from './service/features/user/userSlice';
+import { devLoginUser, fetchUser, loginUser } from './service/features/user/userSlice';
 
 import Root from './routes/Root';
 import Profile from './components/Profile/Profile';
@@ -37,8 +37,12 @@ function App() {
   useEffect(() => {
     const initApp = async () => {
       try {
-        await dispatch(loginUser()).unwrap()
-        await dispatch(fetchUser()).unwrap()
+        if (import.meta.env.DEV) {
+          await dispatch(devLoginUser())
+        } else {
+          await dispatch(loginUser()).unwrap()
+          await dispatch(fetchUser()).unwrap()
+        }
       } catch (error) {
         console.log(error)
       }
