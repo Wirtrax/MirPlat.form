@@ -26,6 +26,12 @@ export default function Tetris() {
 
   const preview = photo ? URL.createObjectURL(photo) : null
 
+  const handleSubmit = () => {
+    //отправка фото на бэк
+
+    navigate('/tetris/success')
+  }
+
   useEffect(() => {
     return () => {
       if (preview) {
@@ -40,7 +46,7 @@ export default function Tetris() {
       description={description}
       buttonText='ОТПРАВИТЬ'
       buttonDisabled={!photo}
-      onButtonClick={() => navigate('/tetris/success')}
+      onButtonClick={handleSubmit}
     >
       <Substrate className={s['tetris__photo-area']}>
         {preview ? (

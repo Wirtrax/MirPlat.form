@@ -111,7 +111,9 @@ export default function Profile() {
           </div>
         </div>
 
-        <Button className={s['profile__activities-btn']}>АКТИВНОСТИ</Button>
+        <Link to={'/main#activities'} >
+          <Button className={s['profile__activities-btn']}>АКТИВНОСТИ</Button>
+        </Link>
 
         <div className={s['profile__cards']}>
           <ProfileInfoCard {...aboutCardData} />

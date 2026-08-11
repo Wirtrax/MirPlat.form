@@ -14,6 +14,8 @@ import PublicRoute from './routes/PublicRoute';
 import Shop from './components/Shop/Shop';
 import Tetris from './components/Activity/Tetris/Tetris';
 import TetrisSuccess from './components/Activity/Tetris/TetrisSuccess';
+import PhotoBooth from './components/Activity/PhotoBooth/PhotoBooth';
+import PhotoBoothSuccess from './components/Activity/PhotoBooth/PhotoBoothSuccess';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,14 +26,16 @@ const router = createBrowserRouter(
 
       <Route element={<ProtectedRoute />}>
         <Route path="instruction" element={<Instruction />} />
+        <Route path='tetris' element={<Tetris />} />
+        <Route path='/tetris/success' element={<TetrisSuccess />} />
+        <Route path='photo_booth' element={<PhotoBooth />} />
+        <Route path='/photo_booth/success' element={<PhotoBoothSuccess />} />
+
         <Route path="/" element={<Root />}>
           <Route index element={<MainPage />} />
           <Route path="main" element={<MainPage />} />
           <Route path="profile" element={<Profile />} />
           <Route path="shop" element={<Shop />} />
-
-          <Route path='tetris' element={<Tetris />} />
-          <Route path='/tetris/success' element={<TetrisSuccess />} />
         </Route>
       </Route>
     </>

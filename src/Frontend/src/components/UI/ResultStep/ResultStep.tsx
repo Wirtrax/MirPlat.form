@@ -16,7 +16,7 @@ export default function ResultStep({
   buttonText,
   onButtonClick,
   children,
-  closeButton
+  closeButton = false, 
 }: ResultStepProps) {
   const navigate = useNavigate()
 
