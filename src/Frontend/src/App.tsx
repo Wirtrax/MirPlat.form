@@ -13,8 +13,6 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
 import Shop from './components/Shop/Shop';
 
-const DEV_AUTH = false;
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -41,13 +39,11 @@ function App() {
   useEffect(() => {
     const initApp = async () => {
       try {
-        if (import.meta.env.DEV) {
-          if (DEV_AUTH) {
-            await dispatch(devLoginUser()).unwrap();
-          } else {
-            await dispatch(loginUser()).unwrap();
-            await dispatch(fetchUser()).unwrap();
-          }
+         if (import.meta.env.DEV) {
+            await dispatch(devLoginUser()).unwrap()
+        } else {
+          await dispatch(loginUser()).unwrap()
+          await dispatch(fetchUser()).unwrap()
         }
       } catch (error) {
         console.log(error);

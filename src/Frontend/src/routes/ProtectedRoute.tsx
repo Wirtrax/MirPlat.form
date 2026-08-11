@@ -9,7 +9,7 @@ import Loader from '../components/UI/Loader/Loader';
 export default function ProtectedRoute() {
   const { user, status } = useAppSelector((state) => state.user);
 
-  if (!user && (status === 'loading' || status === 'idle')) return <Loader />;
+  if (!user && (status === 'loading' || status === 'idle')) return <Loader  className={s.height} />;
 
   if (!user) {
     return <Navigate to="/registration" replace />;
