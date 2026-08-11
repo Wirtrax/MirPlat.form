@@ -46,12 +46,15 @@ const userSlice = createSlice({
       })
       .addCase(devLoginUser.pending, (state) => {
         state.status = 'loading';
+
       })
 
       .addCase(devLoginUser.fulfilled, (state, action) => {
         state.status = 'success';
         state.user = action.payload;
+
       })
+      .addCase(loginUser.fulfilled, (state) => {})
       .addCase(createUser.fulfilled, (state, action) => {
         state.status = 'success';
         state.user = action.payload;
@@ -60,9 +63,13 @@ const userSlice = createSlice({
         state.status = 'success';
         state.user = action.payload;
       })
-
-      .addCase(fetchUser.rejected, (state, action) => {
+      .addCase(devLoginUser.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.user = action.payload;
+      })
+      .addCase(fetchUser.rejected, (state,action) => {
         state.status = 'failed';
+
         state.user = null;
         state.error = action.error.message ?? null;
       })

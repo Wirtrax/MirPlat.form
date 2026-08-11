@@ -26,7 +26,8 @@ export const request = async <T>(endpoint: string, options: RequestInit = {}): P
   const res = await fetch(`${API_URL}${endpoint}`, {
     // credentials: 'include',
     ...options,
-    headers
+    headers,
+
   });
   return checkResponse(res);
 };
