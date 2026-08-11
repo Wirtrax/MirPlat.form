@@ -7,7 +7,7 @@ import Loader from "../components/UI/Loader/Loader"
 export default function PublicRoute() {
     const { user, status } = useAppSelector(state => state.user)
 
-    if (status === 'loading' || status === 'idle') return <Loader />
+    if (status === 'loading') return <Loader />
 
     if (user) {
         return <Navigate to='/' replace />
