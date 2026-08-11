@@ -41,16 +41,14 @@ function App() {
   useEffect(() => {
     const initApp = async () => {
       try {
-
         if (import.meta.env.DEV) {
           if (DEV_AUTH) {
-            await dispatch(devLoginUser()).unwrap()
+            await dispatch(devLoginUser()).unwrap();
+          } else {
+            await dispatch(loginUser()).unwrap();
+            await dispatch(fetchUser()).unwrap();
           }
-        } else {
-          await dispatch(loginUser()).unwrap()
-          await dispatch(fetchUser()).unwrap()
         }
-
       } catch (error) {
         console.log(error);
       }

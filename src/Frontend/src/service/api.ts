@@ -1,9 +1,7 @@
 import type { createOrderResponse, Product } from './features/shop/shopType';
 import type { CreateUser, User } from './features/user/userType';
 
-
 import { getAuthToken, setAuthToken, request } from './utils/query';
-
 interface AuthResponse {
   token: string;
 }
@@ -19,12 +17,12 @@ interface AuthResponse {
 
 //   document.cookie = `token=${data.token}; path=/`
 // }
+
 const getInitData = (): string => {
   return window.Telegram?.WebApp?.initData || 'devtest1';
 };
 
 export const login = async () => {
-
   const data = await request<AuthResponse>('/auth/signin', {
     method: 'POST',
     headers: {
@@ -34,7 +32,6 @@ export const login = async () => {
   });
   setAuthToken(data.token);
   return data
-
 };
 
 export const logout = () => {
@@ -60,7 +57,6 @@ export const getUser = () => {
     method: 'GET',
   });
 };
-
 
 export const devLogin = async (): Promise<User> => {
   await login();
