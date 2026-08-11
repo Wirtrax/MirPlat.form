@@ -13,7 +13,7 @@
     z-index: 999;
     user-select: none;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: var(--color-light);
         color: var(--color-accent);
     }
@@ -22,5 +22,9 @@
         background-color: var(--color-accent-inactive);
         border-color: var(--color-accent-inactive);
         user-select: none;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
     }
 }

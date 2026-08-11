@@ -26,7 +26,7 @@ export default function Header() {
         <Link to={'/main#activities'} onClick={() => setOpen(false)} className={s['menu-item']}>
           Активности
         </Link>
-        <Link to={'/'} onClick={() => setOpen(false)} className={s['menu-item']}>
+        <Link to={'/shop'} onClick={() => setOpen(false)} className={s['menu-item']}>
           Магазин
         </Link>
       </nav>
