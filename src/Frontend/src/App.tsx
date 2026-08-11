@@ -12,6 +12,8 @@ import MainPage from './components/MainPage/MainPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
 
+const DEV_AUTH = true;
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -38,7 +40,9 @@ function App() {
     const initApp = async () => {
       try {
         if (import.meta.env.DEV) {
-          await dispatch(devLoginUser())
+          if (DEV_AUTH) {
+            await dispatch(devLoginUser()).unwrap()
+          }
         } else {
           await dispatch(loginUser()).unwrap()
           await dispatch(fetchUser()).unwrap()
