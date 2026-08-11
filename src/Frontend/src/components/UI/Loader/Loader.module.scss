@@ -1,8 +1,10 @@
 .wrapper {
-    min-height: 100vh;
+    position: absolute;
+    inset: 0;
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .loader {

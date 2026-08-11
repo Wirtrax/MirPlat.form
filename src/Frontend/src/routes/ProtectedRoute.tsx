@@ -1,5 +1,9 @@
+import s from './Route.module.scss'
+
 import { Navigate, Outlet } from 'react-router-dom';
+
 import { useAppSelector } from '../hooks/redux';
+
 import Loader from '../components/UI/Loader/Loader';
 
 export default function ProtectedRoute() {

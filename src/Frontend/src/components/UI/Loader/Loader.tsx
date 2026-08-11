@@ -1,13 +1,14 @@
 import s from './Loader.module.scss';
+import clsx from 'clsx';
 
-import Background from '../Background/Background';
+interface LoaderProps {
+  className?: string;
+}
 
-export default function Loader() {
+export default function Loader({ className }: LoaderProps) {
   return (
-    <Background>
-      <div className={s.wrapper}>
-        <span className={s.loader}></span>
-      </div>
-    </Background>
+    <div className={clsx(s.wrapper, className)}>
+      <span className={s.loader}></span>
+    </div>
   );
 }
