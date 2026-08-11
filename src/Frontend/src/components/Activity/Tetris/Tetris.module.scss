@@ -52,39 +52,3 @@
 
     border-radius: rem(25);
 }
-
-.tetris__success-wrapper {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 100vh;
-}
-
-.close {
-    &-icon {
-        position: absolute;
-        top: rem(25);
-        right: rem(25);
-
-        cursor: pointer;
-
-        transition: opacity 0.2s ease, transform 0.2s ease;
-
-        &:hover {
-            opacity: 0.8;
-            transform: scale(1.05);
-        }
-
-        &:active {
-            transform: scale(0.95);
-        }
-
-        svg {
-            display: block;
-
-        }
-    }
-}

@@ -6,4 +6,5 @@ export interface ResultStepProps {
   buttonText: string;
   onButtonClick: () => void;
   children?: ReactNode;
+  closeButton?: boolean;
 }
