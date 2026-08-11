@@ -17,13 +17,5 @@ export default defineConfig({
       },
     },
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://bootcamp.game-back.ru',
-        changeOrigin: true,
-        secure: true,
-      }
-    }
-  }
+
 })
