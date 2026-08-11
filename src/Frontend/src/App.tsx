@@ -13,7 +13,7 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
 import Shop from './components/Shop/Shop';
 
-const DEV_AUTH = true;
+const DEV_AUTH = false;
 
 const router = createBrowserRouter(
   createRoutesFromElements(
