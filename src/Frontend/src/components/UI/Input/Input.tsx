@@ -13,18 +13,33 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export default function Input({ className, label, error, mask, ...props }: InputProps) {
 
-    const handlePrepare = (appended: string, masked: any) => {
-        if (mask === '+7 000-000-00-00') {
-            if (!masked.value) {
-                if (appended.startsWith('8')) return appended.slice(1);
-                if (appended.startsWith('+78') || appended.startsWith('78')) {
-                    return appended.replace(/^(\+?7)?8/, '');
-                }
-            }
-            if (masked.value === '+7 ' && appended === '8') return '';
+  const handlePrepare = (appended: string, masked: any) => {
+    if (mask === '+7 000-000-00-00') {
+
+      if (!appended) return appended;
+
+      let cleanAppended = appended.replace(/\D/g, '');
+
+      if (!masked.value || masked.value === '+7 ') {
+        if (cleanAppended.startsWith('8') || cleanAppended.startsWith('7')) {
+          cleanAppended = cleanAppended.slice(1);
         }
-        return appended;
+
+        if (cleanAppended.length > 0) {
+          return '9' + cleanAppended.slice(1);
+        }
+
+        return '';
+      }
+      const currentDigits = masked.unmaskedValue || '';
+      if (currentDigits.length === 0 && cleanAppended.length > 0) {
+        return '9' + cleanAppended.slice(1);
+      }
     }
+
+    return appended;
+  };
+
 
   return (
     <div className={s.inputField}>
