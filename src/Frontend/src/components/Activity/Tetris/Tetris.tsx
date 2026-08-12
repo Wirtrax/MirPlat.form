@@ -2,19 +2,17 @@ import s from './Tetris.module.scss';
 
 import PhotoTetris from '../../../assets/activity/photoTetris.svg?react'
 
-import { useNavigate } from 'react-router-dom';
-
 import { useEffect, useState } from 'react';
 
 import ActivityLayout from "../ActivityLayout/ActivityLayout";
 import Substrate from '../../UI/Substrate/Substrate';
 
+interface TetrisProps {
+  onSubmitPhoto: () => void;
+}
 
-
-
-export default function Tetris() {
+export default function Tetris({ onSubmitPhoto }: TetrisProps) {
   const [photo, setPhoto] = useState<File | null>(null)
-  const navigate = useNavigate()
 
   const description = 'Собери головоломку из деталей, повторяя принцип тетриса. Когда конструкция будет готова — загрузи фото результата. После проверки модератором ты получишь баллы.'
 
@@ -25,12 +23,6 @@ export default function Tetris() {
   }
 
   const preview = photo ? URL.createObjectURL(photo) : null
-
-  const handleSubmit = () => {
-    //отправка фото на бэк
-
-    navigate('/tetris/success')
-  }
 
   useEffect(() => {
     return () => {
@@ -46,7 +38,7 @@ export default function Tetris() {
       description={description}
       buttonText='ОТПРАВИТЬ'
       buttonDisabled={!photo}
-      onButtonClick={handleSubmit}
+      onButtonClick={onSubmitPhoto}
     >
       <Substrate className={s['tetris__photo-area']}>
         {preview ? (

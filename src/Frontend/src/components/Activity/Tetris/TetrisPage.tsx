@@ -1,20 +1,26 @@
+import { useState } from 'react';
+
 import Tetris from './Tetris';
 import TetrisSuccess from './TetrisSuccess';
 
 export default function TetrisPage() {
-    const attempts = [
-        {
-            is_photo: true,
-        },
-    ];
+    const [hasSubmittedPhoto] = useState(false); //вручную для повторного захода
+    // const hasSubmittedPhoto = attempts.some(
+    //     attempt => attempt.is_photo
+    // );
+    const [isJustSubmitted, setIsJustSubmitted] = useState(false);
 
-    const hasSubmittedPhoto = attempts.some(
-        (attempt) => attempt.is_photo
-    );
-
-    if (hasSubmittedPhoto) {
-        return <TetrisSuccess hasSubmittedPhoto={hasSubmittedPhoto} />;
+    const handleSubmit = () => {
+        //отправка фото на бэк
+        setIsJustSubmitted(true);
     }
 
-    return <Tetris />;
+    if (hasSubmittedPhoto) {
+        return <TetrisSuccess hasSubmittedPhoto={true} />;
+    }
+    if (isJustSubmitted) {
+        return <TetrisSuccess hasSubmittedPhoto={false} />;
+    }
+
+    return <Tetris onSubmitPhoto={handleSubmit} />;
 }

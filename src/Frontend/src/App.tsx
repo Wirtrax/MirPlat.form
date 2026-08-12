@@ -5,17 +5,16 @@ import { useAppDispatch } from './hooks/redux';
 import { devLoginUser, fetchUser, loginUser } from './service/features/user/userSlice';
 
 import Root from './routes/Root';
+import ProtectedRoute from './routes/ProtectedRoute';
+import PublicRoute from './routes/PublicRoute';
+
 import Profile from './components/Profile/Profile';
 import Registration from './components/Registration/Registration';
 import Instruction from './components/Instructions/Instruction';
 import MainPage from './components/MainPage/MainPage';
-import ProtectedRoute from './routes/ProtectedRoute';
-import PublicRoute from './routes/PublicRoute';
 import Shop from './components/Shop/Shop';
-import Tetris from './components/Activity/Tetris/Tetris';
-import TetrisSuccess from './components/Activity/Tetris/TetrisSuccess';
-import PhotoBooth from './components/Activity/PhotoBooth/PhotoBooth';
-import PhotoBoothSuccess from './components/Activity/PhotoBooth/PhotoBoothSuccess';
+import TetrisPage from './components/Activity/Tetris/TetrisPage';
+import PhotoBoothPage from './components/Activity/PhotoBooth/PhotoBoothPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,10 +25,8 @@ const router = createBrowserRouter(
 
       <Route element={<ProtectedRoute />}>
         <Route path="instruction" element={<Instruction />} />
-        <Route path='tetris' element={<Tetris />} />
-        <Route path='/tetris/success' element={<TetrisSuccess />} />
-        <Route path='photo_booth' element={<PhotoBooth />} />
-        <Route path='/photo_booth/success' element={<PhotoBoothSuccess />} />
+        <Route path='tetris' element={<TetrisPage />} />
+        <Route path='photo_booth' element={<PhotoBoothPage />} />
 
         <Route path="/" element={<Root />}>
           <Route index element={<MainPage />} />

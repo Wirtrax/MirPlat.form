@@ -2,14 +2,16 @@ import s from './PhotoBooth.module.scss';
 
 import PhotoBoothIcon from '../../../assets/activity/photoTetris.svg?react'
 
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ActivityLayout from '../ActivityLayout/ActivityLayout';
 import Substrate from '../../UI/Substrate/Substrate';
 
-export default function PhotoBooth() {
+interface PhotoBoothProps {
+    onSubmitPhoto: () => void;
+}
+
+export default function PhotoBooth({ onSubmitPhoto }: PhotoBoothProps) {
     const [photo, setPhoto] = useState<File | null>(null)
-    const navigate = useNavigate()
 
     const description = 'Загрузи фото и получи персональный чек с твоим именем и лотерейным номером для участия в розыгрыше. Номер закрепляется за тобой и не меняется при повторной печати.'
 
@@ -35,7 +37,7 @@ export default function PhotoBooth() {
             description={description}
             buttonText='ПЕЧАТЬ'
             buttonDisabled={!photo}
-            onButtonClick={() => navigate('/photo_booth/success')}
+            onButtonClick={onSubmitPhoto}
         >
             <Substrate className={s['booth__photo-area']}>
                 {preview ? (
