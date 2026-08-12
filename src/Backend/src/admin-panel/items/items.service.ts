@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config/dist/config.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { NotFoundError } from 'rxjs';
+import { readdir } from 'fs/promises';
 import { Item } from 'src/entities/item.entity';
 import { Repository } from 'typeorm';
 
@@ -8,7 +9,8 @@ import { Repository } from 'typeorm';
 export class ItemsService {
     constructor(
         @InjectRepository(Item)
-        private readonly itemsRepo : Repository<Item>
+        private readonly itemsRepo : Repository<Item>,
+        private readonly configService: ConfigService
     ) {}
 
     async getAllItems(): Promise<Item[]> {
@@ -35,5 +37,24 @@ export class ItemsService {
         }
         await this.itemsRepo.delete(id);
         return {success:true};
+    }
+
+    async getImages(): Promise<string[]> {
+        const imagesPath = this.configService.get('IMAGES_PATH');
+        const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
+
+        if(!imagesPath) {
+            throw new Error('Путь с изображениями не задан в конфигурации');
+        }
+        try {
+            const images = (await readdir(imagesPath))
+                .filter(file => allowedExtensions.some(ext => file.toLowerCase().endsWith(ext)));
+            
+            return images;
+        }
+        catch {
+            throw new NotFoundException('Изображения не найдены');
+        }
+    
     }
 }

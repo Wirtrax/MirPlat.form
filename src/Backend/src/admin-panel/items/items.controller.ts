@@ -30,4 +30,9 @@ export class ItemsController {
     deleteItem(@Param('id', ParseIntPipe) id: number) {
         return this.itemsService.deleteItem(id);
     }
+    
+    @Get('images')
+    getImages() {
+        return this.itemsService.getImages();
+    }
 }
