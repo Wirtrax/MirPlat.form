@@ -16,6 +16,7 @@ export default function ResultStep({
   buttonText,
   onButtonClick,
   children,
+  className,
   closeButton = false, 
 }: ResultStepProps) {
   const navigate = useNavigate()
@@ -34,9 +35,9 @@ export default function ResultStep({
             <CloseIcon />
           </span>
         }
-        <div className={s['resultCard']}>
+        <div className={clsx(s['resultCard'], className)}>
           <h2 className={s.resultTitle}>{title}</h2>
-          <p className={s.resultDescription}>{description}</p>
+          <div className={s.resultDescription}>{description}</div>
           <Button onClick={onButtonClick}>{buttonText}</Button>
           <div className={s.btnSkip}>{children}</div>
         </div>

@@ -2,15 +2,16 @@ import { useState } from "react";
 import PhotoCheckSuccess from "./PhotoCheckSuccess";
 import PhotoCheck from "./PhotoCheck";
 
+const PHOTO_CHECK_KEY = 'photoCheckSubmitted';
+
 export default function PhotoCheckPage() {
-    const [hasSubmittedPhoto] = useState(true); //вручную для повторного захода
-    // const hasSubmittedPhoto = attempts.some(
-    //     attempt => attempt.is_photo
-    // );
+    const [hasSubmittedPhoto] = useState(
+        () => localStorage.getItem(PHOTO_CHECK_KEY) === 'true'
+    )
     const [isJustSubmitted, setIsJustSubmitted] = useState(false)
 
     const handleSubmit = () => {
-        //отправка на бэк
+       localStorage.setItem(PHOTO_CHECK_KEY, 'true')
         setIsJustSubmitted(true)
     }
 

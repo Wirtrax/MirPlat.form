@@ -32,6 +32,10 @@
 }
 
 .resultDescription {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     font-family: var(--font-family-base);
     font-weight: 500;
     font-size: rem(14);

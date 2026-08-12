@@ -23,7 +23,7 @@ export default function ActivityLayout({
     const navigate = useNavigate()
 
     const handleClose = () => {
-        navigate(-1)
+        navigate('/main#activities')
     }
     return (
         <Background>
@@ -34,7 +34,7 @@ export default function ActivityLayout({
                 <h1 className={s['title']}>{title}</h1>
                 {timer}
                 {description && <p className={s['description']}>{description}</p>}
-                {children} 
+                {children}
                 <Button disabled={buttonDisabled} onClick={onButtonClick}>{buttonText}</Button>
             </section>
         </Background>
