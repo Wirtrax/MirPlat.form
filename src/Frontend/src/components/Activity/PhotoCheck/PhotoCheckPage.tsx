@@ -1,8 +1,8 @@
 import { useState } from "react";
-import PhotoBoothSuccess from "./PhotoBoothSuccess";
-import PhotoBooth from "./PhotoBooth";
+import PhotoCheckSuccess from "./PhotoCheckSuccess";
+import PhotoCheck from "./PhotoCheck";
 
-export default function PhotoBoothPage() {
+export default function PhotoCheckPage() {
     const [hasSubmittedPhoto] = useState(true); //вручную для повторного захода
     // const hasSubmittedPhoto = attempts.some(
     //     attempt => attempt.is_photo
@@ -14,8 +14,8 @@ export default function PhotoBoothPage() {
         setIsJustSubmitted(true)
     }
 
-    if (hasSubmittedPhoto) return <PhotoBoothSuccess hasSubmittedPhoto={true} />
-    if (isJustSubmitted) return <PhotoBoothSuccess hasSubmittedPhoto={false} />
+    if (hasSubmittedPhoto) return <PhotoCheckSuccess hasSubmittedPhoto={true} />
+    if (isJustSubmitted) return <PhotoCheckSuccess hasSubmittedPhoto={false} />
 
-    return <PhotoBooth onSubmitPhoto={handleSubmit} />
+    return <PhotoCheck onSubmitPhoto={handleSubmit} />
 }

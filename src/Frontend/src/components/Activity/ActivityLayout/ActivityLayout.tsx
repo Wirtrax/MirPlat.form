@@ -32,9 +32,9 @@ export default function ActivityLayout({
                     <CloseIcon />
                 </span>
                 <h1 className={s['title']}>{title}</h1>
+                {timer}
                 {description && <p className={s['description']}>{description}</p>}
-                {children}
-                {timer && <p className={s['timer']}>{timer}</p>}
+                {children} 
                 <Button disabled={buttonDisabled} onClick={onButtonClick}>{buttonText}</Button>
             </section>
         </Background>

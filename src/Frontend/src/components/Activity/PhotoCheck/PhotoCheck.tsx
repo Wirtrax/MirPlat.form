@@ -1,16 +1,16 @@
-import s from './PhotoBooth.module.scss';
+import s from './PhotoCheck.module.scss';
 
-import PhotoBoothIcon from '../../../assets/activity/photoTetris.svg?react'
+import PhotoCheckIcon from '../../../assets/activity/photoTetris.svg?react'
 
 import { useEffect, useState } from 'react';
 import ActivityLayout from '../ActivityLayout/ActivityLayout';
 import Substrate from '../../UI/Substrate/Substrate';
 
-interface PhotoBoothProps {
+interface PhotoCheckProps {
     onSubmitPhoto: () => void;
 }
 
-export default function PhotoBooth({ onSubmitPhoto }: PhotoBoothProps) {
+export default function PhotoCheck({ onSubmitPhoto }: PhotoCheckProps) {
     const [photo, setPhoto] = useState<File | null>(null)
 
     const description = 'Загрузи фото и получи персональный чек с твоим именем и лотерейным номером для участия в розыгрыше. Номер закрепляется за тобой и не меняется при повторной печати.'
@@ -50,7 +50,7 @@ export default function PhotoBooth({ onSubmitPhoto }: PhotoBoothProps) {
                     </div>
                 ) : (
                     <label className={s['booth__upload']}>
-                        <PhotoBoothIcon />
+                        <PhotoCheckIcon />
 
                         <span className={s['booth__upload-text']}>
                             Загрузить фото

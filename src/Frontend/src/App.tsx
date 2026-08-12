@@ -14,7 +14,8 @@ import Instruction from './components/Instructions/Instruction';
 import MainPage from './components/MainPage/MainPage';
 import Shop from './components/Shop/Shop';
 import TetrisPage from './components/Activity/Tetris/TetrisPage';
-import PhotoBoothPage from './components/Activity/PhotoBooth/PhotoBoothPage';
+import PhotoCheckPage from './components/Activity/PhotoCheck/PhotoCheckPage';
+import FourByFour from './components/Activity/FourByFour/FourByFour';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +27,8 @@ const router = createBrowserRouter(
       <Route element={<ProtectedRoute />}>
         <Route path="instruction" element={<Instruction />} />
         <Route path='tetris' element={<TetrisPage />} />
-        <Route path='photo_booth' element={<PhotoBoothPage />} />
+        <Route path='photo_check' element={<PhotoCheckPage />} />
+        <Route path='four_by_four' element={<FourByFour />} />
 
         <Route path="/" element={<Root />}>
           <Route index element={<MainPage />} />

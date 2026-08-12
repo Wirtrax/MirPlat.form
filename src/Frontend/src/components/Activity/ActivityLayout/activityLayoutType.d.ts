@@ -1,4 +1,4 @@
-export interface ActivityProps {
+ export interface ActivityProps {
     title?: string;
     children?: React.ReactNode;
     description?: string;
