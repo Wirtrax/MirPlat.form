@@ -1,6 +1,6 @@
 import { checkResponse } from './responseCheck';
 
-const API_URL = 'https://bootcamp.game-back.ru/api';
+const API_URL = import.meta.env.VITE_API_URL;
 const TOKEN_STORAGE_KEY = 'authToken';
 
 let authToken: string | null = typeof localStorage !== 'undefined' ? localStorage.getItem(TOKEN_STORAGE_KEY) : null;

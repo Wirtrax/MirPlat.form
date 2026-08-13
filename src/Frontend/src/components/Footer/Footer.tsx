@@ -11,22 +11,34 @@ export default function Footer() {
   return (
     <div className={s.footer}>
       <img src={footerLogo} className={s['footer-logo']} />
-      <Link to={'https://mir-platform.ru/'} className={s['footer-text']}>
+
+      <a href="mailto:MirEvent@nspk.ru"
+        className={s['footer-text']}>
         MirEvent@nspk.ru
-      </Link>
-      <Link to={'/'} className={s['footer-text']}>
+      </a>
+
+      <Link to="/" className={s['footer-text']}>
         пользовательское соглашение
       </Link>
+
       <div className={s['footer-contacts']}>
-        <Link to={'https://vk.com/mir_plat.form'}>
+        <a href={import.meta.env.VITE_VK_URL}
+          target="_blank"
+          rel="noreferrer">
           <VK_Icon />
-        </Link>
-        <Link to={'https://t.me/mir_platform'}>
+        </a>
+
+        <a href={import.meta.env.VITE_TELEGRAM_URL}
+          target="_blank"
+          rel="noreferrer">
           <TG_Icon />
-        </Link>
-        <Link to={'https://habr.com/ru/specials/978610/'}>
+        </a>
+
+        <a href={import.meta.env.VITE_HABR_URL}
+          target="_blank"
+          rel="noreferrer">
           <Splash_Icon />
-        </Link>
+        </a>
       </div>
     </div>
   );
