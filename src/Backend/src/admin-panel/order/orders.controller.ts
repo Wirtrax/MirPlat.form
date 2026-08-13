@@ -1,16 +1,20 @@
-import { Controller, Get, Param, ParseIntPipe, Patch, Query, Body } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Patch, Query, Body, UseGuards } from '@nestjs/common';
 import { OrderService } from './orders.service';
 import { PurchaseStatus } from 'src/entities/purchase.entity';
+import { JwtGuard } from '../auth/guards/jwt.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
 
 @Controller('orders')
 export class OrderController {
     constructor(private readonly orderService: OrderService) {}
 
+    @UseGuards(JwtGuard, RolesGuard)
     @Get()
     getAllOrders() {
         return this.orderService.getAllOrders();
     }
 
+    @UseGuards(JwtGuard, RolesGuard)
     @Get('details')
     getDetailedReport(
         @Query('userId', ParseIntPipe) userId: number, 
@@ -19,6 +23,7 @@ export class OrderController {
         return this.orderService.getPurchaseDetails(userId, itemId);
     }
 
+    @UseGuards(JwtGuard, RolesGuard)
     @Patch(':id/status')
     updateStatus(
         @Param('id', ParseIntPipe) id: number, 
