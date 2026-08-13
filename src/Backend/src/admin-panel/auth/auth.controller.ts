@@ -19,8 +19,7 @@ export class AuthController {
         return this.authService.login(dto.login, dto.password);
     }
 
-    @UseGuards(JwtGuard, RolesGuard)
-    @UseGuards(SuperAdminGuard)
+    @UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
     @Post('register')
     register(@Body() dto: LoginDto) {
         return this.authService.register(dto.login, dto.password);
