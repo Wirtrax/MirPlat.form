@@ -6,11 +6,15 @@ import { JwtModule } from '@nestjs/jwt';
 import { Admin } from 'src/entities/admins.entity';
 import { ConfigModule } from '@nestjs/config/dist/config.module';
 import { ConfigService } from '@nestjs/config/dist/config.service';
+import { JwtGuard } from './guards/jwt.guard';
+import { APP_GUARD } from '@nestjs/core/constants';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Admin]),
     JwtModule.registerAsync({
+      global: true,
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -20,7 +24,10 @@ import { ConfigService } from '@nestjs/config/dist/config.service';
     })
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    {provide: APP_GUARD, useClass: JwtGuard},
+    {provide: APP_GUARD, useClass: RolesGuard}],
 })
 
 export class AuthModule {}
