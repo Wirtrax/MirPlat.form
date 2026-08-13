@@ -4,6 +4,8 @@ import { User } from 'src/entities/user.entity';
 import { SuperAdminGuard } from '../auth/guards/super-admin.guard';
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { CreateUserDto } from './userDto/createUserDto';
+import { UpdateUserDto } from './userDto/updateUserDto';
 
 @Controller('users')
 export class UsersController {
@@ -17,8 +19,8 @@ export class UsersController {
 
         @UseGuards(JwtGuard, RolesGuard)
         @Post()
-        addNewUser(@Body() user: User) {
-            return this.usersService.addNewUser(user);
+        addNewUser(@Body() dto: CreateUserDto) {
+            return this.usersService.addNewUser(dto);
         }
 
         @UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
@@ -27,9 +29,15 @@ export class UsersController {
             return this.usersService.deleteUser(id);
         }
         
-        @UseGuards(JwtGuard, RolesGuard)
+        @UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
         @Patch(':id')
-        updateUser(@Param('id', ParseIntPipe) id: number, @Body() changes) {
-            return this.usersService.updateUser(id, changes);
+        updateUser(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
+            return this.usersService.updateUser(id, dto);
+        }
+
+        @UseGuards(JwtGuard, RolesGuard)
+        @Patch(':id/balance')
+        changeBalance(@Param('id', ParseIntPipe) id: number, @Body('amount') amount: number,) {
+            return this.usersService.changeBalance(id, amount);
         }
 }

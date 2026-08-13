@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { readdir } from 'fs/promises';
 import { Item } from 'src/entities/item.entity';
 import { Repository } from 'typeorm';
+import { UpdateItemDto } from './itemDto/updateItemDto';
+import { CreateItemDto } from './itemDto/createItemDto';
 
 @Injectable()
 export class ItemsService {
@@ -17,8 +19,8 @@ export class ItemsService {
         return this.itemsRepo.find();
     }
 
-    async updateItem(id: number, changes: Partial<Item>) {
-        const result = await this.itemsRepo.update(id, changes);
+    async updateItem(id: number, updateItemDto: Partial<UpdateItemDto>) {
+        const result = await this.itemsRepo.update(id, updateItemDto);
         if (result.affected === 0) throw new NotFoundException('Товар не найден');
         return { success: true };
     }
@@ -27,8 +29,8 @@ export class ItemsService {
         return this.updateItem(id, {is_active: false});
     }
 
-    async addItem(item: Item): Promise<Item> {
-        return this.itemsRepo.save(item);
+    async addItem(createItemDto: CreateItemDto): Promise<CreateItemDto> {
+        return this.itemsRepo.save(createItemDto);
     }
 
     async deleteItem(id: number) {

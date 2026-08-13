@@ -1,8 +1,9 @@
 import { Controller, Patch, Get, Param, ParseIntPipe, Body, Post, Delete, UseGuards} from '@nestjs/common';
 import { ItemsService } from './items.service';
-import { Item } from 'src/entities/item.entity';
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { UpdateItemDto } from './itemDto/updateItemDto';
+import { CreateItemDto } from './itemDto/createItemDto';
 
 @Controller('items')
 export class ItemsController {
@@ -15,6 +16,12 @@ export class ItemsController {
     }
 
     @UseGuards(JwtGuard, RolesGuard)
+    @Get('images')
+    getImages() {
+        return this.itemsService.getImages();
+    }
+
+    @UseGuards(JwtGuard, RolesGuard)
     @Patch(':id/hide')
     hideItem(@Param('id', ParseIntPipe) id: number) {
         return this.itemsService.hideItem(id);
@@ -22,25 +29,19 @@ export class ItemsController {
 
     @UseGuards(JwtGuard, RolesGuard)
     @Patch(':id')
-    updateItem(@Param('id', ParseIntPipe) id: number, @Body() changes  ){
-        return this.itemsService.updateItem(id, changes);
+    updateItem(@Param('id', ParseIntPipe) id: number, @Body() updateItemDto:UpdateItemDto  ){
+        return this.itemsService.updateItem(id, updateItemDto);
     }
 
     @UseGuards(JwtGuard, RolesGuard)
     @Post()
-    addItem(@Body()item: Item){
-        return this.itemsService.addItem(item);
+    addItem(@Body()createItemDto: CreateItemDto){
+        return this.itemsService.addItem(createItemDto);
     }
 
     @UseGuards(JwtGuard, RolesGuard)
     @Delete(':id')
     deleteItem(@Param('id', ParseIntPipe) id: number) {
         return this.itemsService.deleteItem(id);
-    }
-    
-    @UseGuards(JwtGuard, RolesGuard)
-    @Get('images')
-    getImages() {
-        return this.itemsService.getImages();
     }
 }
