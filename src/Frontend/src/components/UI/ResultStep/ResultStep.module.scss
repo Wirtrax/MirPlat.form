@@ -13,11 +13,13 @@
 
     display: flex;
     flex-direction: column;
+    align-items: center;
+
     padding: rem(119) rem(37) rem(96) rem(37);
     gap: rem(12);
 
     text-align: center;
-    border-radius: 25px;
+    border-radius: var(--border-radius);
 
     backdrop-filter: blur(9.100000381469727px);
     box-shadow: 0 0 6px 0 rgba(21, 67, 205, 0.2);

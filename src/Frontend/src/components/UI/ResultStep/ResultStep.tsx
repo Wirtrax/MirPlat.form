@@ -17,13 +17,26 @@ export default function ResultStep({
   onButtonClick,
   children,
   className,
-  closeButton = false, 
+  closeButton = false,
+  hideBachground = false,
 }: ResultStepProps) {
   const navigate = useNavigate()
 
   const handleClose = () => {
     navigate('/main');
   }
+
+  const renderCard = () => {
+    return (
+      <div className={clsx(s['resultCard'], className)}>
+        <h2 className={s.resultTitle}>{title}</h2>
+        <div className={s.resultDescription}>{description}</div>
+        <Button onClick={onButtonClick}>{buttonText}</Button>
+        <div className={s.btnSkip}>{children}</div>
+      </div>
+    )
+  }
+  if (hideBachground) return renderCard()
 
   return (
 
@@ -35,12 +48,7 @@ export default function ResultStep({
             <CloseIcon />
           </span>
         }
-        <div className={clsx(s['resultCard'], className)}>
-          <h2 className={s.resultTitle}>{title}</h2>
-          <div className={s.resultDescription}>{description}</div>
-          <Button onClick={onButtonClick}>{buttonText}</Button>
-          <div className={s.btnSkip}>{children}</div>
-        </div>
+        {renderCard()}
       </div>
     </Background>
 

@@ -3,29 +3,40 @@ import clsx from 'clsx';
 
 import { useEffect, useState } from "react"
 
-interface TimerProps {
-    duration: number;
-    danger: number;
-}
+import type { TimerProps } from './timerType';
 
-export default function Timer({ duration, danger }: TimerProps) {
+export default function Timer({ duration = 0, danger = 0, staticTime, classNameMargin, onFinish }: TimerProps) {
     const [timeLeft, setTimeLeft] = useState(duration)
     const isDanger = timeLeft <= danger
 
     useEffect(() => {
-        if (timeLeft <= 0) return
+        if (staticTime || timeLeft <= 0) {
+            return
+        }
 
         const timer = setInterval(() => {
             setTimeLeft(prev => prev - 1)
         }, 1000)
         return () => clearInterval(timer)
-    }, [timeLeft])
+    }, [timeLeft, staticTime])
 
-    const minutes = Math.floor(timeLeft / 60)
-    const seconds = timeLeft % 60
-    const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`
+    useEffect(() => {
+        if (!staticTime && timeLeft === 0) {
+            onFinish?.()
+        }
+    }, [timeLeft, staticTime, onFinish])
+
+    const renderTime = () => {
+        if (staticTime) return staticTime
+
+        const minutes = Math.floor(timeLeft / 60)
+        const seconds = timeLeft % 60
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`
+    };
 
     return (
-        <p className={clsx(s['timer'], isDanger && s['timer__danger'])}>{formattedTime}</p>
-    )
+        <p className={clsx(s['timer'], classNameMargin, isDanger && !staticTime && s['timer__danger'])}>
+            {renderTime()}
+        </p>
+    );
 }

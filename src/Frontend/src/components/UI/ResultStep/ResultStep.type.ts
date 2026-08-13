@@ -8,4 +8,5 @@ export interface ResultStepProps {
   className?: string;
   children?: ReactNode;
   closeButton?: boolean;
+  hideBachground?: boolean;
 }

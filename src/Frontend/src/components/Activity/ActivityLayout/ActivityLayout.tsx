@@ -35,7 +35,10 @@ export default function ActivityLayout({
                 {timer}
                 {description && <p className={s['description']}>{description}</p>}
                 {children}
-                <Button disabled={buttonDisabled} onClick={onButtonClick}>{buttonText}</Button>
+                {
+                    buttonText &&
+                    <Button className={s['activity__button']} disabled={buttonDisabled} onClick={onButtonClick}>{buttonText}</Button>
+                }
             </section>
         </Background>
     )
