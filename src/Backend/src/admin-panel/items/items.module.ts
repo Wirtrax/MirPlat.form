@@ -10,6 +10,7 @@ import { ConfigService } from '@nestjs/config/dist/config.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Item]),
+  ConfigModule,
     ServeStaticModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
