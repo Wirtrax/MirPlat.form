@@ -1,5 +1,3 @@
-import { checkResponse } from './responseCheck';
-
 const API_URL = import.meta.env.VITE_API_URL;
 const TOKEN_STORAGE_KEY = 'authToken';
 
@@ -27,7 +25,8 @@ export const request = async <T>(endpoint: string, options: RequestInit = {}): P
     // credentials: 'include',
     ...options,
     headers,
-
   });
-  return checkResponse(res);
+
+  if (!res.ok) throw new Error(`Ошибка: ${res.status}`)
+  return res.json() as Promise<T>
 };
