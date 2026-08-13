@@ -1,5 +1,7 @@
 /dist
 /node_modules
+/src/admin-panel/excel-export/exports
+/exports
 
 *.log
 .env
