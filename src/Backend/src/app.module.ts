@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { AdminPanelModule } from './admin-panel/admin-panel.module';
+import { ExcelExportModule } from './admin-panel/excel-export/excel-export.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AdminPanelModule } from './admin-panel/admin-panel.module';
       synchronize: true, // TODO: Remove this before release to production
     }),
     AdminPanelModule,
+    ExcelExportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
