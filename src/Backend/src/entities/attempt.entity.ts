@@ -8,8 +8,9 @@ export enum AttemptStatus {
   DECLINED = 'declined',
 }
 
-export enum DeclineStatus {
-
+export enum DeclineReason {
+  WRONG_PHOTO = 'wrong_photo',
+  INCORRECT_SOLUTION = 'incorrect_solution',
 }
 
 @Entity()
@@ -32,8 +33,8 @@ export class Attempt {
   @Column({ type: 'enum', enum: AttemptStatus })
   status: AttemptStatus;
 
-  @Column({ type: 'enum', enum: DeclineStatus, nullable: true})
-  reason: DeclineStatus;
+  @Column({ type: 'enum', enum: DeclineReason, nullable: true})
+  reason: DeclineReason;
 
   @Column()
   reward: number;
