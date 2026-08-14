@@ -6,6 +6,7 @@ import { JwtGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { CreateUserDto } from './userDto/createUserDto';
 import { UpdateUserDto } from './userDto/updateUserDto';
+import { ChangeBalanceDto } from './userDto/changeBalanceDto'; 
 
 @Controller('users')
 export class UsersController {
@@ -37,7 +38,7 @@ export class UsersController {
 
         @UseGuards(JwtGuard, RolesGuard)
         @Patch(':id/balance')
-        changeBalance(@Param('id', ParseIntPipe) id: number, @Body('amount') amount: number,) {
-            return this.usersService.changeBalance(id, amount);
+        changeBalance(@Param('id', ParseIntPipe) id: number,@Body() dto: ChangeBalanceDto) {
+            return this.usersService.changeBalance(id, dto.amount);
         }
 }
