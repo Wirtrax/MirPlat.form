@@ -1,0 +1,33 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
+import { ItemModule } from './item/item.module';
+import { AuthModule } from './auth/auth.module';
+import { PurchaseModule } from './purchase/purchase.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DBHOST,
+      port: parseInt(process.env.DBPORT as string),
+      username: process.env.DBUSERNAME,
+      password: process.env.DBPASSWORD,
+      database: process.env.DBNAME,
+      autoLoadEntities: true,
+      logging:['query','error'],
+      synchronize: true, // TODO: Remove this before release to production
+    }),
+    UserModule,
+    ItemModule,
+    AuthModule,
+    ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
