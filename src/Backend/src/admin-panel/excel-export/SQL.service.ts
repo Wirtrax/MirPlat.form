@@ -47,25 +47,6 @@ export class SqlService {
         const endDate = new Date(date);
         endDate.setHours(23, 59, 59, 999)
 
-        // const query = `
-        //     SELECT 
-        //         id,
-        //         phone_number,
-        //         email,
-        //         send_notifications,
-        //         first_name,
-        //         last_name,
-        //         patronym,
-        //         programming_level,
-        //         specialization
-        //     FROM "user"
-        //     WHERE last_login BETWEEN $1 AND $2
-        // `;
-
-        // const result = await this.dataSource.query(query, [startDate, endDate]);
-
-        // return result;
-
         const result =  await this.userRepository
             .createQueryBuilder('user')
             .select([
