@@ -20,7 +20,7 @@ async function bootstrap() {
       bearerFormat:"initData"
     }, "tma")
     .build();
-  SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config))
+  SwaggerModule.setup('api/docs', app, SwaggerModule.createDocument(app, config))
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

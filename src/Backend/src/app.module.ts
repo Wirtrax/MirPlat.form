@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { ItemModule } from './item/item.module';
 import { AuthModule } from './auth/auth.module';
+import { PurchaseModule } from './purchase/purchase.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -18,12 +20,13 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.DBPASSWORD,
       database: process.env.DBNAME,
       autoLoadEntities: true,
+      logging:['query','error'],
       synchronize: true, // TODO: Remove this before release to production
     }),
     UserModule,
     ItemModule,
-    AuthModule
-  ],
+    AuthModule,
+    ],
   controllers: [AppController],
   providers: [AppService],
 })
