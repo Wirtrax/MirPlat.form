@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getUser, login, postUser } from '../../api';
+import { devLogin, getUser, login, postUser } from '../../api';
 
 import type { CreateUser, UserState } from './userType';
 
@@ -9,10 +9,16 @@ export const loginUser = createAsyncThunk('user/loginUser', async () => {
   return data;
 });
 
+export const devLoginUser = createAsyncThunk('user/devLoginUser', async () => {
+  const data = await devLogin();
+  return data;
+});
+
 export const createUser = createAsyncThunk('user/createUser', async (user: CreateUser) => {
   const data = await postUser(user);
   return data;
 });
+
 export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   const data = await getUser();
   return data;
@@ -39,9 +45,8 @@ const userSlice = createSlice({
       .addCase(fetchUser.pending, (state) => {
         state.status = 'loading';
       })
-
-      .addCase(loginUser.fulfilled, (state) => {
-    
+      .addCase(devLoginUser.pending, (state) => {
+        state.status = 'loading';
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.status = 'success';
@@ -51,11 +56,25 @@ const userSlice = createSlice({
         state.status = 'success';
         state.user = action.payload;
       })
-
-      .addCase(fetchUser.rejected, (state) => {
+      .addCase(devLoginUser.fulfilled, (state, action) => {
         state.status = 'success';
-        state.user = null;
+        state.user = action.payload;
       })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.user = null;
+        state.error = action.error.message ?? null;
+      })
+      .addCase(devLoginUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.user = null;
+        state.error = action.error.message ?? 'Dev auth failed';
+      })
+        .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.user = null;
+        state.error = action.error.message ?? null;
+      });
   },
 });
 

@@ -1,0 +1,30 @@
+.shop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-block: rem(41) rem(10);
+
+    &__total-reserve {
+        padding: rem(5) rem(9);
+        margin-block: rem(12)rem(22);
+
+        display: flex;
+        align-items: center;
+        column-gap: rem(6);
+    }
+
+    &__list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: rem(10);
+        row-gap: rem(5);
+
+        width: 100%;
+    }
+
+    &--mishap {
+        text-align: center;
+        opacity: 0.6;
+    }
+}
