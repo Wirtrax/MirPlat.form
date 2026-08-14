@@ -1,6 +1,7 @@
 import s from './Route.module.scss'
 
 import { Navigate, Outlet } from 'react-router-dom';
+import { ROUTES } from './routes';
 
 import { useAppSelector } from '../hooks/redux';
 
@@ -12,7 +13,7 @@ export default function ProtectedRoute() {
   if (!user && (status === 'loading' || status === 'idle')) return <Loader  className={s.height} />;
 
   if (!user) {
-    return <Navigate to="/registration" replace />;
+    return <Navigate to={ROUTES.REGISTRATION} replace />;
   }
 
   return <Outlet />;

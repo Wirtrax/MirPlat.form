@@ -6,6 +6,7 @@ import TG_Icon from '../../assets/footer/tg.svg?react';
 import Splash_Icon from '../../assets/footer/splash.svg?react';
 
 import { Link } from 'react-router-dom';
+import { ROUTES } from '../../routes/routes';
 
 export default function Footer() {
   return (
@@ -17,7 +18,7 @@ export default function Footer() {
         MirEvent@nspk.ru
       </a>
 
-      <Link to="/" className={s['footer-text']}>
+      <Link to={ROUTES.HOME} className={s['footer-text']}>
         пользовательское соглашение
       </Link>
 

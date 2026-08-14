@@ -1,8 +1,11 @@
 import QRCode from 'react-qr-code';
 import s from './PurchaseSuccessModal.module.scss';
+
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../../../routes/routes';
+
 import Button from '../../Button/Button';
 import type { PurchaseSuccessContentProps } from '../modalProp';
-import { Link } from 'react-router-dom';
 
 function PurchaseSuccessContent({ qrValue }: PurchaseSuccessContentProps) {
   return (
@@ -27,7 +30,7 @@ function PurchaseSuccessContent({ qrValue }: PurchaseSuccessContentProps) {
         покупки». Код будет ждать там.
       </p>
 
-      <Link to={'/profile'}>
+      <Link to={ROUTES.PROFILE}>
         <Button>мои покупки</Button>
       </Link>
     </div>

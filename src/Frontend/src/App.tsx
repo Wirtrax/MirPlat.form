@@ -12,21 +12,21 @@ import MainPage from './components/MainPage/MainPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
 import Shop from './components/Shop/Shop';
+import { ROUTES } from './routes/routes';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route element={<PublicRoute />}>
-        <Route path="registration" element={<Registration />} />
+        <Route path={ROUTES.REGISTRATION} element={<Registration />} />
       </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route path="instruction" element={<Instruction />} />
-        <Route path="/" element={<Root />}>
+        <Route path={ROUTES.INSTRUCTION} element={<Instruction />} />
+        <Route path={ROUTES.HOME} element={<Root />}>
           <Route index element={<MainPage />} />
-          <Route path="main" element={<MainPage />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="shop" element={<Shop />} />
+          <Route path={ROUTES.PROFILE} element={<Profile />} />
+          <Route path={ROUTES.SHOP} element={<Shop />} />
         </Route>
       </Route>
     </>
@@ -39,8 +39,8 @@ function App() {
   useEffect(() => {
     const initApp = async () => {
       try {
-         if (import.meta.env.DEV) {
-            await dispatch(devLoginUser()).unwrap()
+        if (import.meta.env.DEV) {
+          await dispatch(devLoginUser()).unwrap()
         } else {
           await dispatch(loginUser()).unwrap()
           await dispatch(fetchUser()).unwrap()
