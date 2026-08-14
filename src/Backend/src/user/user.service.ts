@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -25,8 +25,12 @@ export class UserService {
     return this.usersRepo.findOneBy({ telegram_id});
   }
 
+  async updateLastLoginDate(user: User): Promise<void> {
+    user.last_login = new Date();
+  }
+
   create(createUserDto: CreateUserDto, telegram_id: string): Promise<User>{
-    const user = this.usersRepo.create({...createUserDto, telegram_id});
+    const user = this.usersRepo.create({...createUserDto, telegram_id, last_login: new Date()});
     return this.usersRepo.save(user);
   }
 
