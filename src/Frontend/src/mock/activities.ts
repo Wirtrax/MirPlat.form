@@ -1,5 +1,6 @@
 import gameAvatar from '../assets/avatar/default.webp';
 import type { CornerPositionT } from '../components/UI/CornerSquare/cornerSquareProps';
+import { ROUTES } from '../routes/routes';
 
 export interface Activity {
   id: string;
@@ -27,7 +28,7 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'загрузить фото',
     gameAvatar: gameAvatar,
-    link: '/tetris',
+    link: ROUTES.TETRIS,
 
     positionSquare: 'top-left',
     mainSize: 64,
@@ -44,7 +45,7 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'загрузить фото',
     gameAvatar: gameAvatar,
-    link: '/photo_check',
+    link: ROUTES.PHOTO_CHECK,
 
     positionSquare: 'top-right',
     mainSize: 67,
@@ -61,7 +62,7 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'начать игру',
     gameAvatar: gameAvatar,
-    link: '/four_by_four',
+    link: ROUTES.FOUR_BY_FOUR,
 
     positionSquare: 'bottom-left',
     mainSize: 64,

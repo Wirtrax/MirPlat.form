@@ -9,6 +9,7 @@ import Button from '../Button/Button';
 import Background from '../Background/Background';
 
 import type { ResultStepProps } from './ResultStep.type';
+import { ROUTES } from '../../../routes/routes';
 
 export default function ResultStep({
   title,
@@ -23,7 +24,7 @@ export default function ResultStep({
   const navigate = useNavigate()
 
   const handleClose = () => {
-    navigate('/main');
+    navigate(ROUTES.HOME);
   }
 
   const renderCard = () => {

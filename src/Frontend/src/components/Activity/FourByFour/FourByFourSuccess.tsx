@@ -10,6 +10,7 @@ import ActivityLayout from '../ActivityLayout/ActivityLayout';
 import Timer from '../Timer/Timer';
 
 import type { FourByFourSuccessProps } from './fourByFourType';
+import { ROUTES } from '../../../routes/routes';
 
 export default function FourByFourSuccess({ coins }: FourByFourSuccessProps) {
   const navigate = useNavigate()
@@ -30,11 +31,11 @@ export default function FourByFourSuccess({ coins }: FourByFourSuccessProps) {
         title="Ты отлично справился!"
         description={description}
         buttonText="В ПРОФИЛЬ"
-        onButtonClick={() => navigate('/profile')}
+        onButtonClick={() => navigate(ROUTES.PROFILE)}
         hideBachground={true}
         className={s['game__success-card']}
       >
-        <Link to={'/main#activities'}>К ДРУГИМ АКТИВНОСТЯМ</Link>
+        <Link to={ROUTES.ACTIVITIES}>К ДРУГИМ АКТИВНОСТЯМ</Link>
       </ResultStep>
       <div className={s['game__mascot-container']}>
         <img className={s['game__mascot-img']} src={smile_mascot} alt='smile mascot' />

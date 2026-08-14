@@ -9,6 +9,7 @@ import Background from '../../UI/Background/Background';
 
 import type { ActivityProps } from './activityLayoutType';
 import Button from '../../UI/Button/Button';
+import { ROUTES } from '../../../routes/routes';
 
 export default function ActivityLayout({
     title,
@@ -23,7 +24,7 @@ export default function ActivityLayout({
     const navigate = useNavigate()
 
     const handleClose = () => {
-        navigate('/main#activities')
+        navigate(ROUTES.ACTIVITIES)
     }
     return (
         <Background>

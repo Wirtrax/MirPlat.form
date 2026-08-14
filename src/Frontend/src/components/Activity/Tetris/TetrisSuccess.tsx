@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import ResultStep from '../../UI/ResultStep/ResultStep';
+import { ROUTES } from '../../../routes/routes';
 
 interface TetrisSuccessProps {
   hasSubmittedPhoto: boolean;
@@ -22,10 +23,10 @@ export default function TetrisSuccess({ hasSubmittedPhoto }: TetrisSuccessProps)
             : "Фото отправлено на проверку. Мы начислим баллы после модерации." 
         }
         buttonText="В ПРОФИЛЬ"
-        onButtonClick={() => navigate('/profile')}
+          onButtonClick={() => navigate(ROUTES.PROFILE)}
         closeButton={true}
       >
-        <Link to={'/main#activities'}>К ДРУГИМ АКТИВНОСТЯМ</Link>
+        <Link to={ROUTES.ACTIVITIES}>К ДРУГИМ АКТИВНОСТЯМ</Link>
       </ResultStep>
     </>
 

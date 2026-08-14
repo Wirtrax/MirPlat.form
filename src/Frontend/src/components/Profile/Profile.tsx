@@ -12,6 +12,7 @@ import clsx from 'clsx';
 
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks/redux';
+import { ROUTES } from '../../routes/routes';
 
 import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard';
 import Button from '../UI/Button/Button';
@@ -83,7 +84,7 @@ export default function Profile() {
     <Background variant="minimal">
       <main className={clsx(s['profile'], 'container')}>
         <nav className={s['profile__nav']}>
-          <Link to={'/'}>
+          <Link to={ROUTES.HOME}>
             <span className={s['profile__nav-arrow']}> </span>
             <span className={s['profile__nav-link']}>на главную</span>
           </Link>
@@ -111,7 +112,7 @@ export default function Profile() {
           </div>
         </div>
 
-        <Link to={'/main#activities'} >
+        <Link to={ROUTES.ACTIVITIES} >
           <Button className={s['profile__activities-btn']}>АКТИВНОСТИ</Button>
         </Link>
 
@@ -140,7 +141,7 @@ export default function Profile() {
             <p className={s['profile__empty-text']}>Пока тут ничего нет...</p>
           )}
 
-          <Link to={'/shop'}>
+          <Link to={ROUTES.SHOP}>
             <Button className={s['profile__shop-btn']}>В МАГАЗИН</Button>
           </Link>
         </div>

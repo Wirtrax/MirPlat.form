@@ -13,6 +13,7 @@ import Registration from './components/Registration/Registration';
 import Instruction from './components/Instructions/Instruction';
 import MainPage from './components/MainPage/MainPage';
 import Shop from './components/Shop/Shop';
+import { ROUTES } from './routes/routes';
 import TetrisPage from './components/Activity/Tetris/TetrisPage';
 import PhotoCheckPage from './components/Activity/PhotoCheck/PhotoCheckPage';
 import FourByFourPage from './components/Activity/FourByFour/FourByFourPage';
@@ -21,20 +22,19 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route element={<PublicRoute />}>
-        <Route path="registration" element={<Registration />} />
+        <Route path={ROUTES.REGISTRATION} element={<Registration />} />
       </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route path="instruction" element={<Instruction />} />
-        <Route path='tetris' element={<TetrisPage />} />
-        <Route path='photo_check' element={<PhotoCheckPage />} />
-        <Route path='four_by_four' element={<FourByFourPage />} />
+        <Route path={ROUTES.INSTRUCTION} element={<Instruction />} />
+        <Route path={ROUTES.TETRIS} element={<TetrisPage />} />
+        <Route path={ROUTES.PHOTO_CHECK} element={<PhotoCheckPage />} />
+        <Route path={ROUTES.FOUR_BY_FOUR} element={<FourByFourPage />} />
 
-        <Route path="/" element={<Root />}>
+        <Route path={ROUTES.HOME} element={<Root />}>
           <Route index element={<MainPage />} />
-          <Route path="main" element={<MainPage />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="shop" element={<Shop />} />
+          <Route path={ROUTES.PROFILE} element={<Profile />} />
+          <Route path={ROUTES.SHOP} element={<Shop />} />
         </Route>
       </Route>
     </>

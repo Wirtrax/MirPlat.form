@@ -5,6 +5,7 @@ import Coin from '../../../assets/interface/coin.svg?react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import ResultStep from '../../UI/ResultStep/ResultStep';
+import { ROUTES } from '../../../routes/routes';
 
 interface PhotoCheckProps {
     hasSubmittedPhoto: boolean;
@@ -29,7 +30,7 @@ export default function PhotoCheckSuccess({ hasSubmittedPhoto }: PhotoCheckProps
                 }
                 description={description}
                 buttonText="В ПРОФИЛЬ"
-                onButtonClick={() => navigate('/profile')}
+                onButtonClick={() => navigate(ROUTES.PROFILE)}
                 closeButton={true}
                 className={
                     hasSubmittedPhoto
@@ -37,7 +38,7 @@ export default function PhotoCheckSuccess({ hasSubmittedPhoto }: PhotoCheckProps
                         : s['resultCard__photoCheck']}
 
             >
-                <Link to={'/main#activities'}>К ДРУГИМ АКТИВНОСТЯМ</Link>
+                <Link to={ROUTES.ACTIVITIES}>К ДРУГИМ АКТИВНОСТЯМ</Link>
             </ResultStep>
         </>
     )
