@@ -113,13 +113,11 @@ export class ExcelService {
             try {
                 await workbook.xlsx.readFile(filePath);
                 console.log('Файл считан')
+                
             } catch (error) {
-                console.log('Ошибка чтения файла, создаём новый')
-                const dir = path.dirname(filePath);
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir, { recursive: true });
-                }
+                throw error
             }
+
         } else {
             console.log('Файла не существует, создаём новый')
             const dir = path.dirname(filePath);
@@ -240,10 +238,6 @@ export class ExcelService {
         }
     }
 
-    // private sleep(ms: number): Promise<void> {
-    //     return new Promise(resolve => setTimeout(resolve, ms));
-    // }
-
     /**
      * Загружает данные по запросам из таблиц в эксель и оформляет их
      * @param date 
@@ -256,8 +250,6 @@ export class ExcelService {
 
         const users = await this.sqlService.getUsersByTodayLogin(date);
         const activities = await this.sqlService.getActivitiesByDate(date);
-
-        //await this.createRows(users.length, activities.length, worksheet)
 
         await this.loadUsersToSheet(users, worksheet);      
         await this.loadActivitiesToSheet(activities, worksheet);
