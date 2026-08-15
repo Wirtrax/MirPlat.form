@@ -57,4 +57,7 @@ export class User {
 
   @OneToMany(() => Attempt, (attempt) => attempt.user)
   attempts: Attempt[];
+
+  @Column()
+  last_login: Date;
 }
