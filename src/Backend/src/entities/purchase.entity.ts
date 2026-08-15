@@ -19,7 +19,7 @@ export class Purchase {
   @ManyToOne(() => Item, (item) => item.purchases)
   item: Item;
 
-  @Column({ type: 'enum', enum: PurchaseStatus })
+  @Column({ type: 'enum', enum: PurchaseStatus, default: PurchaseStatus.WAITING })
   status: PurchaseStatus;
 
   @Column()

@@ -1,0 +1,60 @@
+.embla {
+    --dot-color: #F9FAF9;
+
+    &__viewport {
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    &__slide {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        user-select: none;
+        min-width: 0;
+    }
+
+    &__dots {
+        display: flex;
+        gap: rem(8);
+        justify-content: center;
+        margin-top: rem(12);
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+
+            left: rem(-20);
+            right: rem(-20);
+            top: rem(-150);
+            height: rem(200);
+            z-index: 1;
+
+            background: linear-gradient(rgba(22, 116, 228, 0),
+                    rgb(22, 116, 228)40%);
+            filter: blur(15px);
+        }
+    }
+
+    &__dot {
+        padding: 0;
+        border: none;
+        z-index: 10;
+        width: rem(10);
+        height: rem(10);
+        border-radius: 50%;
+
+        background: var(--dot-color);
+        cursor: pointer;
+        opacity: 0.5;
+
+
+
+        &--selected {
+            background: var(--dot-color);
+            opacity: 1;
+        }
+    }
+}

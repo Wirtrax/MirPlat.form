@@ -1,0 +1,48 @@
+.cardList {
+    position: relative;
+
+
+    display: flex;
+    flex-direction: column;
+    gap: rem(8);
+
+    margin-top: rem(8);
+    margin-bottom: rem(26);
+}
+
+.lotteryFox {
+    position: absolute;
+    width: rem(80);
+    z-index: 0;
+    left: rem(210);
+    top: rem(-74);
+}
+
+.cardItem {
+    background-color: var(--color-light);
+    border-radius: rem(13);
+
+    display: flex;
+    align-items: center;
+
+    padding: rem(18) rem(30) rem(15) rem(15);
+    gap: rem(15);
+
+    z-index: 1000;
+}
+
+.links a {
+    font-weight: 500;
+    text-decoration: underline;
+    color: var(--color-blue);
+}
+
+.number {
+    font-size: rem(37);
+    color: var(--color-accent);
+    font-weight: 700;
+}
+
+.description {
+    color: var(--color-dark);
+}

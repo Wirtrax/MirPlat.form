@@ -1,0 +1,45 @@
+.instruction {
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+
+    &__title {
+        font-weight: 700;
+        margin-bottom: rem(24);
+    }
+
+    &__button-block {
+        display: flex;
+        justify-content: center;
+        gap: rem(15);
+    }
+
+    &__list {
+        max-width: rem(286);
+        width: 100%;
+        text-align: center;
+        list-style-position: inside;
+        margin: 0 auto;
+
+        display: grid;
+        row-gap: rem(15);
+
+        padding-block: rem(26) rem(31);
+
+        &-item {
+            font-size: rem(14);
+        }
+    }
+
+    &__image {
+        max-height: rem(380);
+    }
+
+    &__slider {
+        margin-bottom: rem(53);
+        min-width: 0;
+    }
+}

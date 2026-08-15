@@ -1,0 +1,39 @@
+.lottery {
+    padding-top: rem(50);
+    padding-bottom: rem(42);
+
+    background: #e3f1ff;
+    border-radius: rem(25);
+}
+
+.title {
+    margin-bottom: rem(13);
+
+    color: var(--color-blue);
+    font-size: rem(24);
+    font-weight: 700;
+}
+
+.description {
+    color: var(--color-dark);
+    margin-bottom: rem(22);
+
+    span {
+        font-weight: 500;
+    }
+}
+
+.titleCards {
+    color: var(--color-dark);
+    font-weight: 700;
+    font-size: rem(14);
+}
+
+.results {
+    color: var(--color-dark);
+    margin-bottom: rem(30);
+
+    span {
+        font-weight: 700;
+    }
+}

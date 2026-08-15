@@ -1,0 +1,74 @@
+.square {
+    display: block;
+    width: var(--square-size, rem(49));
+    height: var(--square-size, rem(49));
+    background-color: var(--color-accent);
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+
+    &::after {
+        content: "";
+        width: var(--accent-width, rem(20));
+        height: var(--accent-height, rem(20));
+        background-color: var(--accent-color, var(--color-accent));
+        position: absolute;
+    }
+
+    &--top-left {
+        left: 0;
+        top: 0;
+        translate: -50% -50%;
+
+        &::after {
+            right: 0;
+            bottom: 0;
+            translate: 100% 100%;
+        }
+    }
+
+    &--top-right {
+        right: 0;
+        top: 0;
+        translate: 50% -50%;
+
+        &::after {
+            left: 0;
+            bottom: 0;
+            translate: -100% 100%;
+        }
+    }
+
+    &--bottom-right {
+        right: 0;
+        bottom: 0;
+        translate: 50% 50%;
+
+        &::after {
+            left: 0;
+            top: 0;
+            translate: -100% -100%;
+        }
+    }
+
+    &--bottom-left {
+        left: 0;
+        bottom: 0;
+        translate: -50% 50%;
+
+        &::after {
+            right: 0;
+            top: 0;
+            translate: 100% -100%;
+        }
+    }
+
+    &--none {
+        right: 0;
+        top: 0;
+
+        &::after {
+            content: none;
+        }
+    }
+}

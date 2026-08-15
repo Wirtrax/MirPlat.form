@@ -1,0 +1,41 @@
+.footer {
+    background: #f3f2f8;
+    padding: rem(49) rem(62);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-logo {
+        margin-bottom: rem(45);
+    }
+
+    &-text {
+        font-family: var(--font-family-accent);
+        font-weight: 300;
+        font-size: rem(14);
+        text-transform: uppercase;
+        text-decoration: underline !important;
+        text-underline-offset: 2px;
+        text-decoration-skip-ink: none;
+        color: #8c8c8c;
+
+        &:not(:last-of-type) {
+            margin-bottom: rem(31);
+        }
+    }
+
+    &-contacts {
+        display: flex;
+        gap: rem(15);
+        margin-top: rem(51);
+
+        svg {
+            color: var(--color-gray-70);
+            transition: color 0.2s ease-in;
+
+            &:hover {
+                color: var(--color-accent);
+            }
+        }
+    }
+}

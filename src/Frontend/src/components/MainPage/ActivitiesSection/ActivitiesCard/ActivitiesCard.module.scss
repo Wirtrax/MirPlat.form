@@ -1,0 +1,114 @@
+.cardList {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8);
+    margin-top: rem(25);
+}
+
+.substrate {
+    position: relative;
+    overflow: hidden;
+
+    width: rem(315);
+    min-height: rem(111);
+
+    padding-right: var(--container-padding-x);
+    padding-left: var(--container-padding-x);
+    padding-top: rem(28);
+}
+
+.subtitle {
+    font-size: rem(10);
+    line-height: 120%;
+    color: #a4dafb;
+}
+
+.squareBlur {
+    position: absolute;
+    inset: 0;
+
+    filter: blur(3px);
+}
+
+.title {
+    font-size: rem(20);
+}
+
+.closeTitle {
+    margin-top: rem(34);
+}
+
+.openContent {
+    padding-bottom: rem(29);
+}
+
+.reward {
+    margin-top: rem(10);
+    margin-bottom: rem(15);
+
+    display: flex;
+    align-items: center;
+    gap: rem(4);
+}
+
+
+.description {
+    position: relative;
+    font-size: rem(10);
+    line-height: 120%;
+}
+
+.gameAvatar {
+    position: absolute;
+
+    width: rem(131);
+
+    bottom: rem(-60);
+    right: rem(-40);
+
+    object-fit: contain;
+    pointer-events: none;
+
+}
+
+.firstParagraph {
+    max-width: rem(254);
+    margin-bottom: rem(10);
+}
+
+.secondParagraph {
+    max-width: rem(166);
+    margin-bottom: rem(20);
+}
+
+.btn {
+    font-size: rem(12);
+}
+
+.squareTetris {
+    left: rem(194);
+}
+
+.squareTransactions {
+    left: rem(200);
+    top: rem(0);
+
+}
+
+.squarePhoto {
+    left: rem(245);
+    bottom: rem(20);
+}
+
+.squareQr {
+    left: rem(220);
+    top: rem(20);
+}
+
+.squareQuiz {
+    right: rem(80);
+}
+
+.openOpacity {
+    opacity: 0.58;
+}

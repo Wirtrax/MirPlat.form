@@ -1,0 +1,51 @@
+@use "./helpers" as *;
+
+.container {
+  max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.hidden-mobile {
+  @include mobile {
+    display: none !important;
+  }
+}
+
+.visible-mobile {
+  @include mobile-above {
+    display: none !important;
+  }
+}
+
+.circle-icon {
+  --circleSize: #{rem(52)};
+  --cirlceMarginLeft: #{rem(20)};
+  min-height: var(--circleSize);
+  position: relative;
+  display: grid;
+  row-gap: rem(4);
+  padding-right: calc(var(--circleSize) + var(--cirlceMarginLeft));
+
+  @include laptop {
+    --circleSize: #{rem(44)};
+    --cirlceMarginLeft: #{rem(14)};
+  }
+
+  @include mobile {
+    --circleSize: #{rem(40)};
+  }
+
+  &::after {
+    @include square(var(--circleSize));
+    @include abs-y;
+    content: "";
+    right: 0;
+    background: url("../assets/interface/church.ico") center no-repeat var(--color-accent);
+    border-radius: 50%;
+  }
+}
