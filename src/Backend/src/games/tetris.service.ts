@@ -59,5 +59,7 @@ export class TetrisService {
             reward: tetris.reward,
             created_at: new Date(),
         });
+
+        await this.attemptRepository.save(attempt);
     }
 }
