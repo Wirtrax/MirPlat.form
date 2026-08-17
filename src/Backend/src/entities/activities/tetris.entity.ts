@@ -6,5 +6,11 @@ export class Tetris {
     id: number;
 
     @Column()
+    name: string;
+
+    @Column()
+    reward: number;
+
+    @Column()
     photo_example_link: string;
 }
