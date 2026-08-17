@@ -41,43 +41,19 @@ export class QuizService {
             order: {id: 'ASC'}
         });
     }
-    async sendAndCheckAnswer(quizId: number, userid: number, user_answer: string[]): Promise<Result> {
-        const questions = await this.quizQuestionRepo.find({
-            where: {quiz: {id: quizId}},
-            select: {answer_text: true},
-            order: {id: 'ASC'}
-        });
+    async sendAnswer(quizId: number, userid: number): Promise<{ reward: number }> {
 
-        const reward = await this.quizRepo.findOneBy({id: quizId});
+    const quiz = await this.quizRepo.findOneBy({ id: quizId });
 
-        if(!reward) {
-            throw new NotFoundException('Данные о награде не найдены');
-        }
-
-        const questionsCount = await this.quizQuestionRepo.count({where: {quiz: {id: quizId}}});
-
-        let correctAnswersCount = 0;
-
-        const normalize = (s: string) => s.trim().toLowerCase();
-
-        questions.forEach((question, index) => { 
-            if(normalize(question.answer_text) === normalize(user_answer[index]))
-                correctAnswersCount++
-        });
-
-        if(correctAnswersCount === questionsCount) {
-
-            await this.dataSource.transaction(async manager => {
-                await createAttempt(manager, quizId, reward.reward, userid);
-                await manager.increment(User, {id: userid}, 'balance', reward.reward);
-            })
-
-        return { text_result: QuizResultnEnum.ACCEPT, reward: reward.reward };
-        }
-        else {
-            return{ text_result: QuizResultnEnum.REJECT, reward: 0}
-        }
+    if (!quiz) {
+        throw new NotFoundException('Квиз не найден');
     }
 
-    
+    await this.dataSource.transaction(async manager => {
+        await createAttempt(manager, userid, quizId, quiz.reward);
+        await manager.increment(User, { id: userid }, 'balance', quiz.reward);
+    });
+
+    return { reward: quiz.reward };
+} 
 }
