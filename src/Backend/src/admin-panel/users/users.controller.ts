@@ -12,32 +12,32 @@ import { ChangeBalanceDto } from './userDto/changeBalanceDto';
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-        @UseGuards(JwtGuard, RolesGuard)
-        @Get()
+        //@UseGuards(JwtGuard, RolesGuard)
+        //@Get()
         getAllUsers() {
             return this.usersService.getAllUsers();
         }
 
-        @UseGuards(JwtGuard, RolesGuard)
-        @Post()
+        //@UseGuards(JwtGuard, RolesGuard)
+        //@Post()
         addNewUser(@Body() dto: CreateUserDto) {
             return this.usersService.addNewUser(dto);
         }
 
-        @UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
-        @Delete(':id')
+        //@UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
+        //@Delete(':id')
         deleteUser(@Param('id', ParseIntPipe) id: number) {
             return this.usersService.deleteUser(id);
         }
         
-        @UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
-        @Patch(':id')
+        //@UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
+        //@Patch(':id')
         updateUser(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
             return this.usersService.updateUser(id, dto);
         }
 
-        @UseGuards(JwtGuard, RolesGuard)
-        @Patch(':id/balance')
+        //@UseGuards(JwtGuard, RolesGuard)
+        //@Patch(':id/balance')
         changeBalance(@Param('id', ParseIntPipe) id: number,@Body() dto: ChangeBalanceDto) {
             return this.usersService.changeBalance(id, dto.amount);
         }

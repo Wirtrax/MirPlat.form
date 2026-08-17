@@ -5,6 +5,7 @@ import { ItemsModule } from './items/items.module';
 import { OrderModule } from './order/orders.module';
 import { AttemptsModule } from './attempts/attempts.module';
 import { AuthModule } from './auth/auth.module';
+import { ExcelExportModule } from './excel-export/excel-export.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './auth/auth.module';
     OrderModule,
     AttemptsModule,
     AuthModule,
+    ExcelExportModule
   ],
 })
 export class AdminPanelModule {}

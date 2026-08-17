@@ -8,14 +8,14 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 export class OrderController {
     constructor(private readonly orderService: OrderService) {}
 
-    @UseGuards(JwtGuard, RolesGuard)
-    @Get()
+    //@UseGuards(JwtGuard, RolesGuard)
+    //@Get()
     getAllOrders() {
         return this.orderService.getAllOrders();
     }
 
-    @UseGuards(JwtGuard, RolesGuard)
-    @Get('details')
+    //@UseGuards(JwtGuard, RolesGuard)
+    //@Get('details')
     getDetailedReport(
         @Query('userId', ParseIntPipe) userId: number, 
         @Query('itemId', ParseIntPipe) itemId: number
@@ -23,8 +23,8 @@ export class OrderController {
         return this.orderService.getPurchaseDetails(userId, itemId);
     }
 
-    @UseGuards(JwtGuard, RolesGuard)
-    @Patch(':id/status')
+    //@UseGuards(JwtGuard, RolesGuard)
+    //@Patch(':id/status')
     updateStatus(
         @Param('id', ParseIntPipe) id: number, 
         @Body('status') status: PurchaseStatus
