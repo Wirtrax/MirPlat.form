@@ -8,4 +8,5 @@ export const ROUTES = {
     TETRIS: '/tetris',
     PHOTO_CHECK: '/photo_check',
     FOUR_BY_FOUR: '/four_by_four',
+    QUIZ: '/quiz'
 } as const;

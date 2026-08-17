@@ -17,12 +17,14 @@ import { ROUTES } from './routes/routes';
 import TetrisPage from './components/Activity/Tetris/TetrisPage';
 import PhotoCheckPage from './components/Activity/PhotoCheck/PhotoCheckPage';
 import FourByFourPage from './components/Activity/FourByFour/FourByFourPage';
+import QuizPage from './components/Activity/Quiz/QuizPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route element={<PublicRoute />}>
         <Route path={ROUTES.REGISTRATION} element={<Registration />} />
+        <Route path={ROUTES.QUIZ} element={<QuizPage />} />
       </Route>
 
       <Route element={<ProtectedRoute />}>
@@ -30,6 +32,7 @@ const router = createBrowserRouter(
         <Route path={ROUTES.TETRIS} element={<TetrisPage />} />
         <Route path={ROUTES.PHOTO_CHECK} element={<PhotoCheckPage />} />
         <Route path={ROUTES.FOUR_BY_FOUR} element={<FourByFourPage />} />
+      
 
         <Route path={ROUTES.HOME} element={<Root />}>
           <Route index element={<MainPage />} />
