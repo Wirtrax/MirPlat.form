@@ -9,13 +9,13 @@ export class OrderController {
     constructor(private readonly orderService: OrderService) {}
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Get()
+    @Get()
     getAllOrders() {
         return this.orderService.getAllOrders();
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Get('details')
+    @Get('details')
     getDetailedReport(
         @Query('userId', ParseIntPipe) userId: number, 
         @Query('itemId', ParseIntPipe) itemId: number
@@ -24,7 +24,7 @@ export class OrderController {
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Patch(':id/status')
+    @Patch(':id/status')
     updateStatus(
         @Param('id', ParseIntPipe) id: number, 
         @Body('status') status: PurchaseStatus

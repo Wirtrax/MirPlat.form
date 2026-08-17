@@ -14,13 +14,13 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     //@Public()
-    //@Post('login')
+    @Post('login')
     login(@Body() dto: LoginDto) {
         return this.authService.login(dto.login, dto.password);
     }
 
     //@UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
-    //@Post('register')
+    @Post('register')
     register(@Body() dto: LoginDto) {
         return this.authService.register(dto.login, dto.password);
     }
