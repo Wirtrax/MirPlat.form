@@ -4,10 +4,12 @@ import mascot from '../../../assets/mascot/mascotWithQuestion.webp'
 
 import { useState } from 'react';
 import { QUIZ_QUESTIONS } from '../../../mock/quiz';
+import { normalizeAnswer } from '../../../utils/normalizeAnswer';
 
 import ActivityLayout from "../ActivityLayout/ActivityLayout";
 import QuizStep from './QuizStep';
 import QuizSuccess from './QuizSuccess';
+
 
 const QUIZ_RESULT_KEY = 'quizResult';
 
@@ -19,13 +21,6 @@ export default function QuizPage() {
     )
 
     const currentQuestion = QUIZ_QUESTIONS[currentStep];
-
-    const normalizeAnswer = (value: string) => {
-        return value
-            .trim()
-            .toLocaleLowerCase('ru-RU')
-            .replace(/\s+/g, ' ');
-    }
 
     const handleFinishQuiz = (finalAnswers: string[]) => {
         const isAllCorrect = QUIZ_QUESTIONS.every((question, index) => {
@@ -67,15 +62,11 @@ export default function QuizPage() {
             title="Квиз"
             description='Исследуй социальные сети Мир Plat.Form, ответь на 3 вопроса и получи «Приветы»!'
         >
-            {currentQuestion ? (
-                <QuizStep
-                    key={currentQuestion.id}
-                    data={currentQuestion}
-                    onNext={handleNextStep}
-                />
-            ) : (
-                <div>Квиз пройден! Ожидайте результаты...</div>
-            )}
+            <QuizStep
+                key={currentQuestion.id}
+                data={currentQuestion}
+                onNext={handleNextStep}
+            />
 
             <div className={s['game__mascot-container']}>
                 <img className={s['game__mascot-img']} src={mascot} alt='smile mascot' />

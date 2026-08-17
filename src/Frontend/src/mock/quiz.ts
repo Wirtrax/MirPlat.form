@@ -34,6 +34,6 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         buttonText: 'ПЕРЕЙТИ НА САЙТ',
         buttonLink: import.meta.env.VITE_SITE_URL,
         inputPlaceholder: 'Введи город...',
-        correctAnswer: ['томск', 'в томске'],
+        correctAnswer: ['томск', 'в томске'], 
     },
 ];

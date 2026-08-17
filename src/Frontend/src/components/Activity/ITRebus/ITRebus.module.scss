@@ -1,0 +1,53 @@
+.rebus__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: rem(39) rem(29);
+}
+
+.rebus__question {
+    background-color: var(--color-light);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 4px 0 rgba(20, 66, 204, 0.3);
+    background: var(--color-light);
+
+    padding: rem(79) rem(36);
+    margin-bottom: rem(29);
+
+    font-weight: 500;
+    font-size: rem(45);
+    line-height: 110%;
+    text-align: center;
+    color: var(--color-dark-30);
+}
+
+.rebus__span {
+    margin-bottom: rem(5);
+    line-height: 120%;
+}
+
+.rebus__input {
+    text-align: center;
+    width: rem(257);
+    height: rem(35);
+}
+
+.rebus__submit-btn {
+    margin-top: rem(-22);
+    line-height: 110%;
+}
+
+.rebus__status--correct {
+    color: var(--color-light-blue);
+    margin-top: rem(-5);
+}
+
+.rebus__status--error {
+    color: var(--color-red);
+}
+
+.rebus__result {
+    padding: rem(66) rem(27);
+}
+

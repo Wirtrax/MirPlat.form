@@ -96,7 +96,7 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'загрузить фото',
     gameAvatar: gameAvatar,
-    link: '/rebus',
+    link: ROUTES.IT_REBUS,
 
     positionSquare: 'top-left',
     mainSize: 76,
@@ -113,7 +113,7 @@ export const activitiesMock: Activity[] = [
     ],
     buttonText: 'пройти квиз',
     gameAvatar: gameAvatar,
-    link: '/quiz',
+    link: ROUTES.QUIZ,
 
     positionSquare: 'bottom-right',
     mainSize: 95,
