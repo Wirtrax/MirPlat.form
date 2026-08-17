@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Tetris } from 'src/entities/activities/tetris.entity';
 import { Activity  } from 'src/entities/activity.entity';
 import { Attempt, AttemptStatus } from 'src/entities/attempt.entity';
+import { createAttempt } from '../helpers/attempt.helper';
 
 @Injectable()
 export class TetrisService {

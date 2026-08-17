@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { ItemModule } from './item/item.module';
 import { AuthModule } from './auth/auth.module';
+import { ActivitiesModule } from './activities/activities.module';
 import { PurchaseModule } from './purchase/purchase.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
@@ -26,6 +27,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     UserModule,
     ItemModule,
     AuthModule,
+    ActivitiesModule,
     ],
   controllers: [AppController],
   providers: [AppService],
