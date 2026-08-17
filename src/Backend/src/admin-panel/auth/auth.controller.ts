@@ -4,9 +4,15 @@ import { Public } from './decorators/public.decorator';
 import { SuperAdminGuard } from './guards/super-admin.guard';
 import { JwtGuard } from './guards/jwt.guard';
 import { RolesGuard } from './guards/roles.guard';
+import { IsAlpha, IsNotEmpty, IsString } from 'class-validator';
 
 export class LoginDto {
+    @IsString()
+    @IsNotEmpty()
     login!: string;
+
+    @IsString()
+    @IsNotEmpty()
     password!: string;
 }
 @Controller('auth')
