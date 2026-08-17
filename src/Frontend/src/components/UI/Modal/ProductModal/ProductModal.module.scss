@@ -1,0 +1,45 @@
+.product {
+    max-width: rem(214);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    &__title--modal {
+        color: inherit;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        word-break: break-all;
+        text-align: center;
+        margin-top: rem(10);
+    }
+
+    &__price-block--modal {
+        display: flex;
+        align-items: center;
+        column-gap: rem(5);
+
+        margin-block: rem(7);
+    }
+
+    &__deficit--modal {
+        text-align: center;
+        margin-bottom: rem(25);
+    }
+
+    &__qr-block--modal {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    &__qr--modal {
+        background: #fff;
+    }
+
+    &__qr-hint--modal {
+        margin-block: rem(21);
+        color: var(--color-dark-30);
+        text-align: center;
+    }
+}

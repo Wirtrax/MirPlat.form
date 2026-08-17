@@ -1,3 +1,4 @@
+import type { createOrderResponse, Product } from '../shop/shopType';
 export interface CreateUser {
   first_name: string;
   last_name: string;
@@ -15,6 +16,8 @@ export interface User extends CreateUser {
   balance: number;
   is_admin: boolean;
   profile_picture: string;
+  purchases: createOrderResponse[];
+  attempts: any[];
 }
 
 export interface UserState {

@@ -11,22 +11,22 @@ import Instruction from './components/Instructions/Instruction';
 import MainPage from './components/MainPage/MainPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
-
-const DEV_AUTH = true;
+import Shop from './components/Shop/Shop';
+import { ROUTES } from './routes/routes';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route element={<PublicRoute />}>
-        <Route path="registration" element={<Registration />} />
+        <Route path={ROUTES.REGISTRATION} element={<Registration />} />
       </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route path="instruction" element={<Instruction />} />
-        <Route path="/" element={<Root />}>
+        <Route path={ROUTES.INSTRUCTION} element={<Instruction />} />
+        <Route path={ROUTES.HOME} element={<Root />}>
           <Route index element={<MainPage />} />
-          <Route path="main" element={<MainPage />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path={ROUTES.PROFILE} element={<Profile />} />
+          <Route path={ROUTES.SHOP} element={<Shop />} />
         </Route>
       </Route>
     </>
@@ -34,26 +34,24 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const initApp = async () => {
       try {
         if (import.meta.env.DEV) {
-          if (DEV_AUTH) {
-            await dispatch(devLoginUser()).unwrap()
-          }
+          await dispatch(devLoginUser()).unwrap()
         } else {
           await dispatch(loginUser()).unwrap()
           await dispatch(fetchUser()).unwrap()
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
 
-    initApp()
-  }, [dispatch])
+    initApp();
+  }, [dispatch]);
 
   return <RouterProvider router={router}></RouterProvider>;
 }
