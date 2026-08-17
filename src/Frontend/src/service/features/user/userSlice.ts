@@ -18,6 +18,7 @@ export const createUser = createAsyncThunk('user/createUser', async (user: Creat
   const data = await postUser(user);
   return data;
 });
+
 export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   const data = await getUser();
   return data;
@@ -47,11 +48,6 @@ const userSlice = createSlice({
       .addCase(devLoginUser.pending, (state) => {
         state.status = 'loading';
       })
-
-      .addCase(devLoginUser.fulfilled, (state, action) => {
-        state.status = 'success';
-        state.user = action.payload;
-      })
       .addCase(createUser.fulfilled, (state, action) => {
         state.status = 'success';
         state.user = action.payload;
@@ -60,13 +56,11 @@ const userSlice = createSlice({
         state.status = 'success';
         state.user = action.payload;
       })
-
-      .addCase(fetchUser.rejected, (state, action) => {
-        state.status = 'failed';
-        state.user = null;
-        state.error = action.error.message ?? null;
+      .addCase(devLoginUser.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.user = action.payload;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(fetchUser.rejected, (state, action) => {
         state.status = 'failed';
         state.user = null;
         state.error = action.error.message ?? null;
@@ -75,6 +69,11 @@ const userSlice = createSlice({
         state.status = 'failed';
         state.user = null;
         state.error = action.error.message ?? 'Dev auth failed';
+      })
+        .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed';
+        state.user = null;
+        state.error = action.error.message ?? null;
       });
   },
 });

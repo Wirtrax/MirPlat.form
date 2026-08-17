@@ -34,6 +34,11 @@ const validationSchema = Yup.object({
   fio: Yup.string()
     .matches(/^[А-ЯЁа-яё\s-]+$/, 'ФИО может содержать только буквы')
     .min(5, 'введите полное ФИО')
+    .test('has-spaces', 'введите фамилию, имя и отчество через пробел', (value) => {
+      if (!value) return false;
+      const words = value.trim().split(/\s+/);
+      return words.length >= 2;
+    })
     .required('введите ФИО'),
   phone: Yup.string()
     .matches(/^\+7 \d{3}-\d{3}-\d{2}-\d{2}$/, 'введите корректный номер телефона')

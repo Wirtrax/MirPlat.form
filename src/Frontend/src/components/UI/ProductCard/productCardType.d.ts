@@ -1,6 +1,9 @@
+import type { Product } from '../../../service/features/shop/shopType';
 import type { Purchase } from '../../Profile/profileType';
 export type productCardType = {
-  purchase: Purchase;
-  withPrice: boolean;
-  hasBuy: boolean;
+  purchase: Product;
+  withPrice?: boolean;
+  hasBuy?: boolean;
+  received?: boolean;
+  onClick?: () => void;
 };

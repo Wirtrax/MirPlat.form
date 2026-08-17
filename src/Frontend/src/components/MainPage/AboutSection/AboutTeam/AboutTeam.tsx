@@ -20,18 +20,21 @@ export default function AboutTeam() {
         обеспечиваем удобные и безопасные платежи с помощью биоэквайринга и универсальных QR-кодов.
       </div>
       <div className={s.icons}>
-        <Link to={'https://mir-platform.ru/'}>
+        <a href={import.meta.env.VITE_SITE_URL} target="_blank" rel="noreferrer">
           <Site_Icon />
-        </Link>
-        <Link to={'https://vk.com/mir_plat.form'}>
+        </a>
+
+        <a href={import.meta.env.VITE_VK_URL} target="_blank" rel="noreferrer">
           <VK_Icon />
-        </Link>
-        <Link to={'https://habr.com/ru/specials/978610/'}>
+        </a>
+
+        <a href={import.meta.env.VITE_HABR_URL} target="_blank" rel="noreferrer">
           <Habr_Icon />
-        </Link>
-        <Link to={'https://t.me/mir_platform'}>
+        </a>
+
+        <a href={import.meta.env.VITE_TELEGRAM_URL} target="_blank" rel="noreferrer">
           <TG_Icon />
-        </Link>
+        </a>
       </div>
     </div>
   );

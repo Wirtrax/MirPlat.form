@@ -10,8 +10,9 @@ import LevelIcon from '../../assets/profile/contacts/level.svg?react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
+import { useState } from 'react';
 import { useAppSelector } from '../../hooks/redux';
-
+import { ROUTES } from '../../routes/routes';
 
 import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard';
 import Button from '../UI/Button/Button';
@@ -19,12 +20,17 @@ import ProductCard from '../UI/ProductCard/ProductCard';
 import Background from '../UI/Background/Background';
 import Loader from '../UI/Loader/Loader';
 
+import Modal from '../UI/Modal/Modal';
+import ProductModal from '../UI/Modal/ProductModal/ProductModal';
+
 import type { ProfileInfoCardProps } from './profileType';
+import type { createOrderResponse } from '../../service/features/shop/shopType';
 
 export default function Profile() {
   console.log('Рендер компонента Profile');
 
   const { user, status } = useAppSelector((state) => state.user);
+  const [selectedPurchase, setSelectedPurchase] = useState<createOrderResponse | null>(null);
 
   if (status === 'loading' || status === 'idle') {
     return <Loader />;
@@ -32,7 +38,10 @@ export default function Profile() {
   if (!user) {
     return <div>Данные не найдены</div>;
   }
-  const purchases: any[] = (user as any).purchases || [];
+
+  const purchases: createOrderResponse[] = user.purchases || [];
+
+  console.log(purchases);
 
   const fullName = `${user?.last_name} ${user?.first_name} ${user?.patronym}`.trim();
   const contactCardData: ProfileInfoCardProps = {
@@ -75,7 +84,7 @@ export default function Profile() {
     <Background variant="minimal">
       <main className={clsx(s['profile'], 'container')}>
         <nav className={s['profile__nav']}>
-          <Link to={'/'}>
+          <Link to={ROUTES.HOME}>
             <span className={s['profile__nav-arrow']}> </span>
             <span className={s['profile__nav-link']}>на главную</span>
           </Link>
@@ -116,18 +125,35 @@ export default function Profile() {
           {purchases.length > 0 ? (
             <div role="list" className={s['profile__purchases-list']}>
               {purchases.map((purchase, index) => (
-                <ProductCard key={index} purchase={purchase} withPrice={true} hasBuy={true} />
+                <ProductCard
+                  key={purchase.id ?? index}
+                  purchase={purchase.item}
+                  withPrice={false}
+                  hasBuy={true}
+                  received={purchase.status === 'received'}
+                  onClick={() => setSelectedPurchase(purchase)}
+                />
               ))}
             </div>
           ) : (
             <p className={s['profile__empty-text']}>Пока тут ничего нет...</p>
           )}
 
-          <Link to={'/'}>
+          <Link to={ROUTES.SHOP}>
             <Button className={s['profile__shop-btn']}>В МАГАЗИН</Button>
           </Link>
         </div>
       </main>
+
+      {selectedPurchase && (
+        <Modal onClose={() => setSelectedPurchase(null)}>
+          <ProductModal
+            src={selectedPurchase.item?.image}
+            title={selectedPurchase.item?.name}
+            code={selectedPurchase.code}
+          />
+        </Modal>
+      )}
     </Background>
   );
 }
