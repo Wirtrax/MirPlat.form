@@ -12,6 +12,11 @@ export class QuizController {
     @Post('quiz')
     sendReward(@Req() request) {
         const userId = request['userId'];
-        return this.quizService.sendReward(userId);
+        try {
+            return this.quizService.sendReward(userId);
+        }
+        catch(error) {
+            'Вознила непридвиденная ошибка';
+        }
 }
 }
