@@ -13,7 +13,7 @@ export default function ProtectedRoute() {
   if (!user && (status === 'loading' || status === 'idle')) return <Loader  className={s.height} />;
 
   if (!user) {
-    return <Navigate to={ROUTES.REGISTRATION} replace />;
+    return <Navigate to={ROUTES.HOME} replace />;
   }
 
   return <Outlet />;
