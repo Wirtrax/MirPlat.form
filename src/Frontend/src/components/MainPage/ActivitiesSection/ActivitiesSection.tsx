@@ -13,7 +13,7 @@ export default function ActivitiesSection() {
   const [openCard, setOpenCard] = useState<string | null>(null);
 
   return (
-    <section className={clsx('container', s.wrapper)}>
+    <section className={clsx('container', s.wrapper)} id='activities'>
       <div className={s.header}>
         <h2 className={s.title}>Активности</h2>
         <Link to={ROUTES.ACTIVITIES}>

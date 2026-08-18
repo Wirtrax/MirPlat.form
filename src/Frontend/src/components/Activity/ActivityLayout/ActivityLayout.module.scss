@@ -1,0 +1,54 @@
+.wrapper {
+    padding-top: rem(70);
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-height: 100vh;
+}
+
+.title {
+    margin-bottom: rem(20);
+
+    font-weight: 700;
+    font-size: rem(32);
+    text-align: center;
+}
+
+.close {
+    &-icon {
+        position: absolute;
+        top: rem(25);
+        right: rem(25);
+
+        cursor: pointer;
+
+        transition: opacity 0.2s ease, transform 0.2s ease;
+
+        &:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+
+        svg {
+            display: block;
+
+        }
+    }
+}
+
+.description {
+    line-height: 120%;
+
+    margin-bottom: rem(20);
+}
+
+.activity__button {
+    line-height: 110%;
+}

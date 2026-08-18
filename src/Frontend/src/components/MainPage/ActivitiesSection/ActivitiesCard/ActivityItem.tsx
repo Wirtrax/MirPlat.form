@@ -13,13 +13,15 @@ export default function ActivityItem({ card, isOpen, setOpenCard }: ActivityItem
     switch (id) {
       case 'tetris':
         return s.squareTetris;
-      case 'transactions':
+      case 'photo_check':
         return s.squareTransactions;
-      case 'photo_booth':
+      case 'four_by_four':
         return s.squarePhoto;
-      case 'qr':
+      case 'find_error':
         return s.squareQr;
-      case 'quiz':
+      case 'rebus':
+        return s.squareQr;
+      case 'quiz': 
         return s.squareQuiz;
       default:
         return '';
