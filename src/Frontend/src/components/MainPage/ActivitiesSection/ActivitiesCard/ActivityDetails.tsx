@@ -1,12 +1,17 @@
 import s from './ActivitiesCard.module.scss';
 
+import { Link, useNavigate } from 'react-router-dom';
+
 import Coin from '../../../../assets/interface/coin.svg?react';
 
 import Button from '../../../UI/Button/Button';
 
 import type { ActivityDetailsProps } from './ActivitiesCard.types';
+import { ROUTES } from '../../../../routes/routes';
+
 
 export default function ActivityDetails({ card }: ActivityDetailsProps) {
+  const navigate= useNavigate()
   return (
     <div className={s.openContent}>
       <p className={s.reward}>
@@ -20,9 +25,9 @@ export default function ActivityDetails({ card }: ActivityDetailsProps) {
 
         <p className={s.secondParagraph}>{card.description[1]}</p>
 
-        <div className={s.buttonWrapper}>
-          <Button className={s.btn}>{card.buttonText}</Button>
-        </div>
+        <Link to={card.link} className={s.buttonWrapper}>
+          <Button onClick={()=>navigate(ROUTES.TETRIS)} className={s.btn}>{card.buttonText}</Button>
+        </Link>
       </div>
     </div>
   );

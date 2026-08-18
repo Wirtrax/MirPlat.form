@@ -1,0 +1,131 @@
+.game {
+    &__rules-card {
+        margin-top: rem(47);
+        padding: rem(43) rem(19);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background: var(--color-light);
+        border-radius: rem(25);
+    }
+
+    &__rules-title {
+        font-size: rem(20);
+        color: var(--color-blue);
+
+        margin-bottom: rem(22);
+    }
+
+    &__rules-list {
+        margin: 0;
+        padding-left: rem(19);
+    }
+
+    &__rules-item {
+        font-size: rem(14);
+        line-height: 120%;
+        color: var(--color-dark);
+    }
+
+    &__rules-action {
+        line-height: 110%;
+        margin-top: rem(49);
+    }
+
+    &__success-card {
+        padding: rem(64) rem(55);
+
+        position: relative;
+    }
+
+    &__mascot-container {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 100%;
+        max-width: rem(315);
+        height: rem(228);
+
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    &__mascot-img {
+        width: 100%;
+        height: auto;
+        display: block;
+
+        object-fit: cover;
+        object-position: top center;
+    }
+
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: rem(4);
+
+        width: calc(100% + rem(45));
+        max-width: rem(360);
+
+        margin-top: rem(12);
+        margin-bottom: rem(35);
+        box-sizing: border-box;
+    }
+
+    &__card {
+        width: 100%;
+        aspect-ratio: 87 / 114;
+
+        backdrop-filter: blur(18.20918083190918px);
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: rem(8);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+
+        &:active {
+            transform: scale(0.95);
+        }
+
+        &--selected {
+            background: var(--color-accent);
+            transform: scale(0.98);
+        }
+
+        &--error {
+            background: var(--color-accent-inactive);
+        }
+    }
+
+    &__card-icon {
+        width: rem(45);
+        height: rem(45);
+
+        opacity: 0;
+        // visibility: hidden;
+
+        transition:
+            opacity 0.2s ease,
+            visibility 0.2s ease;
+    }
+
+    &__card-icon--visible {
+        opacity: 1;
+        // visibility: visible;
+    }
+
+    &__timer {
+        &.game__timer {
+            margin-bottom: rem(20);
+        }
+    }
+}

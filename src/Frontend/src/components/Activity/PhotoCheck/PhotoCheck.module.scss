@@ -1,0 +1,54 @@
+.booth__photo-area {
+    width: rem(315);
+    height: rem(430);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: rem(30);
+}
+
+.booth__upload {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.booth__upload-text {
+    margin-top: rem(22);
+
+    font-weight: 500;
+}
+
+.booth__input {
+    display: none;
+}
+
+.booth__photo-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: rem(41) rem(12);
+
+    background-color: var(--color-light);
+    border-radius: rem(25);
+    box-shadow: 0 0 6px 0 rgba(21, 67, 205, 0.2);
+}
+
+.booth__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    border-radius: rem(25);
+}
+
+.resultCard__photoCheck{
+    padding: rem(110) rem(55) rem(106) rem(55);
+}

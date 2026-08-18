@@ -19,7 +19,7 @@ interface AuthResponse {
 // }
 
 const getInitData = (): string => {
-  return window.Telegram?.WebApp?.initData || '';
+  return window.Telegram?.WebApp?.initData || 'devtest1';
 };
 
 export const login = async () => {
