@@ -1,3 +1,4 @@
+import { type QuizResultResponse, type PhotoCheckResponse, type TetrisLinkResponse, type TetrisSubmitResponse, type QuizSubmitRequest } from './features/activity/activitySliceType';
 import type { createOrderResponse, Product } from './features/shop/shopType';
 import type { CreateUser, User } from './features/user/userType';
 
@@ -78,3 +79,46 @@ export const createOrder = (id: number): Promise<createOrderResponse> => {
   });
 };
 
+export const getTetrisLink = () => {
+  return request<TetrisLinkResponse>('/activities/tetris', {
+    method: 'GET',
+  });
+};
+
+export const sendTetrisPhoto = (photo_link: string) => {
+  return request<TetrisSubmitResponse>('/activities/tetris', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ photo_link }),
+  });
+};
+
+export const sendPhotoCheck = (flag: boolean) => {
+  return request<PhotoCheckResponse>('/activities/send', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ flag }),
+  });
+};
+
+export const completeQuiz = (flag: boolean) => {
+  const data: QuizSubmitRequest = { flag };
+
+  return request('/activities/quiz', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+};
+
+export const getQuizResult = () => {
+  return request<QuizResultResponse>('/activities/quiz/status', {
+    method: 'GET',
+  });
+}
