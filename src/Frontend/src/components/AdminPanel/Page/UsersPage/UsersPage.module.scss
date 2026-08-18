@@ -1,0 +1,54 @@
+.table {
+    &__initials {
+        display: flex;
+        align-items: center;
+        gap: rem(10);
+
+        &-letter {
+            padding: rem(10);
+            border-radius: rem(10);
+            color: var(--color-light);
+            font-weight: 500;
+        }
+
+        &-name {
+            display: block;
+            font-weight: 600;
+        }
+
+        &-patronym {
+            color: var(--color-gray-60);
+        }
+    }
+
+    &__programming-level {
+        padding: rem(4) rem(6);
+        background-color: var(--color-gray-80);
+        border-radius: rem(6);
+        font-weight: 500;
+        font-size: rem(13);
+    }
+
+    &__contacts {
+        &-email {
+            display: block;
+            font-weight: 450;
+        }
+
+        &-phone {
+            color: var(--color-gray-60);
+        }
+    }
+
+    &__role {
+        color: var(--color-gray-60);
+
+        &--admin {
+            color: var(--color-dark-blue);
+            font-weight: 500;
+            padding: rem(6);
+            border-radius: rem(6);
+            background-color: var(--color-super-light-blue);
+        }
+    }
+}

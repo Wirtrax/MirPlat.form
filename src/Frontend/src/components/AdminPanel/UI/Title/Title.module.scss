@@ -1,0 +1,15 @@
+.title-block {
+    display: grid;
+    gap: rem(5);
+
+    &__main-title {
+        color: var(--color-dark);
+        font-size: rem(26);
+        text-transform: capitalize;
+    }
+
+    &__subtitle {
+        color: var(--color-gray-60);
+        font-size: rem(14);
+    }
+}

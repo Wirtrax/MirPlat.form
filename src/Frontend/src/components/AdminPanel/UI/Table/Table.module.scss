@@ -1,0 +1,77 @@
+.table {
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: rem(16);
+    box-shadow: 0 rem(2) rem(8) rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+
+    &__header {
+        padding: rem(24) rem(32) rem(16) rem(32);
+        border-bottom: rem(1) solid #f0f0f0;
+        display: flex;
+        align-items: center;
+        gap: rem(10);
+
+    }
+
+    &__title {
+        margin: 0;
+        font-size: rem(22);
+        font-weight: 600;
+        color: #1a1a1a;
+    }
+
+    &__count {
+        color: var(--color-gray-60);
+        font-weight: 500;
+    }
+
+    &__wrapper {
+        overflow-x: auto;
+        padding: 0 rem(8) rem(8) rem(8);
+    }
+
+    &__grid {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: rem(14);
+    }
+
+    &__head {
+        background: #fafafa;
+
+        .table__row {
+            border-bottom: rem(2) solid #e8e8e8;
+        }
+
+        .table__cell {
+            padding: rem(14) rem(16);
+            text-align: left;
+            font-weight: 600;
+            font-size: rem(12);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #8c8c8c;
+            white-space: nowrap;
+        }
+    }
+
+    &__row {
+        transition: background-color 0.2s ease;
+        border-bottom: rem(1) solid #f0f0f0;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:hover {
+            background-color: #F7F9FF;
+        }
+    }
+
+    &__cell {
+        padding: rem(16);
+        color: #262626;
+        vertical-align: middle;
+    }
+}

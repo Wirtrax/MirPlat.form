@@ -1,0 +1,13 @@
+.search {
+    display: flex;
+    gap: rem(20);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: rem(20);
+    margin-block: rem(28);
+}

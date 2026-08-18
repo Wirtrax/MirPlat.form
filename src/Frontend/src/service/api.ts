@@ -31,7 +31,7 @@ export const login = async () => {
     },
   });
   setAuthToken(data.token);
-  return data
+  return data;
 };
 
 export const logout = () => {
@@ -78,3 +78,49 @@ export const createOrder = (id: number): Promise<createOrderResponse> => {
   });
 };
 
+// admin data --------------------------
+interface adminLoginReaponse {
+  access_token: string;
+}
+export const adminLogin = async (login: string, password: string) => {
+  const data = await request<adminLoginReaponse>(
+    '/auth/login',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ login, password }),
+    },
+    'admin'
+  );
+  setAuthToken(data.access_token);
+  console.log(data);
+  return data;
+};
+
+export const getUsers = () => {
+  return request<User[]>(
+    '/users',
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    },
+    'admin'
+  );
+};
+
+export const getItems = () => {
+  return request<Product[]>(
+    '/items',
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    },
+    'admin'
+  );
+};
