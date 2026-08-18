@@ -10,37 +10,37 @@ export class ItemsController {
     constructor (private readonly itemsService: ItemsService) {}
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Get()
+    @Get()
     getAllItems(){
         return this.itemsService.getAllItems();
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Get('images')
+    @Get('images')
     getImages() {
         return this.itemsService.getImages();
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Patch(':id/hide')
+    @Patch(':id/hide')
     hideItem(@Param('id', ParseIntPipe) id: number) {
         return this.itemsService.hideItem(id);
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Patch(':id')
+    @Patch(':id')
     updateItem(@Param('id', ParseIntPipe) id: number, @Body() updateItemDto:UpdateItemDto  ){
         return this.itemsService.updateItem(id, updateItemDto);
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Post()
+    @Post()
     addItem(@Body()createItemDto: CreateItemDto){
         return this.itemsService.addItem(createItemDto);
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Delete(':id')
+    @Delete(':id')
     deleteItem(@Param('id', ParseIntPipe) id: number) {
         return this.itemsService.deleteItem(id);
     }

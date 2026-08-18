@@ -4,23 +4,30 @@ import { Public } from './decorators/public.decorator';
 import { SuperAdminGuard } from './guards/super-admin.guard';
 import { JwtGuard } from './guards/jwt.guard';
 import { RolesGuard } from './guards/roles.guard';
+import { IsAlpha, IsNotEmpty, IsString } from 'class-validator';
 
 export class LoginDto {
+    @IsString()
+    @IsNotEmpty()
     login!: string;
+
+    @IsString()
+    @IsNotEmpty()
     password!: string;
 }
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    //@Public()
-    //@Post('login')
+    @Public()
+    @Post('login')
     login(@Body() dto: LoginDto) {
+        console.log('LOGIN dto:', JSON.stringify(dto)); 
         return this.authService.login(dto.login, dto.password);
     }
 
     //@UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
-    //@Post('register')
+    @Post('register')
     register(@Body() dto: LoginDto) {
         return this.authService.register(dto.login, dto.password);
     }

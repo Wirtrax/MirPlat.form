@@ -11,7 +11,7 @@ export class ExcelExportController {
     ) {}
 
     //@UseGuards(JwtGuard, RolesGuard)
-    //@Get('download')
+    @Get('download')
     async downloadExcel(@Res({ passthrough: true }) res: Response): Promise<StreamableFile> {
         try {
             const { buffer, filename } = await this.downloadService.getExcelFile();
