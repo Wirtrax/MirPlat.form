@@ -7,13 +7,13 @@ export interface ItRebusType {
 export const IT_REBUS: ItRebusType[] = [
     {
         id: 1,
-        question: '🐍+ "3"',
+        question: '🐍 + «3»',
         correctAnswer:['python3'],
     },
     {
         id: 2,
-        question: '🎶+🎈+ П',
-        correctAnswer: ['с#', 'c#'],
+        question: '☕ + 📜',
+        correctAnswer: ['javascript', 'js', 'java script'],
     },
     {
         id: 3,
@@ -22,17 +22,17 @@ export const IT_REBUS: ItRebusType[] = [
     },
     {
         id: 4,
-        question: '5`🎤+ 🖬',
-        correctAnswer: ['microsoft'],
+        question: '🔥 + 🦊',
+        correctAnswer: ['firefox', 'fire fox', 'файрфокс', 'фаерфокс'],
     },
     {
         id: 5,
         question: '⭐ + 🐧',
-        correctAnswer: ['astra linux'],
+        correctAnswer: ['astra linux', 'astralinux'],
     },
     {
         id: 6,
-        question: '`🏠+ `🐅+`🍄‍🟫+`💡',
-        correctAnswer: ['html'],
+        question: '🐘 + 🐬',
+        correctAnswer: ['php', 'пхп'],
     },
 ];
