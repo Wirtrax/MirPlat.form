@@ -3,14 +3,14 @@ import { PhotoCheckService } from './photo-check.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import { PhotoCheckDto } from './dto/photo-check.dto';
 
-@Controller('photo_check')
+@Controller('activities')
 export class PhotoCheckController {
     constructor(
         private readonly photoCheckService: PhotoCheckService,
     ) {}
 
     @JWTAuth()
-    @Post('send')   //TODO: Пока не знаю как назвать
+    @Post('photo_check')   //TODO: Пока не знаю как назвать
     async aclaimOrRejectPhotoCheck(
             @Req() req: Request,
             @Body() photoCheckDto: PhotoCheckDto,

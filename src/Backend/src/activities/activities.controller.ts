@@ -8,6 +8,5 @@ import { CreateTetrisAttemptDto } from './tetris/dto/create-tetris-attempt.dto';
 @Controller('activities')
 export class ActivitiesController {
     constructor(
-        private readonly tetrisService: TetrisService
     ) {}
 }
