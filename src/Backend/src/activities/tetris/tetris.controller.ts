@@ -49,6 +49,11 @@ export class TetrisController {
         } catch(error) {
             throw new InternalServerErrorException('Error during sending tetris solution');
         }
+    }
 
+    @JWTAuth()
+    @Post('tetris/status')
+    async checkAttempt(@Req() request) {
+        return this.tetrisService.checkOnReplyTetris(request['userId'])
     }
 }
