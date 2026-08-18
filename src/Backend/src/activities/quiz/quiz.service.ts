@@ -5,6 +5,7 @@ import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import { DataSource } from 'typeorm';
 import { createAttempt } from '../helpers/attempt.helper';
+import { Attempt } from 'src/entities/attempt.entity';
 
 @Injectable()
 export class QuizService {
@@ -14,6 +15,9 @@ export class QuizService {
 
         @InjectDataSource()
         private readonly dataSource: DataSource,
+
+        @InjectRepository(Attempt)
+        private readonly attemptRepo: Repository<Attempt> 
     ) {}
 
     /*async getQuestionText(quizId: number): Promise<QuizQuestion[]> {
@@ -39,5 +43,17 @@ export class QuizService {
     return { reward: quiz.reward };
     }
     
-    
+    async checkOnReply(userId: number): Promise<{ result: boolean }> {
+        const quiz = await this.quizRepo.find().then(q => q[0])
+        if (!quiz) {
+            throw new NotFoundException('Квиз не найден');
+        }
+
+        const exist = await this.attemptRepo.existsBy({
+            user: { id: userId },
+            activity: { name: quiz.name}
+        })
+
+        return {result: exist}
+    }
 }
