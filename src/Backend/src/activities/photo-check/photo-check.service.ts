@@ -50,7 +50,7 @@ export class PhotoCheckService {
         }
 
         await this.dataSource.transaction(async manager => {
-            await createAttempt(manager, user_id, activity_id, reward);
+            await createAttempt(manager, user_id, reward, photo_check.name);
             await manager.increment(User, {id: user_id}, 'balance', reward);
         })
     }

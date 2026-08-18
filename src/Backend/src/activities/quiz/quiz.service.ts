@@ -32,7 +32,7 @@ export class QuizService {
     }
 
     await this.dataSource.transaction(async manager => {
-        await createAttempt(manager, userid, quiz.id, quiz.reward);
+        await createAttempt(manager, userid, quiz.reward, quiz.name);
         await manager.increment(User, { id: userid }, 'balance', quiz.reward);
     });
 
