@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import s from './AdminLoginForm.module.scss';
-import Input from '../../UI/Input/SearchInput';
+import Input from '../../UI/Input/AdminInput';
 import AdminButton from '../../UI/AdminButton/AdminButton';
 import { adminLogin } from '../../../../service/api';
 import type { AdminLoginFormProps } from './adminLoginFormProps';

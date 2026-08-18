@@ -9,7 +9,7 @@ const SubstrateForFrom: React.FC<SubstrateForFromProps> = ({ children, title, co
   return (
     <div className={s.substrate}>
       <h3 className={s.title}>
-        {title} <span className={s.title__count}>{count}</span>
+        {title} {count && <span className={s.title__count}>{count}</span>}
       </h3>
       <div className={s.content}>{children}</div>
     </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import AdminButton from '../../UI/AdminButton/AdminButton';
-import Input from '../../UI/Input/SearchInput';
+import Input from '../../UI/Input/AdminInput';
 import Table from '../../UI/Table/Table';
 import Title from '../../UI/Title/Title';
 import type { User } from '../../../../service/features/user/userType';
@@ -10,10 +10,12 @@ import s from './UsersPage.module.scss';
 import pageStyle from '../Page.module.scss';
 import clsx from 'clsx';
 import { generateBlueGray, getFirstLetters } from '../../helper/utils';
+import { useNavigate } from 'react-router-dom';
 
 function UsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -36,7 +38,7 @@ function UsersPage() {
       title: 'ФИО',
       render: (_, item) => {
         return (
-          <span className={s['table__initials']}>
+          <span className={s['table__initials']} onClick={() => navigate(`/admin/user/${item.id}`)}>
             <span style={{ backgroundColor: generateBlueGray() }} className={s['table__initials-letter']}>
               {getFirstLetters(`${item.last_name} ${item.first_name}`)}
             </span>

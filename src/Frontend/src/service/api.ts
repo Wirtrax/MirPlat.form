@@ -1,3 +1,4 @@
+import type { OrdersState } from '../types/ordersType';
 import type { createOrderResponse, Product } from './features/shop/shopType';
 import type { CreateUser, User } from './features/user/userType';
 
@@ -120,6 +121,46 @@ export const getItems = () => {
       headers: {
         Authorization: `Bearer ${getAuthToken()}`,
       },
+    },
+    'admin'
+  );
+};
+
+export const getOrders = () => {
+  return request<OrdersState[]>(
+    '/orders',
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    },
+    'admin'
+  );
+};
+
+export const deleteUser = (id: number) => {
+  return request(
+    `/users/${id}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    },
+    'admin'
+  );
+};
+export const updateUser = (id: number, data: User) => {
+  return request(
+    `/users/${id}`,
+    {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     },
     'admin'
   );

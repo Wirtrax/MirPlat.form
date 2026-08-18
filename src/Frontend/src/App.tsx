@@ -18,6 +18,8 @@ import UsersPage from './components/AdminPanel/Page/UsersPage/UsersPage';
 import AdminLoginForm from './components/AdminPanel/Page/AdminLoginForm/AdminLoginForm';
 import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 import ItemsPage from './components/AdminPanel/Page/ItemsPage/ItemsPage';
+import OrderPage from './components/AdminPanel/Page/OrderPage/OrderPage';
+import UserPage from './components/AdminPanel/Page/UserPage/UserPage';
 
 const DEV_AUTH = true;
 
@@ -49,6 +51,8 @@ const router = createBrowserRouter(
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="/admin/users" element={<UsersPage />} />
           <Route path="/admin/items" element={<ItemsPage />} />
+          <Route path="/admin/orders" element={<OrderPage />} />
+          <Route path="/admin/user/:id" element={<UserPage />} />
         </Route>
       </Route>
     </>

@@ -1,0 +1,100 @@
+.substrate {
+    margin-block: rem(20);
+
+    &__info-wrapper {
+        display: flex;
+        align-items: center;
+        gap: rem(16);
+        margin: 0;
+        padding: rem(12) rem(16);
+        flex: 1;
+    }
+
+    &__avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: rem(48);
+        height: rem(48);
+        margin: 0;
+        background: #ffffff41;
+        border: 1px solid #ffffff;
+        border-radius: rem(8);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: rem(18);
+        text-transform: uppercase;
+        user-select: none;
+        flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    &__info-container {
+        margin: 0;
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__user-details {
+        display: flex;
+        flex-direction: column;
+        gap: rem(4);
+        margin: 0;
+    }
+
+    &__full-name {
+        margin: 0;
+        font-size: rem(16);
+        font-weight: 600;
+        color: var(--color-light);
+        line-height: 1.4;
+    }
+
+    &__details {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: rem(8);
+        font-size: rem(13);
+        color: #718096;
+        font-weight: 400;
+        flex-wrap: wrap;
+    }
+
+    &__delete-btn {
+        flex-shrink: 0;
+        padding: rem(8) rem(18);
+        background: #ffe1e1;
+        color: rgb(223, 0, 0);
+        border: none;
+        border-radius: rem(8);
+        font-size: rem(13);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: lowercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(252, 92, 125, 0.3);
+        margin-left: rem(8);
+
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(252, 92, 125, 0.4);
+            background: #ffe1e1;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: rem(20) rem(15);
+
+    &__button {
+        grid-column: span 2;
+    }
+}

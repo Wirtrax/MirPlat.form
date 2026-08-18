@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import AdminButton from '../../UI/AdminButton/AdminButton';
-import Input from '../../UI/Input/SearchInput';
+import Input from '../../UI/Input/AdminInput';
 import Table from '../../UI/Table/Table';
 import Title from '../../UI/Title/Title';
 import StatusBadge from '../../UI/StatusBadge/StatusBadge';

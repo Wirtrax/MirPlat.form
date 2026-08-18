@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import s from './Input.module.scss';
 import type { InputProps } from './InputProps';
 
-const Input: React.FC<InputProps> = ({
+const AdminInput: React.FC<InputProps> = ({
   className = '',
   label,
   type = 'text',
@@ -54,4 +54,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default AdminInput;

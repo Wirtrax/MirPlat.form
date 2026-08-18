@@ -9,7 +9,6 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 
     &:hover {
-        transform: translateY(rem(-2));
         box-shadow: 0 rem(6) rem(16) rgba(0, 0, 0, 0.15);
     }
 }
