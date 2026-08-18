@@ -4,7 +4,7 @@ import { User } from 'src/entities/user.entity';
 import { PhotoCheck } from 'src/entities/activities/photo-check.entity';
 import { Repository } from 'typeorm';
 import { DataSource } from 'typeorm';
-import { createAttempt } from '../helpers/attempt.helper';
+import { createAttempt, checkOnReply } from '../helpers/attempt.helper';
 import { Activity } from 'src/entities/activity.entity';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class PhotoCheckService {
         private readonly activityRepo: Repository<Activity>,
 
         @InjectRepository(PhotoCheck)
-        private readonly photoCheckRepo: Repository<PhotoCheck>,
+        private photoCheckRepo: Repository<PhotoCheck>,
 
         @InjectDataSource()
         private readonly dataSource: DataSource,
@@ -53,5 +53,9 @@ export class PhotoCheckService {
             await createAttempt(manager, user_id, reward, photo_check.name);
             await manager.increment(User, {id: user_id}, 'balance', reward);
         })
+    }
+
+    async checkOnReplyPhotoCheck(user_id: number) {
+        return checkOnReply(user_id, this.photoCheckRepo)
     }
 }

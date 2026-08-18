@@ -1,4 +1,4 @@
-import { EntityManager } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { Attempt, AttemptStatus } from '../../entities/attempt.entity';
 import { Activity } from 'src/entities/activity.entity';
 import { NotFoundError } from 'rxjs';
@@ -23,4 +23,21 @@ export async function createAttempt(
         created_at: new Date(),
     });
     return await manager.save(attempt);
+}
+
+export async function checkOnReply(
+    userId: number,
+    activityRepo: Repository<any>,
+): Promise<{ result: boolean }> {
+    const activity = await activityRepo.find().then(a => a[0])
+    if (!activity) {
+        throw new NotFoundException(`Активность не найдена}`);
+    }
+
+    const exist = await activityRepo.existsBy({
+        user: { id: userId },
+        activity: { name: activity.name}
+    })
+
+    return {result: exist}
 }
