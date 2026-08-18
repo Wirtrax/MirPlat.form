@@ -8,6 +8,11 @@ export enum AttemptStatus {
   DECLINED = 'declined',
 }
 
+export enum DeclineReason {
+  WRONG_PHOTO = 'wrong_photo',
+  INCORRECT_SOLUTION = 'incorrect_solution',
+}
+
 @Entity()
 export class Attempt {
   @PrimaryGeneratedColumn()
@@ -28,9 +33,12 @@ export class Attempt {
   @Column({ type: 'enum', enum: AttemptStatus })
   status: AttemptStatus;
 
+  @Column({ type: 'enum', enum: DeclineReason, nullable: true})
+  reason: DeclineReason;
+
   @Column()
   reward: number;
 
-  @CreateDateColumn()
+  @Column()
   created_at: Date;
 }

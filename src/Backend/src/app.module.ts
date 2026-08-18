@@ -8,6 +8,7 @@ import { ExcelExportModule } from './admin-panel/excel-export/excel-export.modul
 import { UserModule } from './user/user.module';
 import { ItemModule } from './item/item.module';
 import { AuthModule } from './auth/auth.module';
+import { ActivitiesModule } from './activities/activities.module';
 import { PurchaseModule } from './purchase/purchase.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
@@ -31,6 +32,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     AuthModule,
     AdminPanelModule,
     ExcelExportModule,
+    ActivitiesModule,
     ],
   controllers: [AppController],
   providers: [AppService],

@@ -26,6 +26,8 @@ export class AuthController {
             throw new ForbiddenException("User is not registred");
         }
 
+        this.userService.updateLastLoginDate(user);
+
         return {token:this.authService.generateToken(user.id)};
     }
 }
