@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException } from '@nestjs/common';
+import {ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { Quiz } from 'src/entities/activities/quiz/quiz.entity';
 import { User } from 'src/entities/user.entity';
@@ -27,7 +27,7 @@ export class QuizService {
             order: {id: 'ASC'}
         });
     }*/
-    async sendReward(userid: number): Promise<{ reward: number }> {
+    async sendReward(userId: number, success: boolean): Promise<{ reward: number }> {
 
     const quiz = await this.quizRepo.find().then(q => q[0])
 
@@ -35,9 +35,19 @@ export class QuizService {
         throw new NotFoundException('Квиз не найден');
     }
 
+    const already = await this.attemptRepo.existsBy({
+        user: { id: userId },
+        activity: { name: quiz.name },
+    });
+    if (already) throw new ForbiddenException('Активность уже пройдена');
+
+    const reward = success? quiz.reward : 0;
+
     await this.dataSource.transaction(async manager => {
-        await createAttempt(manager, userid, quiz.reward, quiz.name);
-        await manager.increment(User, { id: userid }, 'balance', quiz.reward);
+        await createAttempt(manager, userId, quiz.reward, quiz.name);
+
+        if (reward>0)
+            await manager.increment(User, { id: userId }, 'balance', reward);
     });
 
     return { reward: quiz.reward };

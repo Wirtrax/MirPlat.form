@@ -1,8 +1,9 @@
 import { Controller, Get, ParseIntPipe } from '@nestjs/common';
 import { QuizService } from './quiz.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
-import { Param, Post,} from '@nestjs/common';
+import { Body, Post,} from '@nestjs/common';
 import { Req } from '@nestjs/common';
+import { QuizResultDto } from './dto/quiz-result.dto';
 
 @Controller('activities')
 export class QuizController {
@@ -10,14 +11,10 @@ export class QuizController {
     
     @JWTAuth()
     @Post('quiz')
-    sendReward(@Req() request) {
+    sendReward(@Body() dto: QuizResultDto, @Req() request)  {
         const userId = request['userId'];
-        try {
-            return this.quizService.sendReward(userId);
-        }
-        catch(error) {
-            'Вознила непридвиденная ошибка';
-        }
+        
+        return this.quizService.sendReward(userId, dto.success);
     }
 
     @JWTAuth()
