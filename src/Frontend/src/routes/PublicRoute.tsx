@@ -13,7 +13,7 @@ export default function PublicRoute() {
     if (status === 'loading' || status === 'idle') return <Loader className={s.height} />
 
     if (user) {
-        return <Navigate to={ROUTES.HOME} replace />
+        return <Navigate to={ROUTES.INSTRUCTION} replace />
     }
 
     return <Outlet />

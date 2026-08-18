@@ -6,9 +6,13 @@ export interface TetrisSubmitResponse {
     message: string;
 }
 
-export interface PhotoCheckResponse {
+export interface PhotoCheckSubmitResponse {
     message: string;
     status: 'claimed' | 'rejected';
+}
+
+export interface PhotoCheckStatusResponse {
+    result: boolean;
 }
 
 export interface QuizSubmitRequest {
@@ -23,6 +27,7 @@ export interface ActivityState {
     tetrisLink: string | null;
 
     photoCheckStatus: 'claimed' | 'rejected' | null;
+    photoCheckCompleted: boolean | null;
 
     quizResult: boolean | null;
 

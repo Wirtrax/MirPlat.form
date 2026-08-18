@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { ActivityState } from "./activitySliceType";
-import { completeQuiz, getQuizResult, getTetrisLink, sendPhotoCheck, sendTetrisPhoto } from "../../api";
+import { completeQuiz, getPhotoCheckStatus, getQuizResult, getTetrisLink, sendPhotoCheck, sendTetrisPhoto } from "../../api";
 
 
 export const fetchTetrisLink = createAsyncThunk(
@@ -20,7 +20,14 @@ export const submitTetrisPhoto = createAsyncThunk(
 export const submitPhotoCheck = createAsyncThunk(
     'activity/submitPhotoCheck',
     async (flag: boolean) => {
-        return await sendPhotoCheck(flag)
+        return await sendPhotoCheck(flag);
+    }
+);
+
+export const fetchPhotoCheckStatus = createAsyncThunk(
+    'activity/fetchPhotoCheckStatus',
+    async () => {
+        return await getPhotoCheckStatus();
     }
 );
 
@@ -40,8 +47,12 @@ export const fetchQuizResult = createAsyncThunk(
 
 const initialState: ActivityState = {
     tetrisLink: null,
+
     photoCheckStatus: null,
+    photoCheckCompleted: null,
+
     quizResult: null,
+
     status: 'idle',
     error: null,
 }
@@ -87,10 +98,23 @@ const activitySlice = createSlice({
             .addCase(submitPhotoCheck.fulfilled, (state, action) => {
                 state.status = 'success';
                 state.photoCheckStatus = action.payload.status;
+                state.photoCheckCompleted = true;
             })
             .addCase(submitPhotoCheck.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось проверить фото';
+            })
+            .addCase(fetchPhotoCheckStatus.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchPhotoCheckStatus.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.photoCheckCompleted = action.payload.result;
+            })
+            .addCase(fetchPhotoCheckStatus.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить статус Photo Check';
             })
 
             //награда за квиз
@@ -98,7 +122,7 @@ const activitySlice = createSlice({
                 state.status = 'loading';
                 state.error = null;
             })
-            .addCase(fetchCompleteQuiz.fulfilled, (state, action) => {
+            .addCase(fetchCompleteQuiz.fulfilled, (state) => {
                 state.status = 'success';
             })
             .addCase(fetchCompleteQuiz.rejected, (state, action) => {

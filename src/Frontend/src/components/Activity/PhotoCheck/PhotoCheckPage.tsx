@@ -1,22 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhotoCheckSuccess from "./PhotoCheckSuccess";
 import PhotoCheck from "./PhotoCheck";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { fetchPhotoCheckStatus, submitPhotoCheck } from "../../../service/features/activity/activitySlice";
+import Loader from "../../UI/Loader/Loader";
 
-const PHOTO_CHECK_KEY = 'photoCheckSubmitted';
 
 export default function PhotoCheckPage() {
-    const [hasSubmittedPhoto] = useState(
-        () => localStorage.getItem(PHOTO_CHECK_KEY) === 'true'
-    )
+    const dispatch = useAppDispatch()
+    const { photoCheckCompleted } = useAppSelector(state => state.activity)
+
+    useEffect(() => {
+        dispatch(fetchPhotoCheckStatus())
+    }, [dispatch])
+
     const [isJustSubmitted, setIsJustSubmitted] = useState(false)
 
-    const handleSubmit = () => {
-       localStorage.setItem(PHOTO_CHECK_KEY, 'true')
-        setIsJustSubmitted(true)
+    const handleSubmit = async () => {
+        const result = await dispatch(submitPhotoCheck(true))
+
+        if (submitPhotoCheck.fulfilled.match(result)) {
+            setIsJustSubmitted(true);
+        }
     }
 
-    if (hasSubmittedPhoto) return <PhotoCheckSuccess hasSubmittedPhoto={true} />
+    if (photoCheckCompleted === null) return <Loader />
+
     if (isJustSubmitted) return <PhotoCheckSuccess hasSubmittedPhoto={false} />
+
+    if (photoCheckCompleted) return <PhotoCheckSuccess hasSubmittedPhoto={true} />
+
 
     return <PhotoCheck onSubmitPhoto={handleSubmit} />
 }

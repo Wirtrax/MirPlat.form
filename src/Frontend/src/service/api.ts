@@ -1,4 +1,12 @@
-import { type QuizResultResponse, type PhotoCheckResponse, type TetrisLinkResponse, type TetrisSubmitResponse, type QuizSubmitRequest } from './features/activity/activitySliceType';
+import type {
+  QuizResultResponse,
+  TetrisLinkResponse,
+  TetrisSubmitResponse,
+  QuizSubmitRequest,
+  PhotoCheckSubmitResponse,
+  PhotoCheckStatusResponse
+} from './features/activity/activitySliceType';
+
 import type { createOrderResponse, Product } from './features/shop/shopType';
 import type { CreateUser, User } from './features/user/userType';
 
@@ -96,13 +104,22 @@ export const sendTetrisPhoto = (photo_link: string) => {
 };
 
 export const sendPhotoCheck = (flag: boolean) => {
-  return request<PhotoCheckResponse>('/activities/send', {
+  return request<PhotoCheckSubmitResponse>('/activities/photo_check', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ flag }),
   });
+};
+
+export const getPhotoCheckStatus = () => {
+  return request<PhotoCheckStatusResponse>(
+    '/activities/photo_check/status',
+    {
+      method: 'POST',
+    }
+  );
 };
 
 export const completeQuiz = (flag: boolean) => {
