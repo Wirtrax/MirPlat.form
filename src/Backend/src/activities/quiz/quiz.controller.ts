@@ -1,4 +1,4 @@
-import { Controller, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, ParseIntPipe } from '@nestjs/common';
 import { QuizService } from './quiz.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import { Param, Post,} from '@nestjs/common';
@@ -18,5 +18,11 @@ export class QuizController {
         catch(error) {
             'Вознила непридвиденная ошибка';
         }
-}
+    }
+
+    @JWTAuth()
+    @Get('quiz/status')
+    checkAttempt(@Req() request){
+        return this.quizService.checkOnReply(request['userId']);
+    }
 }

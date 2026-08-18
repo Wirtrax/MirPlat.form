@@ -47,4 +47,10 @@ export class PhotoCheckController {
             throw new InternalServerErrorException('Error during adding reward');
         }
     }
+
+    @JWTAuth()
+    @Post('photo_check/status')
+    async checkAttempt(@Req() request) {
+        return this.photoCheckService.checkOnReplyPhotoCheck(request['userId'])
+    }
 }
