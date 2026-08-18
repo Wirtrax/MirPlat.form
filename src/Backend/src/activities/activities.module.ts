@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ActivitiesController } from './activities.controller';
-import { TetrisService } from './tetris.service';
-import { Tetris } from 'src/entities/activities/tetris.entity';
 import { QuizModule } from './quiz/quiz.module';
+import { TetrisModule } from './tetris/tetris.module';
+import { PhotoCheckModule } from './photo-check/photo-check.module';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Tetris]),
+        TetrisModule,
         QuizModule,
+        PhotoCheckModule,
     ],
     controllers: [ActivitiesController],
-    providers: [TetrisService],
+    providers: [],
 })
 export class ActivitiesModule {}

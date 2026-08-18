@@ -5,7 +5,7 @@ export class Tetris {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ default: 'tetris' })
     name: string;
 
     @Column()
