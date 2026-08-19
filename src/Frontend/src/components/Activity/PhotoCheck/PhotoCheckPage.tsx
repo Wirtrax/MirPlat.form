@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+
+import { fetchPhotoCheckStatus, submitPhotoCheck } from "../../../service/features/activity/activitySlice";
+
 import PhotoCheckSuccess from "./PhotoCheckSuccess";
 import PhotoCheck from "./PhotoCheck";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { fetchPhotoCheckStatus, submitPhotoCheck } from "../../../service/features/activity/activitySlice";
+
 import Loader from "../../UI/Loader/Loader";
+import Background from "../../UI/Background/Background";
 
 
 export default function PhotoCheckPage() {
@@ -24,7 +28,7 @@ export default function PhotoCheckPage() {
         }
     }
 
-    if (photoCheckCompleted === null) return <Loader />
+    if (photoCheckCompleted === null) return <Background><Loader /></Background>
 
     if (isJustSubmitted) return <PhotoCheckSuccess hasSubmittedPhoto={false} />
 
