@@ -24,7 +24,7 @@ export class TetrisController {
     }
 
     @JWTAuth()
-    @Post('tetris')
+    @Post('api/tetris')
     async postTetrisSolution(
         @Req() req: Request,
         @Body() createTetrisAttemptDto: CreateTetrisAttemptDto,
