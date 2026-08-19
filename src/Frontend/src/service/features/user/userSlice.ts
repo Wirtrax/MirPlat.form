@@ -50,7 +50,7 @@ const userSlice = createSlice({
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.status = 'success';
-        state.user = action.payload;
+        // state.user = action.payload;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.status = 'success';

@@ -16,12 +16,12 @@ export default function QuizSuccess({ success, error }: QuizSuccessProps) {
   const navigate = useNavigate()
   const descriptionSuccess = (
     <>
-      Тебе начислено {15} <Coin />
+      Тебе начислено 15 <Coin />
     </>
   )
   const descriptionError = (
     <>
-      Тебе начислено {0} <Coin />
+      Тебе начислено 0 <Coin />
     </>
   )
 
