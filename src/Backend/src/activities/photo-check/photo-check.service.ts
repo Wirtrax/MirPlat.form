@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { DataSource } from 'typeorm';
 import { createAttempt, checkOnReply } from '../helpers/attempt.helper';
 import { Activity } from 'src/entities/activity.entity';
+import { Attempt } from 'src/entities/attempt.entity';
+import { privateDecrypt } from 'crypto';
 
 @Injectable()
 export class PhotoCheckService {
@@ -18,6 +20,9 @@ export class PhotoCheckService {
 
         @InjectRepository(PhotoCheck)
         private photoCheckRepo: Repository<PhotoCheck>,
+
+        @InjectRepository(Attempt)
+        private readonly attemptRepo: Repository<Attempt>,
 
         @InjectDataSource()
         private readonly dataSource: DataSource,
@@ -56,6 +61,6 @@ export class PhotoCheckService {
     }
 
     async checkOnReplyPhotoCheck(user_id: number) {
-        return checkOnReply(user_id, this.photoCheckRepo)
+        return checkOnReply(user_id, this.photoCheckRepo, this.attemptRepo)
     }
 }

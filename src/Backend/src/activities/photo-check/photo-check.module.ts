@@ -5,6 +5,7 @@ import { PhotoCheckController } from './photo-check.controller';
 import { PhotoCheckService } from './photo-check.service';
 import { User } from 'src/entities/user.entity';
 import { Activity } from 'src/entities/activity.entity';
+import { Attempt } from 'src/entities/attempt.entity';
 
 
 @Module({
@@ -12,6 +13,7 @@ import { Activity } from 'src/entities/activity.entity';
     PhotoCheck,
     User,
     Activity,
+    Attempt,
     ])],
   providers: [PhotoCheckService],
   controllers: [PhotoCheckController],

@@ -28,13 +28,14 @@ export async function createAttempt(
 export async function checkOnReply(
     userId: number,
     activityRepo: Repository<any>,
+    attemptRepo: Repository<Attempt>,
 ): Promise<{ result: boolean }> {
     const activity = await activityRepo.find().then(a => a[0])
     if (!activity) {
         throw new NotFoundException(`Активность не найдена}`);
     }
 
-    const exist = await activityRepo.existsBy({
+    const exist = await attemptRepo.existsBy({
         user: { id: userId },
         activity: { name: activity.name}
     })

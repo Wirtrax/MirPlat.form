@@ -65,6 +65,6 @@ export class TetrisService {
     }
 
     async checkOnReplyTetris(user_id: number) {
-        return checkOnReply(user_id, this.tetrisRepository)
+        return checkOnReply(user_id, this.tetrisRepository, this.attemptRepository)
     }
 }
