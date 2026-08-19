@@ -4,6 +4,7 @@
     align-items: center;
 
     margin: rem(39) rem(29);
+
 }
 
 .rebus__question {
@@ -20,6 +21,17 @@
     line-height: 110%;
     text-align: center;
     color: var(--color-dark-30);
+
+    @media (max-height: rem(710)) {
+        padding: rem(60) rem(33);
+        // margin-bottom: rem(16);
+    }
+
+    @media (max-height: rem(660)) {
+        padding: rem(40) rem(33);
+        font-size: rem(30);
+    }
+
 }
 
 .rebus__span {
@@ -31,11 +43,20 @@
     text-align: center;
     width: rem(257);
     height: rem(35);
+
+    @media (max-height: rem(660)) {
+        width: rem(196);
+    }
 }
 
 .rebus__submit-btn {
     margin-top: rem(-22);
     line-height: 110%;
+
+    @media (max-height: rem(710)) {
+        margin-bottom: rem(30);
+    }
+
 }
 
 .rebus__status--correct {
@@ -50,4 +71,3 @@
 .rebus__result {
     padding: rem(66) rem(27);
 }
-
