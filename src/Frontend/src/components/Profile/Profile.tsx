@@ -1,6 +1,7 @@
 import s from './Profile.module.scss';
+import avatarStyle from './AvatarModal/AvatarModal.module.scss'
 
-import avatra from '../../assets/avatar/default.png';
+import avatar from '../../assets/avatar/avatarIcon.webp';
 import editPen from '../../assets/ico/profile/pen.svg';
 import EmailIcon from '../../assets/profile/contacts/email.svg?react';
 import PhoneIcon from '../../assets/profile/contacts/phone.svg?react';
@@ -25,12 +26,27 @@ import ProductModal from '../UI/Modal/ProductModal/ProductModal';
 
 import type { ProfileInfoCardProps } from './profileType';
 import type { createOrderResponse } from '../../service/features/shop/shopType';
+import type { AvatarTheme } from './avatarThemes';
+import AvatarModal from './AvatarModal/AvatarModal';
+import ModalOverlay from '../UI/Modal/ModalOverlay/ModalOverlay';
 
 export default function Profile() {
   console.log('Рендер компонента Profile');
 
   const { user, status } = useAppSelector((state) => state.user);
   const [selectedPurchase, setSelectedPurchase] = useState<createOrderResponse | null>(null);
+
+  const [avatarTheme, setAvatarTheme] = useState<AvatarTheme>(() => {
+    return (localStorage.getItem('user_avatar_theme') as AvatarTheme) || 'default';
+  });
+
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+
+  const handleSelectTheme = (theme: AvatarTheme) => {
+    setAvatarTheme(theme);
+    localStorage.setItem('user_avatar_theme', theme);
+    setIsAvatarModalOpen(false);
+  };
 
   if (status === 'loading' || status === 'idle') {
     return <Loader />;
@@ -93,10 +109,19 @@ export default function Profile() {
         <div className={s['profile__header']}>
           <div className={s['profile__user-info']}>
             <div className={s['profile__user-avatar-wrapper']}>
-              <picture style={{ backgroundColor: user?.profile_picture }} className={s['profile__user-avatar']}>
-                <img src={avatra} alt="Аватар пользователя" width={80} height={146} />
+              <picture
+                // style={{ backgroundColor: user?.profile_picture }} 
+                className={clsx(s['profile__user-avatar'],
+                  avatarTheme !== 'default' && s[`profile__user-avatar--${avatarTheme}`]
+                )}
+                onClick={() => setIsAvatarModalOpen(true)}
+              >
+                <img src={avatar} alt="Аватар пользователя" />
               </picture>
-              <button className={s['profile__edit-btn']}>
+              <button
+                className={s['profile__edit-btn']}
+                onClick={() => setIsAvatarModalOpen(true)}
+              >
                 <img src={editPen} alt="Редактировать" />
               </button>
             </div>
@@ -156,6 +181,19 @@ export default function Profile() {
           />
         </Modal>
       )}
+
+      {
+        isAvatarModalOpen && (
+          <Modal
+            className={avatarStyle['modal']}
+            onClose={() => setIsAvatarModalOpen(false)}>
+            <AvatarModal
+              currentTheme={avatarTheme}
+              onSelectTheme={handleSelectTheme}
+            />
+          </Modal>
+        )
+      }
     </Background>
   );
 }
