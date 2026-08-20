@@ -1,7 +1,7 @@
 /dist
 /node_modules
 /exports
-
+/media/*
 src/.http
 *.log
 .env
