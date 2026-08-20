@@ -9,6 +9,13 @@ export class PhotoCheckController {
         private readonly photoCheckService: PhotoCheckService,
     ) {}
 
+
+    @JWTAuth()
+    @Post('photo_check/status')
+    async checkAttempt(@Req() request) {
+        return this.photoCheckService.checkOnReplyPhotoCheck(request['userId'])
+    }
+
     @JWTAuth()
     @Post('photo_check')   //TODO: Пока не знаю как назвать
     async aclaimOrRejectPhotoCheck(
@@ -46,11 +53,5 @@ export class PhotoCheckController {
         } catch(error) {
             throw new InternalServerErrorException('Error during adding reward');
         }
-    }
-
-    @JWTAuth()
-    @Post('photo_check/status')
-    async checkAttempt(@Req() request) {
-        return this.photoCheckService.checkOnReplyPhotoCheck(request['userId'])
     }
 }
