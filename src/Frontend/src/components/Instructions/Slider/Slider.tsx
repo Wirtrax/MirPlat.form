@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import type { sliderPropsI, sliderHandleI } from './sliderProps';
 
 const Slider = forwardRef<sliderHandleI, sliderPropsI>(function Slider(
-  { children, options, slidesPerView = 1, showDots = true },
+  { children, options, slidesPerView = 1, showDots = true, onSlideChange },
   ref
 ) {
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
@@ -43,7 +43,10 @@ const Slider = forwardRef<sliderHandleI, sliderPropsI>(function Slider(
           setSwiperInstance(swiper);
           setSlidesCount(swiper.slides.length);
         }}
-        onSlideChange={(swiper) => setSelectedIndex(swiper.activeIndex)}
+        onSlideChange={(swiper) => {
+          setSelectedIndex(swiper.activeIndex);
+          onSlideChange?.(swiper.activeIndex);
+        }}
         onUpdate={(swiper) => setSlidesCount(swiper.slides.length)}>
         {children.map((slide, index) => (
           <SwiperSlide key={index} className={clsx(s['embla__slide'])}>
