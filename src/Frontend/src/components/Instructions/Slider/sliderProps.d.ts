@@ -6,6 +6,7 @@ export interface sliderPropsI {
   options?: SwiperOptions;
   slidesPerView?: number;
   showDots?: boolean;
+  onSlideChange?: (index: number) => void;
 }
 
 export interface sliderHandleI {

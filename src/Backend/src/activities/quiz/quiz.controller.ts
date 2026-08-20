@@ -4,7 +4,7 @@ import { JWTAuth } from 'src/auth/jwt.decorator';
 import { Param, Post,} from '@nestjs/common';
 import { Req } from '@nestjs/common';
 
-@Controller('activities')
+@Controller('api/activities')
 export class QuizController {
     constructor(private readonly quizService: QuizService){}
     

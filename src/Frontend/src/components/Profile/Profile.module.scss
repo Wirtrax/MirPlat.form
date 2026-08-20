@@ -65,24 +65,35 @@
         &-avatar {
             width: rem(100);
             height: rem(100);
-            overflow: hidden;
             border-radius: 50%;
+            overflow: hidden;
             position: relative;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            cursor: pointer;
+
+            background-color: var(--color-accent);
+
+            &--theme-2 {
+                background-color: #ff8300;
+            }
+
+            &--theme-3 {
+                background-color: #276bdc;
+            }
 
             &-wrapper {
                 position: relative;
-                display: grid;
-
+                display: inline-block;
+                width: fit-content;
             }
 
             img {
-                width: rem(90);
-                height: rem(146);
-                position: absolute;
-                top: 15%;
-                left: 50%;
-                transform: translate(-47%, 0%);
-                filter: grayscale(100%) brightness(170%);
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
                 pointer-events: none;
             }
         }
