@@ -11,7 +11,7 @@ export class PhotoCheckController {
 
 
     @JWTAuth()
-    @Get('photo_check/status')
+    @Post('photo_check_status')
     async checkAttempt(@Req() request) {
         return this.photoCheckService.checkOnReplyPhotoCheck(request['userId'])
     }

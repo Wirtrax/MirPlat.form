@@ -5,7 +5,7 @@ import { JWTAuth } from 'src/auth/jwt.decorator';
 import { CreateTetrisAttemptDto } from './dto/create-tetris-attempt.dto';
 
 
-@Controller('activities')
+@Controller('api/activities')
 export class TetrisController {
     constructor(
         private readonly tetrisService: TetrisService
@@ -24,7 +24,7 @@ export class TetrisController {
     }
 
     @JWTAuth()
-    @Post('api/tetris')
+    @Post('tetris')
     async postTetrisSolution(
         @Req() req: Request,
         @Body() createTetrisAttemptDto: CreateTetrisAttemptDto,
@@ -52,7 +52,7 @@ export class TetrisController {
     }
 
     @JWTAuth()
-    @Post('tetris/status')
+    @Post('tetris_status')
     async checkAttempt(@Req() request) {
         return this.tetrisService.checkOnReplyTetris(request['userId'])
     }
