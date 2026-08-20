@@ -15,7 +15,7 @@ export class PhotoCheckService {
         @InjectRepository(User)
         private readonly userRepo: Repository<User>,
 
-        @InjectRepository(User)
+        @InjectRepository(Activity)
         private readonly activityRepo: Repository<Activity>,
 
         @InjectRepository(PhotoCheck)
