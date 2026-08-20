@@ -32,7 +32,7 @@ export async function checkOnReply(
 ): Promise<{ result: boolean }> {
     const activity = await activityRepo.find().then(a => a[0])
     if (!activity) {
-        throw new NotFoundException(`Активность не найдена}`);
+        throw new NotFoundException(`Активность не найдена`);
     }
 
     const exist = await attemptRepo.existsBy({

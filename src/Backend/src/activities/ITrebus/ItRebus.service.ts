@@ -1,0 +1,87 @@
+import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
+import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
+import { ItRebus } from "src/entities/activities/ItRebus/ItRebus.entity";
+import { User } from "src/entities/user.entity";
+import { ItRebusQuestions } from "src/entities/activities/ItRebus/ItRebusQuestions";
+import { Repository } from "typeorm";
+import { checkOnReply, createAttempt } from "../helpers/attempt.helper";
+import { Attempt } from "src/entities/attempt.entity";
+import { DataSource } from "typeorm/browser";
+
+
+export interface QuestionItem {
+    questionId: number;
+    answer: string;
+}
+
+@Injectable()
+export class ItRebusService {
+    constructor(
+        @InjectRepository(ItRebus)
+        private readonly itRebusRepo: Repository<ItRebus>,
+
+        @InjectRepository(ItRebusQuestions)
+        private readonly questionsRepo: Repository<ItRebusQuestions>,
+        
+        @InjectRepository(Attempt)
+        private readonly attemptRepo: Repository<Attempt>,
+
+        @InjectDataSource()
+        private readonly dataSource: DataSource,
+    ) {}
+
+    async checkAnswers(user_answers: QuestionItem[]): Promise<number> {
+        let countOfUserRightAnswers: number = 0;
+
+        for(const user_answer of user_answers) {
+            const question = await this.questionsRepo.findOneBy({ question_id: user_answer.questionId })
+
+            if(!question) {
+                throw new NotFoundException(`Question with id_${user_answer.questionId} does not exist `)
+            }
+
+            const right_answers = question.right_answers;
+
+            if(!right_answers) {
+                throw new NotFoundException(`Answers on question with id_${user_answer.questionId} do not exist `)
+            }
+
+            if(user_answer.answer in right_answers) {
+                countOfUserRightAnswers++;
+            }
+        }
+
+        return countOfUserRightAnswers;
+    }
+
+    async sendReward(user_id: number, countOfUserRightAnswers: number): Promise<void> {
+        const rebus = await this.itRebusRepo.findOneBy({name: 'ItRebus'});
+
+        if(!rebus) {
+            throw new NotFoundException('ItRebus activity does not exist')
+        }
+
+        const reward_per_answer = rebus.reward_per_answer;
+
+        if(!reward_per_answer) {
+            throw new NotFoundException('reward_per_answer does not exist in ItRebus')
+        }
+
+        const total_reward = reward_per_answer*countOfUserRightAnswers || 0;
+
+        if(total_reward >= 0) {
+
+            await this.dataSource.transaction(async manager => {
+                await createAttempt(manager, user_id, total_reward, rebus.name);
+                await manager.increment(User, { id: user_id }, 'balance', total_reward);
+            });
+
+        } else {
+            throw new InternalServerErrorException('No reward to send')
+        }  
+    }
+
+    async checkOnReplyRebus(user_id: number): Promise<{ result: boolean }> {
+        return checkOnReply(user_id, this.itRebusRepo, this.attemptRepo)
+    }
+} 
