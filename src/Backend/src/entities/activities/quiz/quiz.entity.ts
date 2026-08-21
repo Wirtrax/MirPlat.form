@@ -5,7 +5,7 @@ export class Quiz {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ default: 'quiz' })
     name: string;
 
     @Column()
