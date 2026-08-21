@@ -3,18 +3,18 @@ import { QuizService } from './quiz.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import { Body, Post,} from '@nestjs/common';
 import { Req } from '@nestjs/common';
-import { QuizResultDto } from './dto/quiz-result.dto';
+import { QuizAnswersDto } from './dto/quiz-questions.dto';
 
-@Controller('activities')
+@Controller('api/activities')
 export class QuizController {
     constructor(private readonly quizService: QuizService){}
     
     @JWTAuth()
     @Post('quiz')
-    sendReward(@Body() dto: QuizResultDto, @Req() request)  {
+    sendReward(@Body() dto: QuizAnswersDto, @Req() request)  {
         const userId = request['userId'];
         
-        return this.quizService.sendReward(userId, dto.success);
+        return this.quizService.checkAnswersAndSendReward(userId, dto.answers);
     }
 
     @JWTAuth()

@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { DataSource } from 'typeorm';
 import { createAttempt } from '../helpers/attempt.helper';
 import { Attempt } from 'src/entities/attempt.entity';
+import { QuizQuestion } from 'src/entities/activities/quiz/quiz-question.enity';
 
 @Injectable()
 export class QuizService {
@@ -17,17 +18,20 @@ export class QuizService {
         private readonly dataSource: DataSource,
 
         @InjectRepository(Attempt)
-        private readonly attemptRepo: Repository<Attempt> 
+        private readonly attemptRepo: Repository<Attempt>, 
+
+        @InjectRepository(QuizQuestion)
+        private readonly quizQuestionRepo: Repository<QuizQuestion>
     ) {}
 
-    /*async getQuestionText(quizId: number): Promise<QuizQuestion[]> {
+    async getQuestionText(quizId: number): Promise<QuizQuestion[]> {
         return await this.quizQuestionRepo.find({
             where: { quiz: { id: quizId }},
             select: {id: true, question_text: true},
             order: {id: 'ASC'}
         });
-    }*/
-    async sendReward(userId: number, success: boolean): Promise<{ reward: number }> {
+    }
+    async checkAnswersAndSendReward(userId: number, answers: {questionId: number, answer: string}[]): Promise<{ reward: number }> {
 
     const quiz = await this.quizRepo.find().then(q => q[0])
 
@@ -41,16 +45,38 @@ export class QuizService {
     });
     if (already) throw new ForbiddenException('Активность уже пройдена');
 
+    const questions = await this.quizQuestionRepo.find({
+        where: { quiz: { id: quiz.id } },
+        order: { id: 'ASC' },
+    });
+
+    let correctCount = 0;
+
+    questions.forEach((question) => {
+        const userAnswer = answers.find(a => a.questionId === question.id)
+        if (userAnswer && this.checkAnswer(question, userAnswer.answer)) {
+            correctCount++;
+        }
+    });
+
+    const success = correctCount === questions.length;
+
     const reward = success? quiz.reward : 0;
 
     await this.dataSource.transaction(async manager => {
-        await createAttempt(manager, userId, quiz.reward, quiz.name);
+        await createAttempt(manager, userId, reward, quiz.name);
 
         if (reward>0)
             await manager.increment(User, { id: userId }, 'balance', reward);
     });
 
-    return { reward: quiz.reward };
+    return { reward: reward };
+    }
+
+    checkAnswer(question: QuizQuestion, userAnswer: string): boolean {
+        const normalize = (s: string) => s.trim().toLowerCase();
+        const correctVariants = question.answer_text.split(';').map(normalize);
+        return correctVariants.includes(normalize(userAnswer));
     }
     
     async checkOnReply(userId: number): Promise<{ result: boolean }> {
