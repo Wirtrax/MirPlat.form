@@ -11,7 +11,7 @@ export class TetrisController {
         private readonly tetrisService: TetrisService
     ) {}
 
-    @JWTAuth()// Мы же можем испольховать такой уровень защиты...
+    @JWTAuth()
     @Get('tetris')
     async getTetrisReference(): Promise<{ link: string }> {
         try {
@@ -20,7 +20,6 @@ export class TetrisController {
         } catch(error) {
             throw error;
         }
-
     }
 
     @JWTAuth()
@@ -52,7 +51,7 @@ export class TetrisController {
     }
 
     @JWTAuth()
-    @Post('tetris_status')
+    @Get('tetris_status')
     async checkAttempt(@Req() request) {
         return this.tetrisService.checkOnReplyTetris(request['userId'])
     }

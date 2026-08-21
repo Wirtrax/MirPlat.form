@@ -1,10 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Tetris } from 'src/entities/activities/tetris.entity';
 import { Activity  } from 'src/entities/activity.entity';
 import { Attempt, AttemptStatus } from 'src/entities/attempt.entity';
 import { checkOnReply } from '../helpers/attempt.helper';
+import { isAttemptExist } from '../helpers/attempt.helper';
 
 @Injectable()
 export class TetrisService {
@@ -51,17 +52,28 @@ export class TetrisService {
             throw new Error('Activity "tetris" not found');
         }
 
-        const attempt = this.attemptRepository.create({
-            user: { id: user_id },
-            activity: { id: activity.id },
-            is_photo: true,
-            photo: photo_link,
-            status: AttemptStatus.WAITING,
-            reward: tetris.reward,
-            created_at: new Date(),
-        });
+        const isAlreadyExist = await isAttemptExist(user_id, activity.name, this.attemptRepository)
 
-        await this.attemptRepository.save(attempt);
+        if(isAlreadyExist) {
+            throw new ForbiddenException('Attempt is already exist')
+        }
+
+        try {
+            const attempt = this.attemptRepository.create({
+                user: { id: user_id },
+                activity: { id: activity.id },
+                is_photo: true,
+                photo: photo_link,
+                status: AttemptStatus.WAITING,
+                reward: tetris.reward,
+                created_at: new Date(),
+            });
+
+            await this.attemptRepository.save(attempt);            
+        } catch(error) {
+            throw new InternalServerErrorException('Error during sending reward')
+        }
+
     }
 
     async checkOnReplyTetris(user_id: number) {

@@ -1,10 +1,10 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
+import { Injectable, InternalServerErrorException, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { ItRebus } from "src/entities/activities/ItRebus/ItRebus.entity";
 import { User } from "src/entities/user.entity";
 import { ItRebusQuestions } from "src/entities/activities/ItRebus/ItRebusQuestions";
 import { Repository } from "typeorm";
-import { checkOnReply, createAttempt } from "../helpers/attempt.helper";
+import { checkOnReply, createAttempt, isAttemptExist } from "../helpers/attempt.helper";
 import { Attempt } from "src/entities/attempt.entity";
 import { DataSource } from "typeorm/browser";
 
@@ -59,6 +59,12 @@ export class ItRebusService {
 
         if(!rebus) {
             throw new NotFoundException('ItRebus activity does not exist')
+        }
+
+        const isAlreadyExist = await isAttemptExist(user_id, rebus.name, this.attemptRepo)
+
+        if(isAlreadyExist) {
+            throw new ForbiddenException('Attempt is already exist')
         }
 
         const reward_per_answer = rebus.reward_per_answer;

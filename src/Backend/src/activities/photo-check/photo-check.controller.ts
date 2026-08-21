@@ -9,15 +9,8 @@ export class PhotoCheckController {
         private readonly photoCheckService: PhotoCheckService,
     ) {}
 
-
     @JWTAuth()
-    @Post('photo_check_status')
-    async checkAttempt(@Req() request) {
-        return this.photoCheckService.checkOnReplyPhotoCheck(request['userId'])
-    }
-
-    @JWTAuth()
-    @Post('photo_check')   //TODO: Пока не знаю как назвать
+    @Post('photo_check')
     async aclaimOrRejectPhotoCheck(
             @Req() req: Request,
             @Body() photoCheckDto: PhotoCheckDto,
@@ -32,26 +25,32 @@ export class PhotoCheckController {
             throw new UnprocessableEntityException('userId should be number')
         }
 
-        try {
-            const isApproved = photoCheckDto.flag; 
+        const isApproved = photoCheckDto.flag;
 
+        try {
             if(isApproved) {
                 await this.photoCheckService.claimRewardPhotoCheck(userId)
 
                 return {
-                message: 'Photo check successfully claimed',
-                status: 'claimed' 
+                    message: 'Photo check successfully claimed',
+                    status: 'claimed' 
                 };  
 
             } else {
                 return {
-                message: 'Photo check rejected',
-                status: 'rejected' 
+                    message: 'Photo check rejected',
+                    status: 'rejected' 
                 };
             };
                
         } catch(error) {
             throw new InternalServerErrorException('Error during adding reward');
         }
+    }
+
+    @JWTAuth()
+    @Get('photo_check_status')
+    async checkAttempt(@Req() request) {
+        return this.photoCheckService.checkOnReplyPhotoCheck(request['userId'])
     }
 }

@@ -1,9 +1,7 @@
-import { Body, Controller, Injectable, Post, Req, BadRequestException } from "@nestjs/common";
+import { Body, Controller, Injectable, Post, Get, Req, BadRequestException } from "@nestjs/common";
 import { JWTAuth } from "src/auth/jwt.decorator";
 import { ItRebusService } from "./ItRebus.service";
-import { request } from "http";
 import { SubmitAnswersDto } from "./dto/answer.dto";
-import { ItRebusQuestions } from "src/entities/activities/ItRebus/ItRebusQuestions";
 
 @Controller('api/activities')
 export class ItRebusController {
@@ -12,7 +10,7 @@ export class ItRebusController {
     ) {}
 
     @JWTAuth()
-    @Post('it_rebus_status')
+    @Get('it_rebus_status')
     async checkAttempt(@Req() request) {
         return this.itRebusService.checkOnReplyRebus(request['userId'])
     }
