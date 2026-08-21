@@ -6,22 +6,26 @@ import { User } from 'src/entities/user.entity';
 import { Item } from 'src/entities/item.entity';
 import { DataSource } from 'typeorm/browser/data-source/DataSource.js';
 
+export interface OrderResponse {
+    orderId: number;
+    itemName: string;
+    userFullName: string;
+    userPhoneNumber: string;
+    userEmail;
+    status: PurchaseStatus;
+}
+
 @Injectable()
 export class OrderService {
     constructor(
         @InjectRepository(Purchase)
         private readonly purchasesRepo: Repository<Purchase>,
-        @InjectRepository(User)
-        private readonly usersRepo: Repository<User>,
-        @InjectRepository(Item)
-        private readonly itemsRepo: Repository<Item>,
-        
         @InjectDataSource()
         private readonly dataSource: DataSource
     ) {}
         
-    async getAllOrders() {
-       return this.purchasesRepo
+    async getAllOrders(): Promise<OrderResponse[]> {
+       /*return this.purchasesRepo
         .createQueryBuilder('purchase')
         .leftJoin('purchase.user', 'user')
         .leftJoin('purchase.item', 'item')
@@ -34,7 +38,21 @@ export class OrderService {
         .groupBy('item.name')
         .addGroupBy('user.id')
         .addGroupBy('full_name')
-        .getRawMany();
+        .getRawMany();*/
+        const allOrders = await this.purchasesRepo.find({select: {
+            item: true,
+            user: true,
+            }   
+        });
+        return allOrders.map(p => ({
+            orderId: p.id,
+            itemName: p.item.name,
+            userFullName: `${p.user.last_name} ${p.user.first_name} ${p.user.patronym ?? ''}`.trim(),
+            userPhoneNumber: p.user.phone_number,
+            userEmail: p.user.email,
+            status: p.status
+        }));
+
     }
     async getPurchaseDetails(userId: number, itemId: number) {
         return this.purchasesRepo.find({
@@ -61,26 +79,13 @@ export class OrderService {
         if (purchase.status != PurchaseStatus.WAITING) {
             throw new ForbiddenException('Статус покупки уже изменен, повторное изменение невозможно');
         }
-
+        await this.dataSource.transaction(async manager => {
         if(status===PurchaseStatus.CANCELED){
-            const user = await this.usersRepo.findOne({ where: { id: purchase.user.id } });
-            if(!user) {
-                throw new NotFoundException('Пользователь не найден');
-            }
-            const item = await this.itemsRepo.findOne({ where: { id: purchase.item.id } });
-            if(!item) {
-                throw new NotFoundException('Товар не найден');
-            }
-
-            await this.dataSource.transaction(async manager => {
-                await manager.increment(User, {id: purchase.user.id}, 'balance', item.price);
-                await manager.increment(Item, {id: purchase.item.id}, 'quantity', 1);
-                await manager.update(Purchase, {id}, {status});
-            })
+            await manager.increment(User, {id: purchase.user.id}, 'balance', purchase.item.price);
+            await manager.increment(Item, {id: purchase.item.id}, 'quantity', 1);
         }
-        else {
-            await this.purchasesRepo.update(id, {status});
-        }
+        await manager.update(Purchase, {id}, {status});
+        });
 
         return { success: true };
     }
