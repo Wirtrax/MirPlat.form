@@ -8,7 +8,7 @@ import ActivityLayout from "../ActivityLayout/ActivityLayout";
 import Substrate from '../../UI/Substrate/Substrate';
 
 interface TetrisProps {
-  onSubmitPhoto: () => void;
+  onSubmitPhoto: (photo_link: string) => void;
 }
 
 export default function Tetris({ onSubmitPhoto }: TetrisProps) {
@@ -38,7 +38,7 @@ export default function Tetris({ onSubmitPhoto }: TetrisProps) {
       description={description}
       buttonText='ОТПРАВИТЬ'
       buttonDisabled={!photo}
-      onButtonClick={onSubmitPhoto}
+      // onButtonClick={onSubmitPhoto}
     >
       <Substrate className={s['tetris__photo-area']}>
         {preview ? (

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { ActivityState } from "./activitySliceType";
-import { completeQuiz, getPhotoCheckStatus, getQuizResult, getTetrisLink, sendPhotoCheck, sendTetrisPhoto } from "../../api";
+import { completeQuiz, getPhotoCheckStatus, getQuizResult, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto } from "../../api";
 
 
 export const fetchTetrisLink = createAsyncThunk(
@@ -16,6 +16,13 @@ export const submitTetrisPhoto = createAsyncThunk(
         return await sendTetrisPhoto(photo_link)
     }
 );
+
+export const fetchTetrisStatus = createAsyncThunk(
+    'activity/fetchTetrisStatus',
+    async () => {
+        return await getTetrisStatus()
+    }
+)
 
 export const submitPhotoCheck = createAsyncThunk(
     'activity/submitPhotoCheck',
@@ -33,8 +40,8 @@ export const fetchPhotoCheckStatus = createAsyncThunk(
 
 export const fetchCompleteQuiz = createAsyncThunk(
     'activity/fetchCompleteQuiz',
-    async (flag: boolean) => {
-        return await completeQuiz(flag);
+    async () => {
+        return await completeQuiz();
     }
 );
 
@@ -47,10 +54,12 @@ export const fetchQuizResult = createAsyncThunk(
 
 const initialState: ActivityState = {
     tetrisLink: null,
+    tetrisStatus: null,
 
     photoCheckStatus: null,
     photoCheckCompleted: null,
 
+    quizReward: null,
     quizResult: null,
 
     status: 'idle',
@@ -89,6 +98,19 @@ const activitySlice = createSlice({
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось отправить фото';
             })
+            //получение статуса прохождения тетриса
+            .addCase(fetchTetrisStatus.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchTetrisStatus.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.tetrisStatus = action.payload.result
+            })
+            .addCase(fetchTetrisStatus.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить статус';
+            })
 
             // фото-чек
             .addCase(submitPhotoCheck.pending, (state) => {
@@ -122,8 +144,9 @@ const activitySlice = createSlice({
                 state.status = 'loading';
                 state.error = null;
             })
-            .addCase(fetchCompleteQuiz.fulfilled, (state) => {
+            .addCase(fetchCompleteQuiz.fulfilled, (state, action) => {
                 state.status = 'success';
+                state.quizReward = action.payload.reward
             })
             .addCase(fetchCompleteQuiz.rejected, (state, action) => {
                 state.status = 'failed';

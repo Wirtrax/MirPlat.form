@@ -2,9 +2,10 @@ import type {
   QuizResultResponse,
   TetrisLinkResponse,
   TetrisSubmitResponse,
-  QuizSubmitRequest,
   PhotoCheckSubmitResponse,
-  PhotoCheckStatusResponse
+  PhotoCheckStatusResponse,
+  TetrisStatusResponse,
+  QuizSubmitResponse,
 } from './features/activity/activitySliceType';
 
 import type { createOrderResponse, Product } from './features/shop/shopType';
@@ -14,18 +15,6 @@ import { getAuthToken, setAuthToken, request } from './utils/query';
 interface AuthResponse {
   token: string;
 }
-
-// export const login = async () => {
-//   const data = await request<{ token: string }>('/auth/signin', {
-//     method: 'POST',
-//     headers: {
-//       Authorization: `Bearer ${getInitData()}`,
-//       'Content-Type': 'application/json',
-//     },
-//   });
-
-//   document.cookie = `token=${data.token}; path=/`
-// }
 
 const getInitData = (): string => {
   return window.Telegram?.WebApp?.initData || 'devtest1';
@@ -103,6 +92,12 @@ export const sendTetrisPhoto = (photo_link: string) => {
   });
 };
 
+export const getTetrisStatus = () => {
+  return request<TetrisStatusResponse>('/activities/tetris/status', {
+    method: 'POST',
+  })
+}
+
 export const sendPhotoCheck = (flag: boolean) => {
   return request<PhotoCheckSubmitResponse>('/activities/photo_check', {
     method: 'POST',
@@ -122,15 +117,10 @@ export const getPhotoCheckStatus = () => {
   );
 };
 
-export const completeQuiz = (flag: boolean) => {
-  const data: QuizSubmitRequest = { flag };
-
-  return request('/activities/quiz', {
+export const completeQuiz = () => {
+  return request<QuizSubmitResponse>('/activities/quiz', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+
   });
 };
 
