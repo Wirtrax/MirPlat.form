@@ -1,0 +1,47 @@
+@use "./helpers" as *;
+
+:root {
+  // ===== БЕЛЫЙ И ЧЁРНЫЙ =====
+  --color-light: #ffffff; // Белый — для текста 
+  --color-dark: #000000; // Чёрный — для текста на светлом фоне
+  --color-dark-30: #3F4045; // Тёмно-серый — для второстепенного текста
+
+  // ===== СЕРЫЕ =====
+  --color-gray-50: #888888; // Серый — для текста и иконок (средний)
+  --color-gray-60: #8C8C8C; // Серый — для разделителей
+  --color-gray-70: #BEBEBE;
+
+  // ===== СИНИЕ (для фонов и подложек) =====
+  --color-dark-blue: #1543CD;
+  --color-blue: #2e5bd0;
+  --color-ocean-blue: #01ABFD;
+  --color-dodger-blue: #1CA3F4;
+  --color-light-blue: #a5dafb;
+
+  // ===== АКЦЕНТНЫЕ =====
+  --color-accent: #ffab36; // Оранжевый — акцентные кнопки, иконки
+  --color-alternative-accent: #FFB34A; // Светло-оранжевый — дополнительные акценты
+  --color-accent-inactive: #ffd59b; // Бледный — акценты в пассивном состоянии
+
+  // ===== ОШИБКИ =====
+  --color-red: #f00; // Красный — ошибки, валидация
+
+  // ===== ФОНЫ =====
+  --background-color: #00A9FB; // Базовый цвет фона
+  --background-gradient: linear-gradient(180deg, #00a9fb 0%, #1e5eda 100%); // Градиент фона
+  --gradient: linear-gradient(246.19deg, rgba(255, 255, 255, 0.2) 21.21%, rgba(69, 156, 236, 0.2) 102.4%); // Декоративный для подложек
+
+  // ===== ОФОРМЛЕНИЕ =====
+  --border-radius: #{rem(25)}; // Скругление углов
+
+  // ===== ШРИФТЫ =====
+  --font-family-base: "Gotham Pro", sans-serif; // Основной шрифт
+  --font-family-accent: "Helvetica Neue", sans-serif; // Акцентный шрифт
+
+  // ===== КОНТЕЙНЕР =====
+  --container-width: #{rem(315)}; // Ширина контейнера
+  --container-padding-x: #{rem(30)}; // Отступы контейнера
+
+  // ===== АНИМАЦИИ =====
+  --transition-duration: 0.2s; // Длительность переходов
+}

@@ -1,0 +1,27 @@
+.wrapper{
+    margin-bottom: rem(25);
+}
+.radioList {
+    display: flex;
+    flex-direction: column;
+    gap: rem(21);
+}
+
+.radioTitle {
+    display: flex;
+
+    font-family: var(--font-family-base);
+    font-weight: 500;
+    font-size: rem(14);
+    color: var(--color-light);
+    margin-bottom: 14px;
+}
+
+.error {
+    text-align: center;
+    font-family: var(--font-family-base);
+    font-weight: 400;
+    font-size: rem(10);
+    text-transform: lowercase;
+    color: var(--color-red);
+}

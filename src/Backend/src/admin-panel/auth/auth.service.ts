@@ -1,0 +1,69 @@
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Admin } from 'src/entities/admins.entity';
+import { JwtService } from '@nestjs/jwt';
+import { AdminRole } from 'src/entities/admins.entity';
+import * as bcrypt from 'bcrypt';
+
+export interface resultForLogin {
+    token: string;
+    role: AdminRole
+}
+
+@Injectable()
+export class AuthService {
+    constructor(
+        @InjectRepository(Admin)
+        private readonly adminRepo: Repository<Admin>,
+        private readonly jwtService: JwtService
+    ) {}
+
+    async register(login: string, password: string) {
+        const isAdminExist = await this.adminRepo.existsBy({login});
+
+            if (isAdminExist) {
+                throw new ConflictException('Админ с таким логином уже существует')
+        }
+        
+        try {
+            const hash = await bcrypt.hash(password, 10);
+            const admin = this.adminRepo.create({ 
+                login: login, 
+                password_hash: hash,
+                role: AdminRole.ADMIN});
+
+            await this.adminRepo.save(admin);
+
+            return { 
+                id: admin.id, 
+                login: admin.login, 
+                role: admin.role};    
+
+        } catch {
+            throw new UnauthorizedException('Ошибка во время создания нового админа')
+        }
+
+    }
+
+    async login(login: string, password: string): Promise<resultForLogin>  {
+        const admin = await this.adminRepo.findOne({ where: {login}});
+
+        if (!admin) {
+            throw new UnauthorizedException("Администратор не найден");
+        }
+
+        const valid = await bcrypt.compare(password, admin.password_hash);
+
+        if (!valid) {
+            throw new UnauthorizedException("Неверный логин или пароль");
+        }
+            
+        const token = await this.jwtService.signAsync({
+            sub: admin.id,
+            role: admin.role,
+        });
+
+        return { token: token, role: admin.role}
+    }
+}

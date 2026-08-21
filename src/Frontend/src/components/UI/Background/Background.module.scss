@@ -1,0 +1,40 @@
+.wrapper {
+    position: relative;
+    // min-height: 100vh;
+    overflow: hidden;
+}
+
+.background {
+    background-image: var(--background-gradient);
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.main {
+    position: relative;
+    z-index: 1;
+}
+
+.filter {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(3.199999809265137px);
+    background: rgba(255, 255, 255, 0.1);
+    z-index: -1;
+
+    pointer-events: none;
+}
+
+.square {
+    &--bottom-alternative {
+        translate: 0 10%;
+    }
+
+    &--top-alternative {
+        left: var(--accent-width);
+        translate: 0 -20%;
+    }
+
+}

@@ -18,7 +18,7 @@ Content-Type: application/json
     "is_admin": true
 }
 ###
-DELETE  http://localhost:3000/admin/users/14
+DELETE  http://localhost:3000/admin/users/6
 ###
 PATCH http://localhost:3000/admin/users/4
 Content-Type: application/json
@@ -57,31 +57,11 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/admin/orders
 ### 
-PATCH http://localhost:3000/admin/orders/1/status
+PATCH http://localhost:3000/admin/orders/status
 Content-Type: application/json
 
 {
     "status": "canceled"
 }
 ### 
-GET http://localhost:3000/admin/orders/details?userId=4&itemId=1
-###
-GET http://localhost:3000/admin/attempts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJzdXBlcl9hZG1pbiIsImlhdCI6MTc4NjYyNTYyMSwiZXhwIjoxNzg2NjI5MjIxfQ.WqZKzGCNe9Dc7GCGLsshGJd1fsYDsSeATvIsYit9KWs
-###
-POST http://localhost:3000/admin/auth/login
-Content-Type: application/json
-
-{
-    "login": "admin",
-    "password": "password"
-}
-
-### 
-POST http://localhost:3000/admin/auth/register
-Content-Type: application/json
-
-{
-    "login": "admin",
-    "password": "password"
-}
+GET http://localhost:3000/admin/orders/1/details?userId=4&itemId=1

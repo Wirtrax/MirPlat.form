@@ -1,0 +1,63 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: rem(35);
+
+    max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+    margin-inline: auto;
+    padding-left: var(--container-padding-x);
+}
+
+.title {
+    font-weight: 700;
+    font-size: rem(24);
+}
+
+.speakerCard {
+    border: 1px solid var(--color-light);
+    border-radius: rem(25);
+    background-color: var(--color-light);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    height: rem(368);
+    margin-bottom: rem(17);
+}
+
+.avatar {
+    width: rem(170);
+    height: rem(170);
+    margin-top: rem(31);
+    margin-bottom: rem(31);
+}
+
+.name {
+    font-size: rem(20);
+    color: var(--color-blue);
+    text-align: center;
+    margin-bottom: rem(9);
+}
+
+.subtitle {
+    text-align: center;
+    font-size: rem(10);
+    color: var(--color-dark);
+    opacity: 0.5;
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    text-align: center;
+    font-size: rem(10);
+    color: var(--color-dark);
+    line-height: 120%;
+
+    margin: rem(23);
+}

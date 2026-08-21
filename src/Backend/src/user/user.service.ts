@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -14,7 +14,7 @@ export class UserService {
   ) {}
 
   findOneById(id: number): Promise<User | null> {
-     return this.usersRepo.findOneBy({id});
+     return this.usersRepo.findOne({where: {id}, relations: {purchases:{item:true}, attempts: true}});
   }
 
   isTelegramIdExists(telegram_id: string): Promise<boolean> {
@@ -31,7 +31,13 @@ export class UserService {
 
   create(createUserDto: CreateUserDto, telegram_id: string): Promise<User>{
     const user = this.usersRepo.create({...createUserDto, telegram_id, last_login: new Date()});
-    return this.usersRepo.save(user);
+    return this.usersRepo.save(user).catch((err) =>{
+      throw new InternalServerErrorException("Failed to create a user")
+    });
+  }
+
+  getOneRandom(){
+    return this.usersRepo.createQueryBuilder('user').select().orderBy('RANDOM()').getOne();
   }
 
   async delete(id: number): Promise<void> {

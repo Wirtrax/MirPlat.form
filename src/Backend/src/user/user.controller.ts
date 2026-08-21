@@ -36,4 +36,9 @@ export class UserController {
   update(@Req() req: Request, @Body() updateUserDto: UpdateUserDto){
     return this.userService.update(updateUserDto, req['userId']);
   }
+
+  @Get("rand")
+  getRand(){
+    return this.userService.getOneRandom();
+  }
 }

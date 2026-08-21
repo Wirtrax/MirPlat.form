@@ -1,0 +1,109 @@
+.game {
+    &__mascot-container {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 100%;
+        max-width: rem(250);
+        height: rem(200);
+
+        overflow: hidden;
+        pointer-events: none;
+        z-index: -1;
+
+        @media (max-height: 750px) {
+            max-width: rem(200);
+            height: rem(160);
+        }
+
+        @media (max-height: 700px) {
+            max-width: rem(150);
+            height: rem(120);
+        }
+
+        @media (max-height: 650px) {
+            max-width: rem(120);
+            height: rem(90);
+            bottom: rem(-10);
+        }
+    }
+
+    &__mascot-img {
+        width: 100%;
+        height: auto;
+        display: block;
+
+        object-fit: cover;
+        object-position: top center;
+    }
+}
+
+.quiz {
+    &__card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        padding: clamp(rem(20), 5vh, rem(49)) rem(25);
+    }
+
+    &__question {
+        font-weight: 500;
+        font-size: rem(16);
+        line-height: 120%;
+
+        margin-bottom: rem(10);
+    }
+
+    &__hint {
+        margin-bottom: clamp(rem(14), 3vh, rem(30));
+
+        width: 100%;
+        text-align: left;
+    }
+
+    &__input {
+        text-align: center;
+        width: rem(269);
+
+        height: clamp(rem(36), 5vh, rem(42));
+
+        margin-top: clamp(rem(14), 3vh, rem(30));
+
+        &::placeholder {
+            text-align: center;
+        }
+    }
+
+    &__link-btn {
+        display: inline-block;
+        width: fit-content;
+
+        border: 1px solid var(--color-light);
+        color: var(--color-accent);
+        background: var(--color-light);
+        line-height: 110%;
+
+        &:hover {
+            background-color: var(--color-accent);
+            color: var(--color-light);
+        }
+    }
+
+    &__submit-btn {
+        margin-top: rem(-22);
+        position: relative;
+        z-index: 2;
+
+        @media (max-height: 750px) {
+            margin-bottom: rem(20);
+        }
+    }
+
+    &__result {
+        padding: rem(66) rem(27);
+    }
+}

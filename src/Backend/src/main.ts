@@ -6,9 +6,14 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({
-    transform: true
-  }))
-  app.enableCors();
+    whitelist: true,
+    //forbidNonWhitelisted: true,
+    transform: true,
+  }));
+  app.enableCors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  });
   const config = new DocumentBuilder()
     .setTitle('MirPlat.form API')
     .addBearerAuth({
