@@ -3,7 +3,7 @@ import { PhotoCheckService } from './photo-check.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import { PhotoCheckDto } from './dto/photo-check.dto';
 
-@Controller('activities')
+@Controller('api/activities')
 export class PhotoCheckController {
     constructor(
         private readonly photoCheckService: PhotoCheckService,
