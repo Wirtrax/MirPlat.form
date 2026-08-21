@@ -94,7 +94,19 @@
     grid-template-columns: 1fr 1fr;
     gap: rem(20) rem(15);
 
-    &__button {
+
+    &__checkbox-panel {
         grid-column: span 2;
+    }
+
+    &__line {
+        width: 100%;
+        display: block;
+        border: 0.1px dashed var(--color-gray-80);
+        margin-block: rem(8);
+    }
+
+    &__button {
+        padding-block: rem(10);
     }
 }

@@ -8,6 +8,10 @@ import type { User } from '../../../../service/features/user/userType';
 import { deleteUser, getUsers, updateUser } from '../../../../service/api';
 import { getFirstLetters } from '../../helper/utils';
 import s from './UserPage.module.scss';
+import SelectAdmin from '../../UI/Select/SelectAdmin';
+import { specializationOptions } from '../../UI/Select/specializationOptions';
+import { levelOptions } from '../../UI/Select/programmingLeveloptions';
+import ChekboxAdmin from '../../UI/Chekbox/ChekboxAdmin';
 
 function UserPage() {
   const { id } = useParams();
@@ -18,9 +22,13 @@ function UserPage() {
     patronym: '',
     telegram_id: '',
     email: '',
+    specialization: '',
+    programming_level: '',
     phone_number: '',
     balance: 0,
     profile_picture: '',
+    send_notifications: false,
+    is_admin: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   //область хи-хи ха-ха о которой я узнал 18 числа в 21:00
@@ -36,10 +44,14 @@ function UserPage() {
             last_name: foundUser.last_name || '',
             patronym: foundUser.patronym || '',
             telegram_id: foundUser.telegram_id || '',
+            specialization: foundUser.specialization || '',
+            programming_level: foundUser.programming_level || '',
             email: foundUser.email || '',
             phone_number: foundUser.phone_number || '',
             balance: foundUser.balance || 0,
             profile_picture: foundUser.profile_picture || '',
+            send_notifications: foundUser.send_notifications || false,
+            is_admin: foundUser.is_admin || false,
           });
         } else {
           setUser(null);
@@ -66,11 +78,16 @@ function UserPage() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | { target: { name: string; value: string } }
+  ) => {
     const { name, value } = e.target;
+    const type = 'type' in e.target ? e.target.type : undefined;
+    const checked = 'checked' in e.target ? e.target.checked : undefined;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -116,11 +133,11 @@ function UserPage() {
         </AdminButton>
       </SubstrateForUser>
       <SubstrateForFrom title="Данные пользователя">
-        <form onSubmit={handleSubmit} className={s['form']}>
+        <form className={s['form']}>
           <AdminInput
             label="Имя"
             value={formData.first_name}
-            onChange={handleInputChange}
+            onChange={handleChange}
             name="first_name"
             type="text"
             placeholder="Имя"
@@ -128,7 +145,7 @@ function UserPage() {
           <AdminInput
             label="Фамилия"
             value={formData.last_name}
-            onChange={handleInputChange}
+            onChange={handleChange}
             name="last_name"
             type="text"
             placeholder="Фамилия"
@@ -136,7 +153,7 @@ function UserPage() {
           <AdminInput
             label="Отчество"
             value={formData.patronym}
-            onChange={handleInputChange}
+            onChange={handleChange}
             name="patronym"
             type="text"
             placeholder="Отчество"
@@ -144,16 +161,30 @@ function UserPage() {
           <AdminInput
             label="Telegram ID"
             value={formData.telegram_id}
-            onChange={handleInputChange}
+            onChange={handleChange}
             name="telegram_id"
             type="text"
             placeholder="Telegram ID"
             disabled
           />
+          <SelectAdmin
+            label="Специализация"
+            options={specializationOptions}
+            name="specialization"
+            onChange={handleChange}
+            value={formData.specialization}
+          />
+          <SelectAdmin
+            label="Уровень программирования"
+            options={levelOptions}
+            name="programming_level"
+            onChange={handleChange}
+            value={formData.programming_level}
+          />
           <AdminInput
             label="Email"
             value={formData.email}
-            onChange={handleInputChange}
+            onChange={handleChange}
             name="email"
             type="email"
             placeholder="Email"
@@ -161,7 +192,7 @@ function UserPage() {
           <AdminInput
             label="Телефон"
             value={formData.phone_number}
-            onChange={handleInputChange}
+            onChange={handleChange}
             name="phone_number"
             type="tel"
             placeholder="Телефон"
@@ -169,7 +200,7 @@ function UserPage() {
           <AdminInput
             label="Баланс баллов"
             value={formData.balance}
-            onChange={handleInputChange}
+            onChange={handleChange}
             name="balance"
             type="number"
             placeholder="Баланс баллов"
@@ -177,15 +208,32 @@ function UserPage() {
           <AdminInput
             label="Фото профиля (URL)"
             value={formData.profile_picture}
-            onChange={handleInputChange}
+            onChange={handleChange}
             name="profile_picture"
             type="text"
             placeholder="Фото профиля (URL)"
           />
-          <AdminButton type="submit" disabled={isSubmitting} className={s['form__button']}>
-            {isSubmitting ? 'Обновление...' : 'Обновить данные'}
-          </AdminButton>
+          <div className={s['form__checkbox-panel']}>
+            <ChekboxAdmin
+              label="Уведомления"
+              subtitle="Получать уведомления в Telegram"
+              name="send_notifications"
+              isCheck={formData.send_notifications}
+              onChange={handleChange}
+            />
+            <span className={s['form__line']}></span>
+            <ChekboxAdmin
+              label="Права администратора"
+              subtitle="Доступ к админ-панели"
+              name="is_admin"
+              isCheck={formData.is_admin}
+              onChange={handleChange}
+            />
+          </div>
         </form>
+        <AdminButton type="submit" disabled={isSubmitting} className={s['form__button']} onClick={handleSubmit}>
+          {isSubmitting ? 'Сохранение...' : 'Сохранить изменения'}
+        </AdminButton>
       </SubstrateForFrom>
     </section>
   );

@@ -23,7 +23,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = () => {
           { label: 'Пользователи', path: '/admin/users', count: 0, icon: <UsersIcon /> },
           { label: 'Товары', path: '/admin/items', count: 0, icon: <ProductIcon /> },
           { label: 'Все заказы', path: '/admin/orders', count: 0, icon: <AllOrderIcon /> },
-          { label: 'Участники игр', path: '/admin/users', count: 0, icon: <GameIcon /> },
+          { label: 'Участники игр', path: '/admin/attempts', count: 0, icon: <GameIcon /> },
         ]}
         adminName="Админ Дежурный"
         adminRole="Суперадмин"

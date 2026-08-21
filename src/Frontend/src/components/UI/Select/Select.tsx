@@ -5,14 +5,7 @@ import ArrowIсonSelect from '../../../assets/interface/arrowIconSelect.svg?reac
 
 import type { SelectProps } from './selectProps';
 
-export default function Select({
-  label,
-  error,
-  name,
-  value,
-  options,
-  onChange,
-}: SelectProps) {
+export default function Select({ label, error, name, value, options, onChange }: SelectProps) {
   const [open, setOpen] = useState(false);
 
   const selected = options.find((option) => option.value === value);
@@ -22,11 +15,7 @@ export default function Select({
       {label && <label className={s.label}>{label}</label>}
 
       <div className={s.selectWrapper}>
-        <button
-          type="button"
-          className={s.select}
-          onClick={() => setOpen((prev) => !prev)}
-        >
+        <button type="button" className={s.select} onClick={() => setOpen((prev) => !prev)}>
           <span>{selected?.label ?? 'Выберите специализацию'}</span>
           <ArrowIсonSelect />
         </button>
@@ -46,8 +35,7 @@ export default function Select({
                   });
 
                   setOpen(false);
-                }}
-              >
+                }}>
                 {option.label}
               </li>
             ))}
