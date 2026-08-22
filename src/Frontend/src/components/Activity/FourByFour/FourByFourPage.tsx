@@ -1,9 +1,12 @@
 import { useState } from "react"
+
 import FourByFourRules from "./FourByFourRules"
 import FourByFourGame from "./FourByFourGame"
 import FourByFourSuccess from "./FourByFourSuccess"
 
-type GameStep = 'rules' | 'game' | 'result'
+import type { GameStep } from "../gameStep"
+
+
 
 export default function FourByFourPage() {
   const [step, setStep] = useState<GameStep>('rules')

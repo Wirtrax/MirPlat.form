@@ -9,6 +9,7 @@ import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
 
 import type { QuizStepProps } from './quizType';
+import { normalizeAnswer } from '../../../utils/normalizeAnswer';
 
 export default function QuizStep({ data, onNext }: QuizStepProps) {
   const [answer, setAnswer] = useState('');
@@ -20,7 +21,7 @@ export default function QuizStep({ data, onNext }: QuizStepProps) {
       return;
     }
     setError('');
-    onNext(answer);
+    onNext(normalizeAnswer(answer));
     setAnswer('');
   };
 

@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { ActivityState } from "./activitySliceType";
-import { completeQuiz, getPhotoCheckStatus, getQuizResult, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto } from "../../api";
+import type { ActivityState, QuizAnswer } from "./activitySliceType";
+import { getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitRebus } from "../../activityApi";
 
-
+// тетрис
 export const fetchTetrisLink = createAsyncThunk(
     'activity/fetchTetrisLink',
     async () => {
@@ -24,6 +24,7 @@ export const fetchTetrisStatus = createAsyncThunk(
     }
 )
 
+// фоточек
 export const submitPhotoCheck = createAsyncThunk(
     'activity/submitPhotoCheck',
     async (flag: boolean) => {
@@ -38,10 +39,11 @@ export const fetchPhotoCheckStatus = createAsyncThunk(
     }
 );
 
+// квиз
 export const fetchCompleteQuiz = createAsyncThunk(
     'activity/fetchCompleteQuiz',
-    async () => {
-        return await completeQuiz();
+    async (answers: QuizAnswer[]) => {
+        return await submiteQuiz(answers);
     }
 );
 
@@ -52,6 +54,22 @@ export const fetchQuizResult = createAsyncThunk(
     }
 );
 
+// ребус
+export const fetchSubmitRebus = createAsyncThunk(
+    'activity/fetchSubmitRebus',
+    async (answers: string[]) => {
+        return await submitRebus(answers);
+    }
+);
+
+export const fetchRebusStatus = createAsyncThunk(
+    'activity/fetchRebusStatus',
+    async () => {
+        return await getRebusStatus();
+    }
+);
+
+
 const initialState: ActivityState = {
     tetrisLink: null,
     tetrisStatus: null,
@@ -60,7 +78,10 @@ const initialState: ActivityState = {
     photoCheckCompleted: null,
 
     quizReward: null,
-    quizResult: null,
+    quizStatus: null,
+
+    rewardRebus: null,
+    rebusStatus: null,
 
     status: 'idle',
     error: null,
@@ -112,7 +133,7 @@ const activitySlice = createSlice({
                 state.error = action.error.message ?? 'Не удалось получить статус';
             })
 
-            // фото-чек
+            // фоточек отправка флага
             .addCase(submitPhotoCheck.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
@@ -126,6 +147,7 @@ const activitySlice = createSlice({
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось проверить фото';
             })
+            // фоточек получение статуса
             .addCase(fetchPhotoCheckStatus.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
@@ -160,11 +182,40 @@ const activitySlice = createSlice({
             })
             .addCase(fetchQuizResult.fulfilled, (state, action) => {
                 state.status = 'success';
-                state.quizResult = action.payload.result;
+                state.quizStatus = action.payload.result;
+                state.quizReward = action.payload.reward
             })
             .addCase(fetchQuizResult.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось получить статус квиза';
+            })
+
+            //отправка ребуса и получение монет
+            .addCase(fetchSubmitRebus.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchSubmitRebus.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.rewardRebus = action.payload.rightAnswersCount
+            })
+            .addCase(fetchSubmitRebus.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить награду';
+            })
+
+            //получение статуса ребуса
+            .addCase(fetchRebusStatus.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchRebusStatus.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.rebusStatus = action.payload.result;
+            })
+            .addCase(fetchRebusStatus.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить статус ребуса';
             })
     }
 })

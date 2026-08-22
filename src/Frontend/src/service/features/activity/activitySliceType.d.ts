@@ -19,11 +19,25 @@ export interface PhotoCheckStatusResponse {
     result: boolean;
 }
 
+export interface QuizAnswer {
+    questionId: number;
+    answer: string;
+}
+
 export interface QuizSubmitResponse {
     reward: number;
 }
 
-export interface QuizResultResponse {
+export interface QuizStatusResponse {
+    result: boolean;
+    reward: number;
+}
+
+export interface RebusSubmitResponse {
+    succses: boolean;
+    rightAnswersCount: number;
+}
+export interface RebusStatusResponse {
     result: boolean;
 }
 
@@ -35,7 +49,10 @@ export interface ActivityState {
     photoCheckCompleted: boolean | null;
 
     quizReward: number | null;
-    quizResult: boolean | null;
+    quizStatus: boolean | null;
+
+    rewardRebus: number | null,
+    rebusStatus: boolean | null;
 
     status: 'idle' | 'loading' | 'success' | 'failed';
 

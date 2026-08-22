@@ -2,58 +2,54 @@ import s from './Quiz.module.scss'
 
 import mascot from '../../../assets/mascot/mascotWithQuestion.webp'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { QUIZ_QUESTIONS } from '../../../mock/quiz';
-import { normalizeAnswer } from '../../../utils/normalizeAnswer';
 
 import ActivityLayout from "../ActivityLayout/ActivityLayout";
 import QuizStep from './QuizStep';
 import QuizSuccess from './QuizSuccess';
-
-
-const QUIZ_RESULT_KEY = 'quizResult';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { fetchCompleteQuiz, fetchQuizResult } from '../../../service/features/activity/activitySlice';
+import type { QuizAnswer } from '../../../service/features/activity/activitySliceType';
+import Background from '../../UI/Background/Background';
+import Loader from '../../UI/Loader/Loader';
 
 export default function QuizPage() {
+    const dispatch = useAppDispatch()
+    const { quizStatus, quizReward, status } = useAppSelector(state => state.activity)
+
     const [currentStep, setCurrentStep] = useState(0);
-    const [userAnswers, setUserAnswers] = useState<string[]>([]);
-    const [quizResult, setQuizResult] = useState<'success' | 'error' | null>(
-        () => localStorage.getItem(QUIZ_RESULT_KEY) as 'success' | 'error' | null
-    )
+    const [userAnswers, setUserAnswers] = useState<QuizAnswer[]>([]);
 
     const currentQuestion = QUIZ_QUESTIONS[currentStep];
 
-    const handleFinishQuiz = (finalAnswers: string[]) => {
-        const isAllCorrect = QUIZ_QUESTIONS.every((question, index) => {
-            const userAnswer = normalizeAnswer(finalAnswers[index])
-
-            return question.correctAnswer.some(
-                answer => normalizeAnswer(answer) === userAnswer
-            )
-        })
-
-        const result = isAllCorrect ? 'success' : 'error'
-
-        localStorage.setItem(QUIZ_RESULT_KEY, result)
-        setQuizResult(result)
-    }
+    useEffect(() => {
+        dispatch(fetchQuizResult())
+    }, [])
 
     const handleNextStep = (answer: string) => {
-        const updatedAnswers = [...userAnswers, answer];
+        const quizAnswer: QuizAnswer = {
+            questionId: currentQuestion.id,
+            answer,
+        }
 
+        const updatedAnswers = [...userAnswers, quizAnswer];
         setUserAnswers(updatedAnswers)
 
         if (currentStep < QUIZ_QUESTIONS.length - 1) {
             setCurrentStep(prev => prev + 1)
         } else {
-            handleFinishQuiz(updatedAnswers)
+            dispatch(fetchCompleteQuiz(updatedAnswers))
         }
     }
 
-    if (quizResult === 'success') {
+    if (status === 'loading' && quizStatus === null) return <Background><Loader /></Background>
+
+    if (quizStatus === true && quizReward !== null && quizReward > 0) {
         return <QuizSuccess success />;
     }
 
-    if (quizResult === 'error') {
+    if (quizStatus === true && quizReward !== null && quizReward === 0) {
         return <QuizSuccess error />;
     }
 
