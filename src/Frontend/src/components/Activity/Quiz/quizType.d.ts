@@ -1,4 +1,5 @@
 import type { QuizQuestion } from "../../../mock/quiz";
+import type { QuizAnswer } from "../../../service/features/activity/activitySliceType";
 
 export interface QuizSuccessProps {
     success?: boolean;

@@ -11,17 +11,21 @@ import ResultStep from "../../UI/ResultStep/ResultStep";
 
 import type { QuizSuccessProps } from './quizType';
 import ActivityLayout from '../ActivityLayout/ActivityLayout';
+import { useAppSelector } from '../../../hooks/redux';
 
 export default function QuizSuccess({ success, error }: QuizSuccessProps) {
+  const { quizReward } = useAppSelector(state => state.activity)
+
   const navigate = useNavigate()
+
   const descriptionSuccess = (
     <>
-      Тебе начислено 15 <Coin />
+      Тебе начислено {quizReward} <Coin />
     </>
   )
   const descriptionError = (
     <>
-      Тебе начислено 0 <Coin />
+      Тебе начислено {quizReward} <Coin />
     </>
   )
 

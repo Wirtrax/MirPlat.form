@@ -19,6 +19,7 @@ import PhotoCheckPage from './components/Activity/PhotoCheck/PhotoCheckPage';
 import FourByFourPage from './components/Activity/FourByFour/FourByFourPage';
 import QuizPage from './components/Activity/Quiz/QuizPage';
 import ITRebusPage from './components/Activity/ITRebus/ITRebusPage';
+import FindErrorPage from './components/Activity/FindError/FindErrorPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
         <Route path={ROUTES.FOUR_BY_FOUR} element={<FourByFourPage />} />
         <Route path={ROUTES.QUIZ} element={<QuizPage />} />
         <Route path={ROUTES.IT_REBUS} element={<ITRebusPage />} />
+        <Route path={ROUTES.FIND_ERROR} element={<FindErrorPage />} />
 
 
         <Route path={ROUTES.HOME} element={<Root />}>
