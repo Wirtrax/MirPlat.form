@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { ActivityState, QuizAnswer } from "./activitySliceType";
-import { getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitRebus } from "../../activityApi";
+import { getCardsGame, getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitFourGame, submitRebus } from "../../activityApi";
 
 // тетрис
 export const fetchTetrisLink = createAsyncThunk(
@@ -69,6 +69,20 @@ export const fetchRebusStatus = createAsyncThunk(
     }
 );
 
+// 4x4
+export const fetchCardGame = createAsyncThunk(
+    'activity/fetchCardGame',
+    async () => {
+        return await getCardsGame();
+    }
+)
+export const fetchSubmitFourGame = createAsyncThunk(
+    'activity/fetchSubmitFourGame',
+    async (count_of_guesed_group: number) => {
+        return await submitFourGame(count_of_guesed_group);
+    }
+)
+
 
 const initialState: ActivityState = {
     tetrisLink: null,
@@ -82,6 +96,9 @@ const initialState: ActivityState = {
 
     rewardRebus: null,
     rebusStatus: null,
+
+    cardsGame: null,
+    rewardFourGame: null,
 
     status: 'idle',
     error: null,
@@ -216,6 +233,33 @@ const activitySlice = createSlice({
             .addCase(fetchRebusStatus.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось получить статус ребуса';
+            })
+
+            //4x4 получение карточек
+            .addCase(fetchCardGame.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchCardGame.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.cardsGame = action.payload.groups;
+            })
+            .addCase(fetchCardGame.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить карточки для игры';
+            })
+            //4x4 получить награду
+            .addCase(fetchSubmitFourGame.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchSubmitFourGame.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.rewardFourGame = action.payload.reward;
+            })
+            .addCase(fetchSubmitFourGame.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить награду';
             })
     }
 })

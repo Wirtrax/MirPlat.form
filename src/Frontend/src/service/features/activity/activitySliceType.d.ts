@@ -41,6 +41,22 @@ export interface RebusStatusResponse {
     result: boolean;
 }
 
+
+export interface CardGameGroup {
+    id: number;
+    icon: string;
+    group_id: string;
+}
+
+export interface CardGameGroupsResponse {
+    groups: CardGameGroup[];
+}
+
+export interface FourGameSubmitResponse {
+    reward: number;
+}
+
+
 export interface ActivityState {
     tetrisLink: string | null;
     tetrisStatus: boolean | null;
@@ -53,6 +69,9 @@ export interface ActivityState {
 
     rewardRebus: number | null,
     rebusStatus: boolean | null;
+
+    rewardFourGame: number | null;
+    cardsGame: CardGameGroup[] | null;
 
     status: 'idle' | 'loading' | 'success' | 'failed';
 
