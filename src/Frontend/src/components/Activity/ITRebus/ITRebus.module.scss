@@ -51,12 +51,6 @@
 
 .rebus__submit-btn {
     margin-top: rem(-22);
-    line-height: 110%;
-
-    @media (max-height: rem(710)) {
-        margin-bottom: rem(30);
-    }
-
 }
 
 .rebus__status--correct {
