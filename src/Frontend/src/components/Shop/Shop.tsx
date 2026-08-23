@@ -90,7 +90,7 @@ function Shop() {
       </div>
 
       {selectedProduct && (
-        <Modal onClose={handleCloseModal}>
+        <Modal onClose={handleCloseModal} className={clsx(successCode && s['shop__modal'])}>
           {successCode ? (
             <PurchaseSuccessModal qrValue={successCode} />
           ) : (
