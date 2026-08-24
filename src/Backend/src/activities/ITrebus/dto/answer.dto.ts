@@ -1,8 +1,7 @@
-// answer.dto.ts
 import { IsArray, ValidateNested, IsNumber, IsString, IsNotEmpty } from 'class-validator';
 import { Type } from 'class-transformer';
 
-class QuestionItemDto {
+export class QuestionItemDto {
     @IsNumber({}, { message: 'questionId must be a number' })
     @IsNotEmpty({ message: 'questionId is required' })
     questionId: number;
