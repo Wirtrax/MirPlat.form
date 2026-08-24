@@ -25,8 +25,8 @@ export class ItemsService {
         return { success: true };
     }
 
-    async hideItem(id: number) {
-        return this.updateItem(id, {is_active: false});
+    async changeStatusItem(id: number, status: boolean) {
+        return this.updateItem(id, {is_active: status});
     }
 
     async addItem(createItemDto: CreateItemDto): Promise<CreateItemDto> {

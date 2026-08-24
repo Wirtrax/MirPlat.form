@@ -22,9 +22,9 @@ export class ItemsController {
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    @Patch(':id/hide')
-    hideItem(@Param('id', ParseIntPipe) id: number) {
-        return this.itemsService.hideItem(id);
+    @Patch(':id/status')
+    changeStatus(@Param('id', ParseIntPipe) id: number, @Body('status') status: boolean) {
+        return this.itemsService.changeStatusItem(id, status);
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
