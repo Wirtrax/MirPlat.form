@@ -1,11 +1,12 @@
 import s from './Modal.module.scss';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import clsx from 'clsx';
 
 import ModalOverlay from './ModalOverlay/ModalOverlay';
 import type { ModalProps } from './modalProp';
 
-const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ children, onClose, className }) => {
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -21,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
 
   return ReactDOM.createPortal(
     <ModalOverlay onClose={onClose}>
-      <div className={s.modal} onClick={(e) => e.stopPropagation()}>
+      <div className={clsx(s.modal, className)} onClick={(e) => e.stopPropagation()}>
         <button className={s['modal__btn']} onClick={onClose} type="button">
           <span className={s['modal__btn-icon-close']}></span>
         </button>

@@ -14,7 +14,7 @@ export const IT_REBUS: ItRebusType[] = [
         id: 2,
         question: '☕ + 📜',
         correctAnswer: ['javascript', 'js', 'java script'],
-    },
+    }, 
     {
         id: 3,
         question: '🧠+ 🍆',
