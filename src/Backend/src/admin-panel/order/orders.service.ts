@@ -1,17 +1,16 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { Purchase, PurchaseStatus } from 'src/entities/purchase.entity';
-import { Repository } from 'typeorm/browser/repository/Repository.js';
-import { InjectDataSource, InjectRepository } from '@nestjs/typeorm/dist/common/typeorm.decorators';
+import { Repository, DataSource } from 'typeorm';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Item } from 'src/entities/item.entity';
-import { DataSource } from 'typeorm/browser/data-source/DataSource.js';
 
 export interface OrderResponse {
     orderId: number;
     itemName: string;
     userFullName: string;
     userPhoneNumber: string;
-    userEmail;
+    userEmail: string;
     status: PurchaseStatus;
 }
 
@@ -39,7 +38,9 @@ export class OrderService {
         .addGroupBy('user.id')
         .addGroupBy('full_name')
         .getRawMany();*/
-        const allOrders = await this.purchasesRepo.find({select: {
+        const allOrders = await this.purchasesRepo.find({
+            relations: {item: true, user: true},
+            select: {
             item: true,
             user: true,
             }   
