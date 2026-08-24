@@ -7,7 +7,7 @@ import FindErrorSuccess from "./FindErrorSuccess"
 
 
 export default function FindErrorPage() {
-    const [step, setStep] = useState<GameStep>('game')
+    const [step, setStep] = useState<GameStep>('rules')
 
     const handleEndGame = () => {
         setStep('result')
