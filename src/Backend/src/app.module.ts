@@ -31,6 +31,7 @@ import { join } from 'path';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'media'),
+      serveRoot: '/media/'
     }),
     UserModule,
     ItemModule,

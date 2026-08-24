@@ -1,6 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ServeStaticModule } from '@nestjs/serve-static';
+import { MediaController } from './media.controller';
+import { MediaService } from './media.service';
+import { MulterModule } from '@nestjs/platform-express';
+import multer from 'multer';
 
-@Module({})
+@Module({
+  providers: [MediaService],
+  exports: [MediaService]
+})
 export class MediaModule {
 }
