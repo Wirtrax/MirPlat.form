@@ -12,7 +12,7 @@ import { ExcelExportModule } from './excel-export/excel-export.module';
     RouterModule.register([
       {
         path: 'admin',
-        children: [UsersModule, ItemsModule, OrderModule, AttemptsModule, AuthModule],
+        children: [UsersModule, ItemsModule, OrderModule, AttemptsModule, AuthModule, ExcelExportModule],
       },
     ]),
     UsersModule,
