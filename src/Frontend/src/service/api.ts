@@ -1,12 +1,3 @@
-import type {
-  QuizResultResponse,
-  TetrisLinkResponse,
-  TetrisSubmitResponse,
-  QuizSubmitRequest,
-  PhotoCheckSubmitResponse,
-  PhotoCheckStatusResponse
-} from './features/activity/activitySliceType';
-
 import type { createOrderResponse, Product } from './features/shop/shopType';
 import type { CreateUser, User } from './features/user/userType';
 
@@ -14,18 +5,6 @@ import { getAuthToken, setAuthToken, request } from './utils/query';
 interface AuthResponse {
   token: string;
 }
-
-// export const login = async () => {
-//   const data = await request<{ token: string }>('/auth/signin', {
-//     method: 'POST',
-//     headers: {
-//       Authorization: `Bearer ${getInitData()}`,
-//       'Content-Type': 'application/json',
-//     },
-//   });
-
-//   document.cookie = `token=${data.token}; path=/`
-// }
 
 const getInitData = (): string => {
   return window.Telegram?.WebApp?.initData || 'devtest1';
@@ -86,56 +65,3 @@ export const createOrder = (id: number): Promise<createOrderResponse> => {
     },
   });
 };
-
-export const getTetrisLink = () => {
-  return request<TetrisLinkResponse>('/activities/tetris', {
-    method: 'GET',
-  });
-};
-
-export const sendTetrisPhoto = (photo_link: string) => {
-  return request<TetrisSubmitResponse>('/activities/tetris', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ photo_link }),
-  });
-};
-
-export const sendPhotoCheck = (flag: boolean) => {
-  return request<PhotoCheckSubmitResponse>('/activities/photo_check', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ flag }),
-  });
-};
-
-export const getPhotoCheckStatus = () => {
-  return request<PhotoCheckStatusResponse>(
-    '/activities/photo_check/status',
-    {
-      method: 'POST',
-    }
-  );
-};
-
-export const completeQuiz = (flag: boolean) => {
-  const data: QuizSubmitRequest = { flag };
-
-  return request('/activities/quiz', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-};
-
-export const getQuizResult = () => {
-  return request<QuizResultResponse>('/activities/quiz/status', {
-    method: 'GET',
-  });
-}

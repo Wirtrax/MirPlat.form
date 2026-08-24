@@ -2,7 +2,7 @@ import type { ItRebusType } from "../../../mock/itRebus";
 
 export interface ITRebusStepProps {
     data: ItRebusType;
-    onNext: (isCorrect: boolean) => void;
+    onNext: (answer: string) => void;
 }
 
 export interface ITRebusSuccessProps{

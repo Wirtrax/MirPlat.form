@@ -14,25 +14,19 @@ import type { ITRebusStepProps } from './itRebusType'
 export default function ITRebusStep({ data, onNext }: ITRebusStepProps) {
     const [answer, setAnswer] = useState('')
     const [isAnswered, setIsAnswered] = useState(false)
-    const [isCorrected, setIsCorrected] = useState<boolean | null>(null)
 
     const handleCheck = () => {
         if (!answer.trim()) return
-
         const userAnswer = normalizeAnswer(answer)
 
-        const isCorrect = data.correctAnswer.some(
-            correctAnswer => normalizeAnswer(correctAnswer) === userAnswer
-        )
-        setIsCorrected(isCorrect)
         setIsAnswered(true)
     }
     const handleNextStep = () => {
-        if (isCorrected !== null) onNext(isCorrected)
+        onNext(answer)
 
         setAnswer('')
         setIsAnswered(false)
-        setIsCorrected(null)
+
     }
 
     return (

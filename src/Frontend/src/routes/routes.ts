@@ -9,5 +9,6 @@ export const ROUTES = {
     PHOTO_CHECK: '/photo_check',
     FOUR_BY_FOUR: '/four_by_four',
     QUIZ: '/quiz',
-    IT_REBUS: '/it_rebus'
+    IT_REBUS: '/it_rebus',
+    FIND_ERROR: 'find_error',
 } as const;

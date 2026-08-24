@@ -15,8 +15,8 @@ export default function CardLottery() {
             {card.description}
             {card.id === 3 && (
               <span className={s.links}>
-                <a href="https://vk.com/mir_plat.form">Telegram</a>, <a href="https://t.me/mir_platform">ВКонтакте</a>,{' '}
-                <a href="https://habr.com/ru/specials/978610/">Хабр</a>
+                <a href={import.meta.env.VITE_TELEGRAM_URL}>Telegram</a>, <a href={import.meta.env.VITE_VK_URL}>ВКонтакте</a>,{' '}
+                <a href={import.meta.env.VITE_HABR_URL}>Хабр</a>
               </span>
             )}
           </p>

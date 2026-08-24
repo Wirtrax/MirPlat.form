@@ -27,4 +27,14 @@
         text-align: center;
         opacity: 0.6;
     }
+
+    &__modal {
+
+        @media (max-height: rem(800)) {
+            overflow-y: auto;
+            padding: rem(20) rem(6);
+            margin-top: rem(50);
+            box-sizing: border-box;
+        }
+    }
 }

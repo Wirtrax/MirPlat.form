@@ -8,6 +8,9 @@ import PhoneIcon from '../../assets/profile/contacts/phone.svg?react';
 import SpecializationIcon from '../../assets/profile/contacts/specialization.svg?react';
 import LevelIcon from '../../assets/profile/contacts/level.svg?react';
 
+import { options } from '../Registration/RegistrationForm/specializationOptions';
+import { EXPERIENCE_LEVELS } from '../UI/RadioList/RadioList';
+
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -57,6 +60,9 @@ export default function Profile() {
 
   const purchases: createOrderResponse[] = user.purchases || [];
 
+  const specializationLabel = options.find(option => option.value === user?.specialization)
+  const levelLabel = EXPERIENCE_LEVELS.find(level => level.value === user?.programming_level)
+
   console.log(purchases);
 
   const fullName = `${user?.last_name} ${user?.first_name} ${user?.patronym}`.trim();
@@ -85,13 +91,13 @@ export default function Profile() {
         id: 'spec',
         icon: <SpecializationIcon />,
         label: 'Специализация',
-        value: user.specialization,
+        value: specializationLabel?.label ?? user.specialization,
       },
       {
         id: 'level',
         icon: <LevelIcon />,
         label: 'Уровень',
-        value: user.programming_level,
+        value: levelLabel?.label ?? user.specialization,
       },
     ],
   };

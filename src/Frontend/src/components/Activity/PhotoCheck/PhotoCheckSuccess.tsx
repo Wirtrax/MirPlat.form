@@ -7,11 +7,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import ResultStep from '../../UI/ResultStep/ResultStep';
 import { ROUTES } from '../../../routes/routes';
 
-interface PhotoCheckProps {
+interface PhotoCheckSuccessProps {
     hasSubmittedPhoto: boolean;
 }
 
-export default function PhotoCheckSuccess({ hasSubmittedPhoto }: PhotoCheckProps) {
+export default function PhotoCheckSuccess({ hasSubmittedPhoto }: PhotoCheckSuccessProps) {
     const navigate = useNavigate()
 
     const description = (

@@ -1,21 +1,27 @@
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useEffect, useState } from 'react';
 
 import Tetris from './Tetris';
 import TetrisSuccess from './TetrisSuccess';
+import { fetchTetrisStatus, submitTetrisPhoto } from '../../../service/features/activity/activitySlice';
+
 
 export default function TetrisPage() {
-    const [hasSubmittedPhoto] = useState(false); //вручную для повторного захода
-    // const hasSubmittedPhoto = attempts.some(
-    //     attempt => attempt.is_photo
-    // );
+    const { tetrisStatus } = useAppSelector(state => state.activity)
+    const dispatch = useAppDispatch()
+
     const [isJustSubmitted, setIsJustSubmitted] = useState(false);
 
-    const handleSubmit = () => {
-        //отправка фото на бэк
-        setIsJustSubmitted(true);
+    useEffect(() => {
+        dispatch(fetchTetrisStatus())
+    }, [])
+
+    const handleSubmit = async (photo_link: string) => {
+        await dispatch(submitTetrisPhoto(photo_link)).unwrap()
+        setIsJustSubmitted(true)
     }
 
-    if (hasSubmittedPhoto) {
+    if (tetrisStatus) {
         return <TetrisSuccess hasSubmittedPhoto={true} />;
     }
     if (isJustSubmitted) {

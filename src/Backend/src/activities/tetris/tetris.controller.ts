@@ -5,7 +5,7 @@ import { JWTAuth } from 'src/auth/jwt.decorator';
 import { CreateTetrisAttemptDto } from './dto/create-tetris-attempt.dto';
 
 
-@Controller('activities')
+@Controller('api/activities')
 export class TetrisController {
     constructor(
         private readonly tetrisService: TetrisService
