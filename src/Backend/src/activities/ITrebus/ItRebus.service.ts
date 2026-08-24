@@ -77,14 +77,14 @@ export class ItRebusService {
 
         const total_reward = reward_per_answer*countOfUserRightAnswers;
 
-        if(total_reward >= 0) {
+        try {
             await this.dataSource.transaction(async manager => {
                 await createAttempt(manager, user_id, total_reward, rebus.name);
                 await manager.increment(User, { id: user_id }, 'balance', total_reward);
             });
 
-        } else {
-            throw new InternalServerErrorException('No reward to send')
+        } catch {
+            throw new InternalServerErrorException('Error during sending reward')
         }  
     }
 

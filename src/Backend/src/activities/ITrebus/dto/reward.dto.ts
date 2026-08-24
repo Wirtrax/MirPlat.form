@@ -2,7 +2,7 @@ import { IsArray, ValidateNested, IsNumber, IsString, IsNotEmpty } from 'class-v
 import { Type } from 'class-transformer';
 
 export class SendRewardDto {
-    @IsNumber({}, { message: 'questionId must be a number' })
-    @IsNotEmpty({ message: 'questionId is required' })
+    @IsNumber({}, { message: 'countOfRightAnswer must be a number' })
+    @IsNotEmpty({ message: 'countOfRightAnswer is required' })
     countOfRightAnswers: number;
 }

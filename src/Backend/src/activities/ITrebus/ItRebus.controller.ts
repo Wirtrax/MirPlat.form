@@ -1,7 +1,7 @@
 import { Body, Controller, Injectable, Post, Get, Req, BadRequestException, InternalServerErrorException } from "@nestjs/common";
 import { JWTAuth } from "src/auth/jwt.decorator";
 import { ItRebusService } from "./ItRebus.service";
-import { QuestionItemDto, SubmitAnswersDto } from "./dto/answer.dto";
+import { QuestionItemDto } from "./dto/answer.dto";
 import { JwtGuard } from "src/auth/jwt.guard";
 import { SendRewardDto } from "./dto/reward.dto";
 
@@ -21,7 +21,6 @@ export class ItRebusController {
     @Post('it_rebus')
     async checkAnswer(
         @Body() questionItemDto: QuestionItemDto,
-        @Req() request,
     ) {
         const answer = questionItemDto;
         try {
@@ -33,7 +32,7 @@ export class ItRebusController {
     }
 
     @JWTAuth()
-    @Post('it-rebus/reward')
+    @Post('it_rebus/reward')
     async getItRebusreward(
         @Body() sendRewardDto: SendRewardDto,
         @Req() request,

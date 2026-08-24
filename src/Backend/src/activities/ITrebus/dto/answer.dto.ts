@@ -10,10 +10,3 @@ export class QuestionItemDto {
     @IsNotEmpty({ message: 'answer is required' })
     answer: string;
 }
-
-export class SubmitAnswersDto {
-    @IsArray({ message: 'answers must be an array' })
-    @ValidateNested({ each: true })
-    @Type(() => QuestionItemDto)
-    answers: QuestionItemDto[];
-}
