@@ -137,10 +137,10 @@ export default function Profile() {
             </p>
           </div>
 
-          <div className={s['profile__balance']}>
-            <p className={s['profile__balance-label']}>Баланс «Приветов»:</p>
-            <p className={s['profile__balance-value']}>{user?.balance}</p>
-          </div>
+          <dl className={s['profile__balance']}>
+            <dt className={s['profile__balance-label']}>Баланс «Приветов»:</dt>
+            <dd className={s['profile__balance-value']}>{user?.balance}</dd>
+          </dl>
         </div>
 
         <Link to={ROUTES.ACTIVITIES} >
