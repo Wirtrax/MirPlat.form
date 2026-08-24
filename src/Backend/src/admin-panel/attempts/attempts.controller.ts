@@ -8,19 +8,19 @@ import { AttemptStatus } from 'src/entities/attempt.entity';
 export class AttemptsController {
     constructor (private readonly attemptsService: AttemptsService) {}
     
-    @UseGuards(JwtGuard, RolesGuard)
+    //@UseGuards(JwtGuard, RolesGuard)
     @Get()
     getAllAttempts() {
         return this.attemptsService.getAllAttempts();
     }
 
-    @UseGuards(JwtGuard, RolesGuard)
+    //@UseGuards(JwtGuard, RolesGuard)
     @Get(':id')
     getAttemptById(@Param('id') userId: number) {
         return this.attemptsService.getAttempt(userId);
     }
 
-    @UseGuards(JwtGuard, RolesGuard)
+    //@UseGuards(JwtGuard, RolesGuard)
     @Patch(':id')
     changeStatus(
         @Param('id', ParseIntPipe) attemptId: number, 
