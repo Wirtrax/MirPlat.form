@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException, NotFoundException, ForbiddenE
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { ItRebus } from "src/entities/activities/ItRebus/ItRebus.entity";
 import { User } from "src/entities/user.entity";
-import { ItRebusQuestions } from "src/entities/activities/ItRebus/ItRebusQuestions";
+import { ItRebusQuestions } from "src/entities/activities/ItRebus/ItRebusQuestions.entity";
 import { Repository } from "typeorm";
 import { checkOnReply, createAttempt, isAttemptExist } from "../helpers/attempt.helper";
 import { Attempt } from "src/entities/attempt.entity";

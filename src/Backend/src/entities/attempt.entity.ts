@@ -9,8 +9,8 @@ export enum AttemptStatus {
 }
 
 export enum DeclineReason {
-  WRONG_PHOTO = 'wrong_photo',
-  INCORRECT_SOLUTION = 'incorrect_solution',
+  WRONG_PHOTO = 'wrong photo',
+  INCORRECT_SOLUTION = 'incorrect solution',
 }
 
 @Entity()

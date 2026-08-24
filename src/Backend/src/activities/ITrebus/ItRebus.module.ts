@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ItRebus } from 'src/entities/activities/ItRebus/ItRebus.entity';
-import { ItRebusQuestions } from 'src/entities/activities/ItRebus/ItRebusQuestions';
+import { ItRebusQuestions } from 'src/entities/activities/ItRebus/ItRebusQuestions.entity';
 import { Attempt } from 'src/entities/attempt.entity';
 import { ItRebusService } from './ItRebus.service';
 import { ItRebusController } from './ItRebus.controller';
