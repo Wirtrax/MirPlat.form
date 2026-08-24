@@ -29,7 +29,7 @@ export interface QuizSubmitResponse {
 }
 
 export interface QuizStatusResponse {
-    result: boolean;
+    isReply: boolean;
     reward: number;
 }
 

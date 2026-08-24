@@ -199,7 +199,7 @@ const activitySlice = createSlice({
             })
             .addCase(fetchQuizResult.fulfilled, (state, action) => {
                 state.status = 'success';
-                state.quizStatus = action.payload.result;
+                state.quizStatus = action.payload.isReply;
                 state.quizReward = action.payload.reward
             })
             .addCase(fetchQuizResult.rejected, (state, action) => {
