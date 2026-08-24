@@ -1,8 +1,8 @@
-import { Injectable, InternalServerErrorException, NotFoundException, ForbiddenException } from "@nestjs/common";
+import { Injectable, InternalServerErrorException, NotFoundException, ForbiddenException, BadRequestException } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { ItRebus } from "src/entities/activities/ItRebus/ItRebus.entity";
 import { User } from "src/entities/user.entity";
-import { ItRebusQuestions } from "src/entities/activities/ItRebus/ItRebusQuestions";
+import { ItRebusQuestions } from "src/entities/activities/ItRebus/ItRebusQuestions.entity";
 import { Repository } from "typeorm";
 import { checkOnReply, createAttempt, isAttemptExist } from "../helpers/attempt.helper";
 import { Attempt } from "src/entities/attempt.entity";
@@ -30,31 +30,33 @@ export class ItRebusService {
         private readonly dataSource: DataSource,
     ) {}
 
-    async checkAnswers(user_answers: QuestionItem[]): Promise<number> {
-        let countOfUserRightAnswers: number = 0;
+    async checkAnswer(user_answer: QuestionItem): Promise<boolean> {
+        const question = await this.questionsRepo.findOneBy({ question_id: user_answer.questionId })
 
-        for(const user_answer of user_answers) {
-            const question = await this.questionsRepo.findOneBy({ question_id: user_answer.questionId })
-
-            if(!question) {
-                throw new NotFoundException(`Question with id_${user_answer.questionId} does not exist `)
-            }
-
-            const right_answers = question.right_answers;
-
-            if(!right_answers) {
-                throw new NotFoundException(`Answers on question with id_${user_answer.questionId} do not exist `)
-            }
-
-            if(user_answer.answer in right_answers) {
-                countOfUserRightAnswers++;
-            }
+        if(!question) {
+            throw new NotFoundException(`Question with id_${user_answer.questionId} does not exist `)
         }
 
-        return countOfUserRightAnswers;
+        const right_answers = question.right_answers;
+
+        if(!right_answers) {
+            throw new NotFoundException(`Answers on question with id_${user_answer.questionId} do not exist `)
+        }
+
+        if(user_answer.answer in right_answers) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     async sendReward(user_id: number, countOfUserRightAnswers: number): Promise<void> {
+        const maxQuestionCount = await this.getTotalQuestionCount(); 
+
+        if(countOfUserRightAnswers < 0 || countOfUserRightAnswers > maxQuestionCount) {
+            throw new BadRequestException('Invalid number of right questions')
+        }
+
         const rebus = await this.itRebusRepo.findOneBy({name: 'ItRebus'});
 
         if(!rebus) {
@@ -73,21 +75,30 @@ export class ItRebusService {
             throw new NotFoundException('reward_per_answer does not exist in ItRebus')
         }
 
-        const total_reward = reward_per_answer*countOfUserRightAnswers || 0;
+        const total_reward = reward_per_answer*countOfUserRightAnswers;
 
-        if(total_reward >= 0) {
-
+        try {
             await this.dataSource.transaction(async manager => {
                 await createAttempt(manager, user_id, total_reward, rebus.name);
                 await manager.increment(User, { id: user_id }, 'balance', total_reward);
             });
 
-        } else {
-            throw new InternalServerErrorException('No reward to send')
+        } catch {
+            throw new InternalServerErrorException('Error during sending reward')
         }  
     }
 
     async checkOnReplyRebus(user_id: number): Promise<{ result: boolean }> {
         return checkOnReply(user_id, this.itRebusRepo, this.attemptRepo)
+    }
+
+    async getTotalQuestionCount(): Promise<number> {
+        const questionsCount = await this.questionsRepo.count()
+
+        if(questionsCount === 0) {
+            throw new NotFoundException('Cannot find any questions')
+        }
+
+        return questionsCount
     }
 } 

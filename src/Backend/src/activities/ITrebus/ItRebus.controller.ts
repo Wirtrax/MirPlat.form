@@ -1,7 +1,9 @@
-import { Body, Controller, Injectable, Post, Get, Req, BadRequestException } from "@nestjs/common";
+import { Body, Controller, Injectable, Post, Get, Req, BadRequestException, InternalServerErrorException } from "@nestjs/common";
 import { JWTAuth } from "src/auth/jwt.decorator";
 import { ItRebusService } from "./ItRebus.service";
-import { SubmitAnswersDto } from "./dto/answer.dto";
+import { QuestionItemDto } from "./dto/answer.dto";
+import { JwtGuard } from "src/auth/jwt.guard";
+import { SendRewardDto } from "./dto/reward.dto";
 
 @Controller('api/activities')
 export class ItRebusController {
@@ -17,31 +19,35 @@ export class ItRebusController {
 
     @JWTAuth()
     @Post('it_rebus')
-    async checkAnswers(
-        @Body() submitAnswersDto: SubmitAnswersDto,
+    async checkAnswer(
+        @Body() questionItemDto: QuestionItemDto,
+    ) {
+        const answer = questionItemDto;
+        try {
+            const isAnswerRight = await this.itRebusService.checkAnswer(answer)
+            return isAnswerRight
+        } catch(error) {
+            throw new InternalServerErrorException('Error during checking answer')
+        }
+    }
+
+    @JWTAuth()
+    @Post('it_rebus/reward')
+    async getItRebusreward(
+        @Body() sendRewardDto: SendRewardDto,
         @Req() request,
     ) {
         const userId = request['userId'];
-        const answers = submitAnswersDto.answers;
+        const countOfRightAnswers = sendRewardDto.countOfRightAnswers;
 
         if (typeof userId !== 'number' || isNaN(userId)) {
             throw new BadRequestException('Invalid user ID');
         }
 
         try {
-            const countOfRightAnswers = await this.itRebusService.checkAnswers(answers)
-
-            await this.itRebusService.sendReward(userId, countOfRightAnswers)
-
-            return {
-                succses: true,
-                rightAnswersCount: countOfRightAnswers,
-            }
+            this.itRebusService.sendReward(userId, countOfRightAnswers)
         } catch(error) {
-            return {
-                succses: false,
-                message: `fall with error: ${error}`
-            }
+            throw new InternalServerErrorException('')
         }
     }
 } 
