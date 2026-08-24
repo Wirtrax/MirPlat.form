@@ -10,7 +10,7 @@ export class ExcelExportController {
         private readonly downloadService: DownloadService,
     ) {}
 
-    @UseGuards(JwtGuard, RolesGuard)
+    //@UseGuards(JwtGuard, RolesGuard)
     @Get('download')
     async downloadExcel(@Res({ passthrough: true }) res: Response): Promise<StreamableFile> {
         try {
