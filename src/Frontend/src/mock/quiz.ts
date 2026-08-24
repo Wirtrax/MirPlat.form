@@ -5,7 +5,6 @@ export interface QuizQuestion {
     buttonText: string;
     buttonLink: string;
     inputPlaceholder: string;
-    correctAnswer: string[];
 }
 
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
@@ -16,7 +15,6 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         buttonText: 'ПЕРЕЙТИ В TELEGRAM',
         buttonLink: import.meta.env.VITE_TELEGRAM_URL,
         inputPlaceholder: 'Введи число...',
-        correctAnswer: ['6'],
     },
     {
         id: 2,
@@ -25,7 +23,6 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         buttonText: 'ПЕРЕЙТИ НА ХАБР',
         buttonLink: import.meta.env.VITE_HABR_URL,
         inputPlaceholder: 'Введи слово...',
-        correctAnswer: ['клиринг'],
     },
     {
         id: 3,
@@ -34,6 +31,5 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         buttonText: 'ПЕРЕЙТИ НА САЙТ',
         buttonLink: import.meta.env.VITE_SITE_URL,
         inputPlaceholder: 'Введи город...',
-        correctAnswer: ['томск', 'в томске'], 
     },
 ];

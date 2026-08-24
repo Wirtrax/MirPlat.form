@@ -5,6 +5,7 @@ export interface ModalOverlayProps {
 export interface ModalProps {
   children: React.ReactNode;
   onClose: () => void;
+  className?: string;
 }
 export interface ProductModalProps {
   src: string;

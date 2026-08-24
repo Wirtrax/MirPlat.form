@@ -1,5 +1,5 @@
 import { Controller, Post, Body, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthService, resultForLogin } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { SuperAdminGuard } from './guards/super-admin.guard';
 import { JwtGuard } from './guards/jwt.guard';
@@ -21,7 +21,7 @@ export class AuthController {
 
     @Public()
     @Post('login')
-    login(@Body() dto: LoginDto) {
+    login(@Body() dto: LoginDto){
         console.log('LOGIN dto:', JSON.stringify(dto)); 
         return this.authService.login(dto.login, dto.password);
     }

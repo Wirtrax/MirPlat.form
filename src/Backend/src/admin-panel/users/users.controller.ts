@@ -41,4 +41,10 @@ export class UsersController {
         changeBalance(@Param('id', ParseIntPipe) id: number,@Body() dto: ChangeBalanceDto) {
             return this.usersService.changeBalance(id, dto.amount);
         }
+
+        //@UseGuards(JwtGuard, RolesGuard)
+        @Get(':id')
+        getUser(@Param('id', ParseIntPipe) id: number) {
+            return this.usersService.getUser(id);
+        }
 }

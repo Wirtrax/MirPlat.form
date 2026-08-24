@@ -9,6 +9,11 @@
 
         background: var(--color-light);
         border-radius: rem(25);
+
+        @media(max-height: rem(650)) {
+            margin-top: rem(16);
+            margin-bottom: rem(45);
+        }
     }
 
     &__rules-title {
@@ -52,6 +57,23 @@
 
         overflow: hidden;
         pointer-events: none;
+        z-index: -1;
+
+        @media (max-height: 750px) {
+            max-width: rem(250);
+            height: rem(180);
+        }
+
+        @media (max-height: 700px) {
+            max-width: rem(195);
+            height: rem(145);
+        }
+
+        @media (max-height: 650px) {
+            max-width: rem(170);
+            height: rem(110);
+            bottom: rem(-10);
+        }
     }
 
     &__mascot-img {

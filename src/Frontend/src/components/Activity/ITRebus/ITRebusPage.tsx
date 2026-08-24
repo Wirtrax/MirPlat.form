@@ -6,42 +6,38 @@ import ActivityLayout from '../ActivityLayout/ActivityLayout'
 import ITRebusStep from './ITRebusStep'
 import ITRebusSuccess from './ITRebusSuccess'
 import ProgressBar from './ProgressBar/ProgressBar'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
+import { fetchRebusStatus, fetchSubmitRebus } from '../../../service/features/activity/activitySlice'
 
 const REBUS_COMPLETED_KEY = 'it_rebus_completed'
 
 export default function ITRebusPage() {
-    const [currentStep, setCurrentStep] = useState(0)
-    const [score, setScore] = useState(0)
-    const [isCompleted, setIsCompleted] = useState(false)
+    const dispatch = useAppDispatch()
+    const { rebusStatus, rewardRebus } = useAppSelector(state => state.activity)
 
-    const [isAlreadyCompleted, setIsAlreadyCompleted] = useState(false)
+    const [currentStep, setCurrentStep] = useState(0)
+    const [userAnswers, setUserAnswers] = useState<string[]>([])
+
     useEffect(() => {
-        const completedBefore = localStorage.getItem(REBUS_COMPLETED_KEY)
-        if (completedBefore) {
-            setIsAlreadyCompleted(true)
-        }
+        dispatch(fetchRebusStatus())
     }, [])
 
-    const currentQuestion = IT_REBUS[currentStep]
+    const handleNextStep = (answer: string) => {
+        const updateAnswers = [...userAnswers, answer]
 
-    const handleNextStep = (isCorrect: boolean) => {
-        if (isCorrect) {
-            setScore(prev => prev + 1)
-        }
         if (currentStep < IT_REBUS.length - 1) {
             setCurrentStep(prev => prev + 1)
         } else {
-
-            localStorage.setItem(REBUS_COMPLETED_KEY, 'true')
-
-            setIsCompleted(true)
+            dispatch(fetchSubmitRebus(updateAnswers))
         }
     }
 
-    if (isAlreadyCompleted) {
+    if (rebusStatus === true) {
         return <ITRebusSuccess score={0} length={IT_REBUS.length} isAlreadyCompleted={true} />
     }
-    if (isCompleted) return <ITRebusSuccess score={score} length={IT_REBUS.length} isAlreadyCompleted={false} />
+    if (rewardRebus !== null) return <ITRebusSuccess score={rewardRebus} length={IT_REBUS.length} isAlreadyCompleted={false} />
+
+    const currentQuestion = IT_REBUS[currentStep]
 
     return (
         <ActivityLayout
@@ -56,3 +52,6 @@ export default function ITRebusPage() {
         </ActivityLayout>
     )
 }
+
+
+

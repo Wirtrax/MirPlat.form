@@ -6,6 +6,11 @@ import { JwtService } from '@nestjs/jwt';
 import { AdminRole } from 'src/entities/admins.entity';
 import * as bcrypt from 'bcrypt';
 
+export interface resultForLogin {
+    token: string;
+    role: AdminRole
+}
+
 @Injectable()
 export class AuthService {
     constructor(
@@ -41,13 +46,13 @@ export class AuthService {
 
     }
 
-    async login(login: string, password: string) {
+    async login(login: string, password: string): Promise<resultForLogin>  {
         const admin = await this.adminRepo.findOne({ where: {login}});
 
         if (!admin) {
-            throw new UnauthorizedException("Неверный логин или пароль");
+            throw new UnauthorizedException("Администратор не найден");
         }
-           
+
         const valid = await bcrypt.compare(password, admin.password_hash);
 
         if (!valid) {
@@ -59,6 +64,6 @@ export class AuthService {
             role: admin.role,
         });
 
-        return { access_token: token }
+        return { token: token, role: admin.role}
     }
 }

@@ -1,25 +1,35 @@
 import s from './FourByFour.module.scss'
 import clsx from 'clsx'
 
+import WhiteUser from '../../../assets/activity/fourByFour/whiteUser.svg?react'
+import BlueUser from '../../../assets/activity/fourByFour/blueUser.svg?react'
+import GreenUser from '../../../assets/activity/fourByFour/greenUser.svg?react'
+import GreenFillUser from '../../../assets/activity/fourByFour/greenFillUser.svg?react'
+
 import { useEffect, useState } from 'react'
 
 import ActivityLayout from '../ActivityLayout/ActivityLayout'
 import Timer from '../Timer/Timer'
 
-import type { FourByFourGameProps } from './fourByFourType'
-import { fourGameCards, type CardItem } from '../../../mock/four_by_four'
+import type { FourByFourGameProps, GameCard } from './fourByFourType'
 
-
-const shuffleArray = (array: CardItem[]) => {
+const shuffleArray = (array: GameCard[]) => {
     return [...array].sort(() => Math.random() - 0.5)
 }
+const groupIcons = {
+    group_1: WhiteUser,
+    group_2: BlueUser,
+    group_3: GreenUser,
+    group_4: GreenFillUser,
+}
 
-export default function FourByFourGame({ onEndGame }: FourByFourGameProps) {
-    const [cards, setCards] = useState<CardItem[]>([])
+export default function FourByFourGame({ onEndGame, cards }: FourByFourGameProps) {
+
+    const [gameCards, setGameCards] = useState<GameCard[]>([])
+    const [remainsCards, setRemainsCards] = useState<GameCard[]>([])
 
     const [selectedCardID, setSelectedCardID] = useState<number[]>([])
     const [guessedCardID, setGuessedCardID] = useState<number[]>([])
-    const [remainsCards, setRemainsCards] = useState<CardItem[]>([])
 
     const [isShowingPreview, setIsShowingPreview] = useState(true)
     const [isError, setIsError] = useState(false)
@@ -41,8 +51,16 @@ export default function FourByFourGame({ onEndGame }: FourByFourGameProps) {
     }
 
     useEffect(() => {
-        const shuffled = shuffleArray(fourGameCards)
-        setCards(shuffled.slice(0, 16))
+        if (!cards) return
+
+        const preparedCards = cards.map(card => ({
+            ...card,
+            Icon: groupIcons[card.group_id as keyof typeof groupIcons],
+        }))
+
+        const shuffled = shuffleArray(preparedCards)
+
+        setGameCards(shuffled.slice(0, 16))
         setRemainsCards(shuffled.slice(16))
 
         const previewTimer = setTimeout(() => {
@@ -50,14 +68,14 @@ export default function FourByFourGame({ onEndGame }: FourByFourGameProps) {
         }, 3000)
 
         return () => clearTimeout(previewTimer)
-    }, [])
+    }, [cards])
 
     useEffect(() => {
         if (selectedCardID.length === 4) {
-            const selectedCards = cards.filter(card => selectedCardID.includes(card.id))
+            const selectedCards = gameCards.filter(card => selectedCardID.includes(card.id))
 
-            const firstGroupId = selectedCards[0]?.groupId;
-            const isSameGroup = selectedCards.every((card) => card.groupId === firstGroupId)
+            const firstgroup_id = selectedCards[0]?.group_id;
+            const isSameGroup = selectedCards.every((card) => card?.group_id === firstgroup_id)
 
             if (isSameGroup) {
                 const timer = setTimeout(() => {
@@ -66,7 +84,7 @@ export default function FourByFourGame({ onEndGame }: FourByFourGameProps) {
                     const newCardsFromRemains = remainsCards.slice(0, 4)
                     setRemainsCards(prev => prev.slice(4))
 
-                    setCards(prevCards => {
+                    setGameCards(prevCards => {
                         let remainsIndex = 0
                         return prevCards.map(card => {
                             if (selectedCardID.includes(card.id) && newCardsFromRemains[remainsIndex]) {
@@ -101,7 +119,7 @@ export default function FourByFourGame({ onEndGame }: FourByFourGameProps) {
                 return () => clearTimeout(timer)
             }
         }
-    }, [selectedCardID, cards])
+    }, [selectedCardID, gameCards])
 
     return (
         <ActivityLayout
@@ -117,7 +135,7 @@ export default function FourByFourGame({ onEndGame }: FourByFourGameProps) {
             />}
         >
             <div className={s['game__grid']}>
-                {cards.map(({ id, Icon }) => {
+                {gameCards?.map(({ id, Icon }) => {
                     const isSelected = selectedCardID.includes(id)
                     const isCardError = isError && isSelected
                     const isIconVisible = isShowingPreview || isSelected || isCardError;

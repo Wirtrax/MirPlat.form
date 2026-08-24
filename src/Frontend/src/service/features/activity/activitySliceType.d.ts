@@ -6,6 +6,10 @@ export interface TetrisSubmitResponse {
     message: string;
 }
 
+export interface TetrisStatusResponse {
+    result: boolean;
+}
+
 export interface PhotoCheckSubmitResponse {
     message: string;
     status: 'claimed' | 'rejected';
@@ -15,21 +19,59 @@ export interface PhotoCheckStatusResponse {
     result: boolean;
 }
 
-export interface QuizSubmitRequest {
-    flag: boolean;
+export interface QuizAnswer {
+    questionId: number;
+    answer: string;
 }
 
-export interface QuizResultResponse {
+export interface QuizSubmitResponse {
+    reward: number;
+}
+
+export interface QuizStatusResponse {
+    result: boolean;
+    reward: number;
+}
+
+export interface RebusSubmitResponse {
+    succses: boolean;
+    rightAnswersCount: number;
+}
+export interface RebusStatusResponse {
     result: boolean;
 }
 
+
+export interface CardGameGroup {
+    id: number;
+    icon: string;
+    group_id: string;
+}
+
+export interface CardGameGroupsResponse {
+    groups: CardGameGroup[];
+}
+
+export interface FourGameSubmitResponse {
+    reward: number;
+}
+
+
 export interface ActivityState {
     tetrisLink: string | null;
+    tetrisStatus: boolean | null;
 
     photoCheckStatus: 'claimed' | 'rejected' | null;
     photoCheckCompleted: boolean | null;
 
-    quizResult: boolean | null;
+    quizReward: number | null;
+    quizStatus: boolean | null;
+
+    rewardRebus: number | null,
+    rebusStatus: boolean | null;
+
+    rewardFourGame: number | null;
+    cardsGame: CardGameGroup[] | null;
 
     status: 'idle' | 'loading' | 'success' | 'failed';
 

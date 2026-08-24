@@ -1,0 +1,1 @@
+export type GameStep = 'rules' | 'game' | 'result'

@@ -49,4 +49,13 @@ export class UsersService {
         await this.usersRepo.increment({ id }, 'balance', amount);
         return { success: true };
     }
+
+    async getUser(userId: number): Promise<User> {
+        const user = await this.usersRepo.findOne({ where: { id: userId } });
+        if(!user) {
+            throw new NotFoundException('Пользователь не найден');
+        }
+
+        return user;
+    }
 }
