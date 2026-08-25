@@ -8,7 +8,7 @@ import ActivityLayout from "../ActivityLayout/ActivityLayout";
 import Substrate from '../../UI/Substrate/Substrate';
 
 interface TetrisProps {
-  onSubmitPhoto: (photo_link: string) => void;
+  onSubmitPhoto: (file: File) => void;
 }
 
 export default function Tetris({ onSubmitPhoto }: TetrisProps) {
@@ -32,13 +32,22 @@ export default function Tetris({ onSubmitPhoto }: TetrisProps) {
     };
   }, [preview]);
 
+  const onButtonClick = () => {
+    console.log('КЛИК ПО ОТПРАВИТЬ', photo);
+
+    if (photo) {
+      console.log('ОТПРАВЛЯЕМ FILE');
+      onSubmitPhoto(photo)
+    }
+  }
+
   return (
     <ActivityLayout
       title='Стек-тетрис'
       description={description}
       buttonText='ОТПРАВИТЬ'
       buttonDisabled={!photo}
-      // onButtonClick={onSubmitPhoto}
+      onButtonClick={onButtonClick}
     >
       <Substrate className={s['tetris__photo-area']}>
         {preview ? (

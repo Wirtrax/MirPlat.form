@@ -12,8 +12,8 @@ export const fetchTetrisLink = createAsyncThunk(
 
 export const submitTetrisPhoto = createAsyncThunk(
     'activity/submitTetrisPhoto',
-    async (photo_link: string) => {
-        return await sendTetrisPhoto(photo_link)
+    async (file: File) => {
+        return await sendTetrisPhoto(file)
     }
 );
 
@@ -247,7 +247,7 @@ const activitySlice = createSlice({
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось получить статус ребуса';
             })
-            
+
             //отправка награды
             .addCase(fetchRebusReward.pending, (state) => {
                 state.status = 'loading';
