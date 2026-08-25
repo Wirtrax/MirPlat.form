@@ -1,6 +1,5 @@
 import type {
     TetrisLinkResponse,
-    TetrisSubmitResponse,
     PhotoCheckSubmitResponse,
     PhotoCheckStatusResponse,
     TetrisStatusResponse,
@@ -22,13 +21,12 @@ export const getTetrisLink = () => {
     });
 };
 
-export const sendTetrisPhoto = (photo_link: string) => {
-    return request<TetrisSubmitResponse>('/activities/tetris', {
+export const sendTetrisPhoto = (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    return request('/activities/tetris', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ photo_link }),
+        body: formData,
     });
 };
 
