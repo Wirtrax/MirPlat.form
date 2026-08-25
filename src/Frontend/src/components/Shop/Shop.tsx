@@ -16,6 +16,7 @@ import PurchaseSuccessModal from '../UI/Modal/PurchaseSuccessModal/PurchaseSucce
 
 import { createOrder } from '../../service/api';
 import type { Product } from '../../service/features/shop/shopType';
+import ShopContent from './ShopContent';
 
 function Shop() {
   const dispatch = useAppDispatch();
@@ -69,24 +70,12 @@ function Shop() {
           <img src={currency} alt="currency" />
         </Substrate>
 
-        {status === 'loading' ? (
-          <Loader />
-        ) : status === 'failed' ? (
-          <p className={s['shop--mishap']}>{error || 'Что-то пошло не так...'}</p>
-        ) : products.length > 0 ? (
-          <section className={s['shop__list']}>
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                purchase={product}
-                withPrice={true}
-                onClick={() => handleOpenProduct(product.id)}
-              />
-            ))}
-          </section>
-        ) : (
-          <p className={s['shop--mishap']}>Товаров пока нет...</p>
-        )}
+        <ShopContent
+          status={status}
+          error={error}
+          products={products}
+          handleOpenProduct={handleOpenProduct}
+        />
       </div>
 
       {selectedProduct && (
