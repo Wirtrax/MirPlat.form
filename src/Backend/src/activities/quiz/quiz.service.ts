@@ -8,6 +8,11 @@ import { createAttempt } from '../helpers/attempt.helper';
 import { Attempt } from 'src/entities/attempt.entity';
 import { QuizQuestion } from 'src/entities/activities/quiz/quiz-question.enity';
 
+export interface checkOnReplyTypeReturn {
+    isReply: boolean;
+    reward: number
+}
+
 @Injectable()
 export class QuizService {
     constructor(
@@ -79,17 +84,22 @@ export class QuizService {
         return correctVariants.includes(normalize(userAnswer));
     }
     
-    async checkOnReply(userId: number): Promise<{ result: boolean }> {
-        const quiz = await this.quizRepo.find().then(q => q[0])
+    async checkOnReply(userId: number): Promise<checkOnReplyTypeReturn> {
+        const quiz = await this.quizRepo.find().then(q => q[0]);
         if (!quiz) {
             throw new NotFoundException('Квиз не найден');
         }
 
-        const exist = await this.attemptRepo.existsBy({
-            user: { id: userId },
-            activity: { name: quiz.name}
-        })
+        const attempt = await this.attemptRepo.findOne({
+            where: {
+                user: { id: userId },
+                activity: { name: quiz.name },
+            },
+        });
 
-        return {result: exist}
+        return {
+            isReply: !!attempt,
+            reward: attempt?.reward ?? 0
+        };
     }
 }
