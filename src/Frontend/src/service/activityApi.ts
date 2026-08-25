@@ -8,7 +8,6 @@ import type {
     QuizStatusResponse,
     RebusSubmitResponse,
     RebusStatusResponse,
-    RebusRewardRequest,
     QuizAnswer,
     CardGameGroupsResponse,
     FourGameSubmitResponse,
