@@ -5,7 +5,7 @@ import { join } from 'path';
 
 @Injectable()
 export class MediaService {
-  async saveFile(file: Express.Multer.File){
+  async saveFile(file: Express.Multer.File): Promise<string> {
     const uniqueName = Date.now() + '-' + file.originalname;
     return new Promise((resolve, reject) => {
       writeFile(join(__dirname, '..', '..', 'media', uniqueName), file.buffer, (err) => {

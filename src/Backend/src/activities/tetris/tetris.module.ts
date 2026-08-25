@@ -5,6 +5,7 @@ import { TetrisService } from './tetris.service';
 import { Tetris } from 'src/entities/activities/tetris.entity';
 import { Activity } from 'src/entities/activity.entity';
 import { Attempt } from 'src/entities/attempt.entity';
+import { MediaService } from 'src/media/media.service';
 
 @Module({
     imports: [
@@ -15,7 +16,10 @@ import { Attempt } from 'src/entities/attempt.entity';
         ]),
     ],
     controllers: [TetrisController],
-    providers: [TetrisService],
+    providers: [
+        TetrisService,
+        MediaService,
+    ],
     exports: [TetrisModule]
 })
 export class TetrisModule {}
