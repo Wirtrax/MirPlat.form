@@ -1,0 +1,14 @@
+.wrapper {
+    width: 100%;
+    min-width: 200px;
+}
+
+.reader {
+    width: 100%;
+
+    :global(video) {
+        display: block;
+        width: 100% !important;
+        height: auto !important;
+    }
+}
