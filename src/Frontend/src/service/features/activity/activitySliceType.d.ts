@@ -2,10 +2,6 @@ export interface TetrisLinkResponse {
     link: string;
 }
 
-export interface TetrisSubmitResponse {
-    message: string;
-}
-
 export interface TetrisStatusResponse {
     result: boolean;
 }

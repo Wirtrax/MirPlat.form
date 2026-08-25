@@ -16,8 +16,8 @@ export default function TetrisPage() {
         dispatch(fetchTetrisStatus())
     }, [])
 
-    const handleSubmit = async (photo_link: string) => {
-        await dispatch(submitTetrisPhoto(photo_link)).unwrap()
+    const handleSubmit = async (file: File) => {
+        await dispatch(submitTetrisPhoto(file)).unwrap()
         setIsJustSubmitted(true)
     }
 
