@@ -23,7 +23,7 @@ export class TetrisController {
         }
     }
 
-
+    @JWTAuth()
     @Post('tetris')
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(
