@@ -15,6 +15,18 @@ export class OrderController {
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
+    @Get('by-item/:itemId') 
+    getOrdersByItemId(@Param('itemId') itemId: number) {
+        return this.orderService.getOrdersByItemId(itemId);
+    }
+    
+    //@UseGuards(JwtGuard, RolesGuard)
+    @Get(':id')
+    getOrder(@Param('id') orderId: number) {
+        return this.orderService.getOrder(orderId);
+    }
+
+    //@UseGuards(JwtGuard, RolesGuard)
     @Get('details')
     getDetailedReport(
         @Query('userId', ParseIntPipe) userId: number, 
@@ -31,4 +43,5 @@ export class OrderController {
     ) {
         return this.orderService.updateStatus(id, status);
     }
+
 }
