@@ -17,7 +17,4 @@ export class QuizQuestion {
 
     @Column({nullable: true})
     position: number;
-
-    @ManyToOne(() => Quiz)
-    quiz: Quiz;
 }
