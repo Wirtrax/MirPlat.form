@@ -1,5 +1,6 @@
-import { Body, Controller, Get, InternalServerErrorException, Post, UnprocessableEntityException} from '@nestjs/common';
+import { Body, Controller, Get, InternalServerErrorException, Post, UnprocessableEntityException, UseInterceptors, UploadedFile, ParseFilePipeBuilder, HttpStatus, Request} from '@nestjs/common';
 import { Req } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { TetrisService } from './tetris.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import { CreateTetrisAttemptDto } from './dto/create-tetris-attempt.dto';
@@ -16,18 +17,23 @@ export class TetrisController {
     async getTetrisReference(): Promise<{ link: string }> {
         try {
             const link = await this.tetrisService.getLinkOfTetrisReference();
-            return {link}            
+            return { link }            
         } catch(error) {
-            throw error;
+            throw new InternalServerErrorException('Error during sending reference link');
         }
     }
 
-    @JWTAuth()
+
     @Post('tetris')
-    async postTetrisSolution(
+    @UseInterceptors(FileInterceptor('file'))
+    async uploadFile(
+        @UploadedFile(new ParseFilePipeBuilder()
+            .addFileTypeValidator({ fileType: /(jpg|jpeg|png)$/ })
+            .addMaxSizeValidator({ maxSize: 5*1024*1024 }) // 5 мб
+            .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY })) 
+            file: Express.Multer.File,
         @Req() req: Request,
-        @Body() createTetrisAttemptDto: CreateTetrisAttemptDto,
-    ): Promise<{message : string}> {
+        ) {
         const userId = req['userId'];
 
         if (!userId) {
@@ -39,16 +45,12 @@ export class TetrisController {
         }
 
         try {
-            await this.tetrisService.createTetrisAttempt(
-                userId, 
-                createTetrisAttemptDto.photo_link,
-            );
-
-            return { message: 'Tetris solution sumbitted successfully' };         
-        } catch(error) {
-            throw new InternalServerErrorException('Error during sending tetris solution');
+            await this.tetrisService.savePhotoAndCreateAttempt(userId, file)
+        } catch {
+            throw new InternalServerErrorException('Unpredicted Error during saving file and creating attempt ')
         }
     }
+
 
     @JWTAuth()
     @Get('tetris_status')
