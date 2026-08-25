@@ -8,6 +8,7 @@ import type {
     QuizStatusResponse,
     RebusSubmitResponse,
     RebusStatusResponse,
+    RebusRewardRequest,
     QuizAnswer,
     CardGameGroupsResponse,
     FourGameSubmitResponse,
@@ -76,13 +77,25 @@ export const getQuizResult = () => {
 }
 
 //ребус
-export const submitRebus = (answers: string[]) => {
+export const submitRebus = (questionId: number, answer: string) => {
     return request<RebusSubmitResponse>('/activities/it_rebus', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ answers }),
+        body: JSON.stringify({ questionId, answer }),
+    });
+};
+
+export const submitRebusReward = (countOfRightAnswers: number) => {
+    return request('/activities/it_rebus/reward', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            countOfRightAnswers,
+        }),
     });
 };
 

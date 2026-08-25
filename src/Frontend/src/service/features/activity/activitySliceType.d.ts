@@ -34,9 +34,18 @@ export interface QuizStatusResponse {
 }
 
 export interface RebusSubmitResponse {
-    succses: boolean;
-    rightAnswersCount: number;
+    result: boolean;
 }
+
+export interface RebusAnswer {
+    questionId: number;
+    answer: string;
+}
+
+export interface RebusRewardRequest {
+    countOfRightAnswers: number;
+}
+
 export interface RebusStatusResponse {
     result: boolean;
 }
@@ -67,8 +76,9 @@ export interface ActivityState {
     quizReward: number | null;
     quizStatus: boolean | null;
 
-    rewardRebus: number | null,
     rebusStatus: boolean | null;
+    rebusResult: boolean | null;
+    rebusRightAnswers: number;
 
     rewardFourGame: number | null;
     cardsGame: CardGameGroup[] | null;

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { ActivityState, QuizAnswer } from "./activitySliceType";
-import { getCardsGame, getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitFourGame, submitRebus } from "../../activityApi";
+import type { ActivityState, QuizAnswer, RebusAnswer } from "./activitySliceType";
+import { getCardsGame, getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitFourGame, submitRebus, submitRebusReward } from "../../activityApi";
 
 // тетрис
 export const fetchTetrisLink = createAsyncThunk(
@@ -57,8 +57,8 @@ export const fetchQuizResult = createAsyncThunk(
 // ребус
 export const fetchSubmitRebus = createAsyncThunk(
     'activity/fetchSubmitRebus',
-    async (answers: string[]) => {
-        return await submitRebus(answers);
+    async ({ questionId, answer }: RebusAnswer) => {
+        return await submitRebus(questionId, answer);
     }
 );
 
@@ -66,6 +66,14 @@ export const fetchRebusStatus = createAsyncThunk(
     'activity/fetchRebusStatus',
     async () => {
         return await getRebusStatus();
+    }
+);
+
+export const fetchRebusReward = createAsyncThunk(
+    'activity/fetchRebusReward',
+    async (countOfRightAnswers: number) => {
+        await submitRebusReward(countOfRightAnswers);
+        return countOfRightAnswers;
     }
 );
 
@@ -94,8 +102,9 @@ const initialState: ActivityState = {
     quizReward: null,
     quizStatus: null,
 
-    rewardRebus: null,
     rebusStatus: null,
+    rebusResult: null,
+    rebusRightAnswers: 0,
 
     cardsGame: null,
     rewardFourGame: null,
@@ -207,18 +216,22 @@ const activitySlice = createSlice({
                 state.error = action.error.message ?? 'Не удалось получить статус квиза';
             })
 
-            //отправка ребуса и получение монет
+            //отправка отвта ребуса
             .addCase(fetchSubmitRebus.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
             })
             .addCase(fetchSubmitRebus.fulfilled, (state, action) => {
                 state.status = 'success';
-                state.rewardRebus = action.payload.rightAnswersCount
+                state.rebusResult = action.payload.result;
+
+                if (action.payload.result) {
+                    state.rebusRightAnswers += 1;
+                }
             })
             .addCase(fetchSubmitRebus.rejected, (state, action) => {
                 state.status = 'failed';
-                state.error = action.error.message ?? 'Не удалось получить награду';
+                state.error = action.error.message ?? 'Не удалось проверить ответ на ребус';
             })
 
             //получение статуса ребуса
@@ -233,6 +246,19 @@ const activitySlice = createSlice({
             .addCase(fetchRebusStatus.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось получить статус ребуса';
+            })
+            
+            //отправка награды
+            .addCase(fetchRebusReward.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchRebusReward.fulfilled, (state) => {
+                state.status = 'success';
+            })
+            .addCase(fetchRebusReward.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось начислить награду за ребус';
             })
 
             //4x4 получение карточек
