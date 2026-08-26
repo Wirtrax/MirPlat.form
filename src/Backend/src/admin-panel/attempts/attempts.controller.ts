@@ -16,8 +16,8 @@ export class AttemptsController {
 
     //@UseGuards(JwtGuard, RolesGuard)
     @Get(':id')
-    getAttemptById(@Param('id') userId: number) {
-        return this.attemptsService.getAttempt(userId);
+    getAttemptById(@Param('id') attemptId: number) {
+        return this.attemptsService.getAttempt(attemptId);
     }
 
     //@UseGuards(JwtGuard, RolesGuard)

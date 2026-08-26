@@ -52,6 +52,45 @@ export class OrderService {
         }));
 
     }
+    async getOrder(orderId: number): Promise<OrderResponse> {
+        const order = await this.purchasesRepo.findOne({
+            where: { id: orderId },
+            relations: { item: true, user: true },
+        });
+        if(!order) {
+            throw new NotFoundException('Покупка не найдена');
+        }
+        return {
+            orderId: order.id,
+            itemName: order.item.name,
+            userFullName: `${order.user.last_name} ${order.user.first_name} ${order.user.patronym ?? ''}`.trim(),
+            userPhoneNumber: order.user.phone_number,
+            userEmail: order.user.email,
+            status: order.status
+        }
+    }
+
+    async getOrdersByItemId(itemId: number) {
+        const ordersByItemId = await this.purchasesRepo.find({
+            where: {
+                item: {id: itemId}
+            },
+            relations: { item: true, user: true },
+        })
+        if(ordersByItemId.length === 0) {
+            throw new NotFoundException('Заказов по этому товару не найдено');
+        }
+
+        return ordersByItemId.map(p => ({
+            orderId: p.id,
+            itemName: p.item.name,
+            userFullName: `${p.user.last_name} ${p.user.first_name} ${p.user.patronym ?? ''}`.trim(),
+            userPhoneNumber: p.user.phone_number,
+            userEmail: p.user.email,
+            status: p.status
+        }))
+    }
+
     async getPurchaseDetails(userId: number, itemId: number) {
         return this.purchasesRepo.find({
             where: {
@@ -68,19 +107,19 @@ export class OrderService {
     }
     
     async updateStatus(id: number, status: PurchaseStatus) {
-        const purchase = await this.purchasesRepo.findOne({
+        const order = await this.purchasesRepo.findOne({
             where: { id },
             relations: { user: true, item: true }
         });
-        if(!purchase) throw new NotFoundException('Покупка не найдена');
+        if(!order) throw new NotFoundException('Покупка не найдена');
 
-        if (purchase.status != PurchaseStatus.WAITING) {
+        if (order.status != PurchaseStatus.WAITING) {
             throw new ForbiddenException('Статус покупки уже изменен, повторное изменение невозможно');
         }
         await this.dataSource.transaction(async manager => {
         if(status===PurchaseStatus.CANCELED){
-            await manager.increment(User, {id: purchase.user.id}, 'balance', purchase.item.price);
-            await manager.increment(Item, {id: purchase.item.id}, 'quantity', 1);
+            await manager.increment(User, {id: order.user.id}, 'balance', order.item.price);
+            await manager.increment(Item, {id: order.item.id}, 'quantity', 1);
         }
         await manager.update(Purchase, {id}, {status});
         });
