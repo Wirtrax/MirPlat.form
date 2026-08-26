@@ -20,6 +20,7 @@ import FourByFourPage from './components/Activity/FourByFour/FourByFourPage';
 import QuizPage from './components/Activity/Quiz/QuizPage';
 import ITRebusPage from './components/Activity/ITRebus/ITRebusPage';
 import FindErrorPage from './components/Activity/FindError/FindErrorPage';
+import ErrorPage from './components/ErrorPage/ErrorPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,6 +46,8 @@ const router = createBrowserRouter(
           <Route path={ROUTES.SHOP} element={<Shop />} />
         </Route>
       </Route>
+
+      <Route path="*" element={<ErrorPage />} />
     </>
   )
 );

@@ -2,44 +2,67 @@ import s from './FindError.module.scss';
 import clsx from 'clsx';
 
 import { useState } from "react";
-import { TASKS_DATA } from "../../../mock/find_error";
+import { useAppSelector } from '../../../hooks/redux';
 
 import Substrate from "../../UI/Substrate/Substrate";
 import ActivityLayout from "../ActivityLayout/ActivityLayout";
 import Timer from "../Timer/Timer";
+import Button from '../../UI/Button/Button';
+import Background from '../../UI/Background/Background';
+import Loader from '../../UI/Loader/Loader';
 
 import type { FindErrorGameProps } from "./findErrorType";
-import Button from '../../UI/Button/Button';
-
+import type {
+  FindErrorAnswer,
+  FindErrorCode,
+} from '../../../service/features/activity/activitySliceType';
 
 
 export default function FindErrorStep({ onEndGame }: FindErrorGameProps) {
+  const { codeLines } = useAppSelector(state => state.activity)
+  const [answers, setAnswers] = useState<FindErrorAnswer[]>([])
+
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedLine, setSelectedLine] = useState<number | null>(null)
-  const [countCorrected, setCountCorrected] = useState(0)
 
-  const currentTask = TASKS_DATA[currentIndex]
+  if (!codeLines) return <Background><Loader /></Background>
+  const currentTask: FindErrorCode = codeLines[currentIndex];
 
   const handleNextStep = () => {
-    if (selectedLine === currentTask.correctLineIndex) {
-      setCountCorrected(prev => prev + 1)
+    if (selectedLine === null) return
+
+    const answer: FindErrorAnswer = {
+      id: currentTask.id,
+      indexInputLine: selectedLine,
     }
 
-    if (currentIndex + 1 >= TASKS_DATA.length) {
-      onEndGame(countCorrected)
-    } else {
-      setCurrentIndex(prev => prev + 1)
-      setSelectedLine(null)
+    const updateAnswers = [...answers, answer]
+
+    if (currentIndex + 1 >= codeLines.length) {
+      onEndGame(updateAnswers)
+      return
     }
+    setAnswers(updateAnswers)
+    setCurrentIndex(prev => prev + 1)
+    setSelectedLine(null)
   }
 
   const handleTimeout = () => {
-    if (currentIndex + 1 >= TASKS_DATA.length) {
-      onEndGame(countCorrected);
-    } else {
-      setCurrentIndex((prev) => prev + 1);
-      setSelectedLine(null);
+    const answer: FindErrorAnswer = {
+      id: currentTask.id,
+      indexInputLine: selectedLine ?? -1,
+    };
+
+    const updatedAnswers = [...answers, answer]
+
+    if (currentIndex + 1 >= codeLines.length) {
+      onEndGame(updatedAnswers)
+      return
     }
+
+    setAnswers(updatedAnswers)
+    setCurrentIndex(prev => prev + 1)
+    setSelectedLine(null)
   }
 
   const handleChoose = (index: number) => {
@@ -86,7 +109,7 @@ export default function FindErrorStep({ onEndGame }: FindErrorGameProps) {
           </Button>
 
           <p className={s['find__index']}>
-            {currentIndex + 1}/{TASKS_DATA.length}
+            {currentIndex + 1}/{codeLines.length}
           </p>
         </div>
 
