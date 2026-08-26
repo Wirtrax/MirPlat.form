@@ -69,7 +69,7 @@ export class FindMistakeService {
         return countOfRightAnswers;
     }
 
-    async sendReward(user_id: number, countOfUserRightAnswers: number): Promise<void> {
+    async sendReward(user_id: number, countOfUserRightAnswers: number): Promise<number> {
         const maxFragmentsCount = await this.getTotalFragmentCount(); 
 
         if(countOfUserRightAnswers < 0 || countOfUserRightAnswers > maxFragmentsCount) {
@@ -103,6 +103,8 @@ export class FindMistakeService {
                 await createAttempt(manager, user_id, total_reward, find_mistake.name);
                 await manager.increment(User, { id: user_id }, 'balance', total_reward);
             });
+
+            return total_reward;
 
         } catch {
             throw new InternalServerErrorException('Error during sending reward')
