@@ -50,7 +50,7 @@ function Shop() {
 
     try {
       const response = await createOrder(selectedProduct.id);
-      const code = response?.code;
+      const code = `https://t.me/MirPlatform5152_bot?start=${response.code}`; //вывестив константу путь без параметров
       setSuccessCode(code);
       dispatch(fetchUser());
     } catch (e: unknown) {
@@ -70,12 +70,7 @@ function Shop() {
           <img src={currency} alt="currency" />
         </Substrate>
 
-        <ShopContent
-          status={status}
-          error={error}
-          products={products}
-          handleOpenProduct={handleOpenProduct}
-        />
+        <ShopContent status={status} error={error} products={products} handleOpenProduct={handleOpenProduct} />
       </div>
 
       {selectedProduct && (
