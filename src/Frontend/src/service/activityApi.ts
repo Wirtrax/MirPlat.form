@@ -10,6 +10,10 @@ import type {
     QuizAnswer,
     CardGameGroupsResponse,
     FourGameSubmitResponse,
+    FindErrorStatus,
+    FindErrorAnswer,
+    FindErrorSubmitResponse,
+    FindErrorCode,
 } from './features/activity/activitySliceType';
 
 import { request } from './utils/query';
@@ -118,7 +122,36 @@ export const submitFourGame = (count_of_guesed_group: number) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({count_of_guesed_group})
+            body: JSON.stringify({ count_of_guesed_group })
+        }
+    )
+}
+
+//найди ошибку
+export const submitFindError = (answers: FindErrorAnswer[]) => {
+    return request<FindErrorSubmitResponse>('/activities/find_mistake',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ answers }),
+        }
+    )
+}
+
+export const getCodeLines = () => {
+    return request<FindErrorCode[]>('/activities/find_mistake',
+        {
+            method: 'GET',
+        }
+    )
+}
+
+export const getFindErrorStatus = () => {
+    return request<FindErrorStatus>('/activities/find_mistake_status',
+        {
+            method: 'GET',
         }
     )
 }

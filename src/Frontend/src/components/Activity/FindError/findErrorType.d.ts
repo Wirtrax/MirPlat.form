@@ -1,11 +1,15 @@
+import type { FindErrorAnswer } from "../../../service/features/activity/activitySliceType";
+
 export interface FindErrorRulesProps {
     onStartGame: () => void;
 }
 
 export interface FindErrorGameProps {
-    onEndGame: (coins: number) => void;
+    onEndGame: (answers: FindErrorAnswer[]) => void;
 }
 
 export interface FindErrorSuccessProps {
-    coins: number;
+    status: boolean;
+    reward?: number;
+    correctAnswers?: number;
 }

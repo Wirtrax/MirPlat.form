@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { ActivityState, QuizAnswer, RebusAnswer } from "./activitySliceType";
-import { getCardsGame, getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitFourGame, submitRebus, submitRebusReward } from "../../activityApi";
+import type { ActivityState, FindErrorAnswer, QuizAnswer, RebusAnswer } from "./activitySliceType";
+import { getCardsGame, getCodeLines, getFindErrorStatus, getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitFindError, submitFourGame, submitRebus, submitRebusReward } from "../../activityApi";
 
 // тетрис
 export const fetchTetrisLink = createAsyncThunk(
@@ -91,6 +91,28 @@ export const fetchSubmitFourGame = createAsyncThunk(
     }
 )
 
+//найти ошибку
+export const fetchSubmitFindError = createAsyncThunk(
+    'activity/fetchSubmitFindError',
+    async (answers: FindErrorAnswer[]) => {
+        return await submitFindError(answers);
+    }
+);
+
+export const fetchGetCodeLines = createAsyncThunk(
+    'activity/fetchGetCodeLines',
+    async () => {
+        return await getCodeLines();
+    }
+)
+
+export const fetchFindErrorStatus = createAsyncThunk(
+    'activity/fetchFindErrorStatus',
+    async () => {
+        return await getFindErrorStatus();
+    }
+)
+
 
 const initialState: ActivityState = {
     tetrisLink: null,
@@ -108,6 +130,12 @@ const initialState: ActivityState = {
 
     cardsGame: null,
     rewardFourGame: null,
+
+    codeLines: null,
+    correctAnswers: null,
+    isComplited: null,
+    rewardFindError: null,
+    findErrorStatus: null,
 
     status: 'idle',
     error: null,
@@ -286,6 +314,48 @@ const activitySlice = createSlice({
             .addCase(fetchSubmitFourGame.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось получить награду';
+            })
+
+            //найти ошибку отправка ответов
+            .addCase(fetchSubmitFindError.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchSubmitFindError.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.correctAnswers = action.payload.correct_answers;
+                state.rewardFindError = action.payload.reward;
+                state.isComplited = action.payload.isComplited;
+            })
+            .addCase(fetchSubmitFindError.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить награду';
+            })
+            //найти ошибку получить массив строк
+            .addCase(fetchGetCodeLines.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchGetCodeLines.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.codeLines = action.payload;
+            })
+            .addCase(fetchGetCodeLines.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить массив';
+            })
+            //найти ошибку получить статус
+            .addCase(fetchFindErrorStatus.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchFindErrorStatus.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.findErrorStatus = action.payload.result;
+            })
+            .addCase(fetchFindErrorStatus.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить статус';
             })
     }
 })

@@ -10,42 +10,55 @@ import ActivityLayout from "../ActivityLayout/ActivityLayout";
 import Timer from "../Timer/Timer";
 import ResultStep from '../../UI/ResultStep/ResultStep';
 
-export default function FindErrorSuccess() {
+import type { FindErrorSuccessProps } from './findErrorType';
+import { useAppSelector } from '../../../hooks/redux';
+
+export default function FindErrorSuccess({ status, reward, correctAnswers }: FindErrorSuccessProps) {
+  const { codeLines } = useAppSelector(state => state.activity)
   const navigate = useNavigate()
 
   const titleCoins = <>
-    3 из 7 правильных ответов
+    {correctAnswers ?? 0} из {codeLines?.length ?? 0} правильных ответов
   </>
   const descriptionCoins = <>
-    Тебе начислили 7 <Coin />
+    Тебе начислили {reward} <Coin />
   </>
+
   return (
     <>
       <ActivityLayout
         title="Найди ошибку"
         timer={<Timer staticTime='00:00' />}
       >
-        <ResultStep
-          title={titleCoins}
-          description={descriptionCoins}
-          buttonText="В ПРОФИЛЬ"
-          onButtonClick={() => navigate(ROUTES.PROFILE)}
-          hideBachground={true}
-          className={s['game__success-card']}
-        >
-          <Link to={ROUTES.ACTIVITIES}>К ДРУГИМ АКТИВНОСТЯМ</Link>
-        </ResultStep>
-        {/* <ResultStep
-          title='Баллы за эту активность уже получены'
-          description='Исследуй другие активности!'
-          buttonText="В ПРОФИЛЬ"
-          onButtonClick={() => navigate(ROUTES.PROFILE)}
-          hideBachground={true}
-          className={s['game__success-card']}
-        >
-          <Link to={ROUTES.ACTIVITIES}>К ДРУГИМ АКТИВНОСТЯМ</Link>
-        </ResultStep> */}
+        {
+          !status &&
 
+          <ResultStep
+            title={titleCoins}
+            description={descriptionCoins}
+            buttonText="В ПРОФИЛЬ"
+            onButtonClick={() => navigate(ROUTES.PROFILE)}
+            hideBachground={true}
+            className={s['game__success-card']}
+          >
+            <Link to={ROUTES.ACTIVITIES}>К ДРУГИМ АКТИВНОСТЯМ</Link>
+          </ResultStep>
+        }
+
+
+        {
+          status &&
+          <ResultStep
+            title='Баллы за эту активность уже получены'
+            description='Исследуй другие активности!'
+            buttonText="В ПРОФИЛЬ"
+            onButtonClick={() => navigate(ROUTES.PROFILE)}
+            hideBachground={true}
+            className={s['game__success-card']}
+          >
+            <Link to={ROUTES.ACTIVITIES}>К ДРУГИМ АКТИВНОСТЯМ</Link>
+          </ResultStep>
+        }
         <div className={s['game__mascot-container']}>
           <img className={s['game__mascot-img']} src={smile_mascot} alt='smile mascot' />
         </div>

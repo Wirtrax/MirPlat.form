@@ -62,6 +62,27 @@ export interface FourGameSubmitResponse {
 }
 
 
+export interface FindErrorAnswer {
+    id: number;
+    indexInputLine: number;
+}
+
+export interface FindErrorSubmitResponse {
+    correct_answers: number;
+    reward: number;
+    isComplited: boolean;
+}
+
+export interface FindErrorCode {
+    id: number;
+    difficulty: string;
+    codeLines: string[];
+}
+
+export interface FindErrorStatus {
+    result: boolean;
+}
+
 export interface ActivityState {
     tetrisLink: string | null;
     tetrisStatus: boolean | null;
@@ -78,6 +99,12 @@ export interface ActivityState {
 
     rewardFourGame: number | null;
     cardsGame: CardGameGroup[] | null;
+
+    codeLines: FindErrorArray[] | null;
+    correctAnswers: number | null;
+    isComplited: boolean | null;
+    rewardFindError: number | null;
+    findErrorStatus: boolean | null;
 
     status: 'idle' | 'loading' | 'success' | 'failed';
 
