@@ -1,9 +1,12 @@
-import { Body, Controller, Get, InternalServerErrorException, Post, UnprocessableEntityException, UseInterceptors, UploadedFile, ParseFilePipeBuilder, HttpStatus, Request} from '@nestjs/common';
+import { Body, Controller, Get, InternalServerErrorException, Post, UnprocessableEntityException, UseInterceptors, UploadedFile, ParseFilePipeBuilder, HttpStatus, Request, Sse, Query} from '@nestjs/common';
 import { Req } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { TetrisService } from './tetris.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import { CreateTetrisAttemptDto } from './dto/create-tetris-attempt.dto';
+import { Observable } from 'rxjs';
+import { UsersService } from 'src/admin-panel/users/users.service';
+import { privateDecrypt } from 'crypto';
 
 
 @Controller('api/activities')
@@ -11,6 +14,33 @@ export class TetrisController {
     constructor(
         private readonly tetrisService: TetrisService
     ) {}
+
+    @JWTAuth()
+    @Get('tetris_attempt_status')
+    async getStatusUpdate(
+        @Req() request: Request,
+        //@Query('userId') user_id: string,
+    ) {
+        //const user_id_num = parseInt(user_id, 10)
+        //const userId = request['userId'] || user_id_num;
+
+        const userId = request['userId']
+
+        if (!userId) {
+            throw new UnprocessableEntityException('userId is not authenticated')
+        }
+
+        if (typeof userId !== 'number') {
+            throw new UnprocessableEntityException('userId should be number')
+        }
+
+        try {
+            const attempt = await this.tetrisService.getTetrisAttemptStatus(userId)
+            return attempt;
+        } catch {
+            throw new InternalServerErrorException('Error during getting attempt status')
+        }
+    }
 
     @JWTAuth()
     @Get('tetris')
@@ -50,6 +80,7 @@ export class TetrisController {
             throw new InternalServerErrorException('Unpredicted Error during saving file and creating attempt ')
         }
     }
+
 
 
     @JWTAuth()
