@@ -39,10 +39,8 @@ export class OrderService {
         .addGroupBy('user.id')
         .addGroupBy('full_name')
         .getRawMany();*/
-        const allOrders = await this.purchasesRepo.find({select: {
-            item: true,
-            user: true,
-            }   
+        const allOrders = await this.purchasesRepo.find({
+            relations: { item: true, user: true }   
         });
         return allOrders.map(p => ({
             orderId: p.id,
