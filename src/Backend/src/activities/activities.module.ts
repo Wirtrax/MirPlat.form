@@ -6,6 +6,7 @@ import { TetrisModule } from './tetris/tetris.module';
 import { PhotoCheckModule } from './photo-check/photo-check.module';
 import { ItRebusModule } from './ITrebus/ItRebus.module';
 import { CardGame4x4Module } from './card-game-4x4/card-game-4x4.module';
+import { FindMistakeModule } from './findMistake/findMistake.module';
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { CardGame4x4Module } from './card-game-4x4/card-game-4x4.module';
         PhotoCheckModule,
         ItRebusModule,
         CardGame4x4Module,
+        FindMistakeModule,
     ],
     controllers: [ActivitiesController],
     providers: [],
