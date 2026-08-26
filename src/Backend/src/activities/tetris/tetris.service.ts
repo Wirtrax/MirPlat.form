@@ -121,7 +121,7 @@ export class TetrisService {
                     is_photo: true,
                     photo: photo_link,
                     status: AttemptStatus.WAITING,
-                    reward: tetris.reward,
+                    reward: 0,
                     created_at: new Date(),
                 });
 
