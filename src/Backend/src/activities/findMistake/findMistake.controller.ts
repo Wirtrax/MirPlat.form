@@ -37,7 +37,13 @@ export class FindMistakeController {
         
         try {
             const countOfRightAnswers = await this.findMistakeService.checkAnswer(codeAnswers);
-            await this.findMistakeService.sendReward(userId, countOfRightAnswers);
+            const reward = await this.findMistakeService.sendReward(userId, countOfRightAnswers);
+
+            return {
+                "correct_answers": countOfRightAnswers,
+                "reward": reward,
+                "isComplited": true,
+            }
         } catch(error) {
             throw new InternalServerErrorException('Error during checking answers or sending reward')
         }
