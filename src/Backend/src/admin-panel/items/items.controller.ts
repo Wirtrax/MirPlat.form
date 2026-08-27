@@ -20,7 +20,7 @@ export class ItemsController {
     getImages() {
         return this.itemsService.getImages();
     }
-    
+    //@UseGuards(JwtGuard, RolesGuard)
     @Get('search')
     searchItems(@Query('q') query: string) {
         return this.itemsService.searchItemsByName(query);
