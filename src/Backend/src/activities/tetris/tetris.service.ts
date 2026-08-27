@@ -58,9 +58,11 @@ export class TetrisService {
         reward: number,
         reason: DeclineReason | null,
     }> {
-        const attempt = await this.attemptRepository.findOneBy({
-            user: { id: user_id },
-            activity: { name: this.TETRIS_NAME}
+        const attempt = await this.attemptRepository.findOne({ 
+            where: {
+                user: { id: user_id },
+                activity: { name: this.TETRIS_NAME}
+            }
         })
 
         if(!attempt) {

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, InternalServerErrorException, Post, UnprocessableEntityException, UseInterceptors, UploadedFile, ParseFilePipeBuilder, HttpStatus, Request, Sse, Query} from '@nestjs/common';
+import { Body, Controller, Get, InternalServerErrorException, Post, UnprocessableEntityException, ForbiddenException, BadRequestException, UseInterceptors, UploadedFile, ParseFilePipeBuilder, HttpStatus, Request, Sse, Query, NotFoundException} from '@nestjs/common';
 import { Req } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { TetrisService } from './tetris.service';
@@ -37,7 +37,13 @@ export class TetrisController {
         try {
             const attempt = await this.tetrisService.getTetrisAttemptStatus(userId)
             return attempt;
-        } catch {
+        } catch(error) {
+            if (error instanceof NotFoundException ||
+                error instanceof ForbiddenException
+            ) {
+                throw error;
+            }
+
             throw new InternalServerErrorException('Error during getting attempt status')
         }
     }
@@ -49,11 +55,17 @@ export class TetrisController {
             const link = await this.tetrisService.getLinkOfTetrisReference();
             return { link }            
         } catch(error) {
+            if (error instanceof NotFoundException ||
+                error instanceof ForbiddenException
+            ) {
+                throw error;
+            }
+
             throw new InternalServerErrorException('Error during sending reference link');
         }
     }
 
-
+    @JWTAuth()
     @Post('tetris')
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(
@@ -76,12 +88,16 @@ export class TetrisController {
 
         try {
             await this.tetrisService.savePhotoAndCreateAttempt(userId, file)
-        } catch {
+        } catch(error) {
+            if (error instanceof NotFoundException ||
+                error instanceof ForbiddenException
+            ) {
+                throw error;
+            }
+
             throw new InternalServerErrorException('Unpredicted Error during saving file and creating attempt ')
         }
     }
-
-
 
     @JWTAuth()
     @Get('tetris_status')

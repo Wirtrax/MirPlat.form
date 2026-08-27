@@ -1,4 +1,4 @@
-import { Controller, Post, Get, UnprocessableEntityException, Req, Body, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Post, Get, UnprocessableEntityException, Req, Body, InternalServerErrorException, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { PhotoCheckService } from './photo-check.service';
 import { JWTAuth } from 'src/auth/jwt.decorator';
 import { PhotoCheckDto } from './dto/photo-check.dto';
@@ -44,6 +44,12 @@ export class PhotoCheckController {
             };
                
         } catch(error) {
+            if (error instanceof NotFoundException ||
+                error instanceof ForbiddenException
+            ) {
+                throw error;
+            }
+
             throw new InternalServerErrorException('Error during adding reward');
         }
     }

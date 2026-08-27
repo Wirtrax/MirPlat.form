@@ -1,4 +1,4 @@
-import { Body, Controller, Injectable, Post, Get, Req, BadRequestException, InternalServerErrorException } from "@nestjs/common";
+import { Body, Controller, Injectable, Post, Get, Req, BadRequestException, InternalServerErrorException, NotFoundException ,Query, ForbiddenException } from "@nestjs/common";
 import { JWTAuth } from "src/auth/jwt.decorator";
 import { ItRebusService } from "./ItRebus.service";
 import { QuestionItemDto } from "./dto/answer.dto";
@@ -27,6 +27,13 @@ export class ItRebusController {
             const isAnswerRight = await this.itRebusService.checkAnswer(answer)
             return isAnswerRight
         } catch(error) {
+            if (error instanceof NotFoundException ||
+                error instanceof ForbiddenException ||
+                error instanceof BadRequestException
+            ) {
+                throw error;
+            }
+
             throw new InternalServerErrorException('Error during checking answer')
         }
     }
@@ -36,7 +43,12 @@ export class ItRebusController {
     async getItRebusreward(
         @Body() sendRewardDto: SendRewardDto,
         @Req() request,
+        //@Query('userId') user_id: string, // УДАЛИТЬ
     ) {
+
+        // const user_id_num = parseInt(user_id, 10) //УДАЛИТЬ 
+        // const userId = user_id_num; // УДАЛИТЬ
+
         const userId = request['userId'];
         const countOfRightAnswers = sendRewardDto.countOfRightAnswers;
 
@@ -45,9 +57,16 @@ export class ItRebusController {
         }
 
         try {
-            this.itRebusService.sendReward(userId, countOfRightAnswers)
+            await this.itRebusService.sendReward(userId, countOfRightAnswers)
         } catch(error) {
-            throw new InternalServerErrorException('')
+            if (error instanceof NotFoundException ||
+                error instanceof ForbiddenException ||
+                error instanceof BadRequestException
+            ) {
+                throw error;
+            }
+
+            throw new InternalServerErrorException('Error during sending reward')
         }
     }
 } 

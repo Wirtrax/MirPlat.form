@@ -2,7 +2,6 @@ import { EntityManager, Repository } from 'typeorm';
 import { Attempt, AttemptStatus } from '../../entities/attempt.entity';
 import { Activity } from 'src/entities/activity.entity';
 import { Injectable, NotFoundException, ForbiddenException} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 
 export async function createAttempt(
     manager: EntityManager,
@@ -46,12 +45,14 @@ export async function checkOnReply(
 export async function isAttemptExist(
     userId: number,
     activityName: string,
-    attemptRepo: Repository<any>
+    attemptRepo: Repository<Attempt>
 ): Promise<boolean> {
-    const isAlreadyExist = await attemptRepo.findOneBy({
-        user: { id: userId},
-        activity: { name: activityName }
+    const isAlreadyExist = await attemptRepo.exists({
+        where: {
+            user: { id: userId },
+            activity: { name: activityName }
+        }
     });
 
-    return !!isAlreadyExist
+    return isAlreadyExist;
 }
