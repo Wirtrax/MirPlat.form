@@ -7,6 +7,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { CreateUserDto } from './userDto/createUserDto';
 import { UpdateUserDto } from './userDto/updateUserDto';
 import { ChangeBalanceDto } from './userDto/changeBalanceDto'; 
+import { ChangeRoleDto } from './userDto/changeRoleDto';
 
 @Controller('users')
 export class UsersController {
@@ -30,10 +31,16 @@ export class UsersController {
             return this.usersService.deleteUser(id);
         }
         
-        //@UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
+        //@UseGuards(JwtGuard, RolesGuard)
         @Patch(':id')
         updateUser(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
             return this.usersService.updateUser(id, dto);
+        }
+
+        //@UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
+        @Patch(':id/role')
+        updateUserRole(@Param('id', ParseIntPipe) id: number, @Body() dto: ChangeRoleDto) {
+            return this.usersService.changeUserRole(id, dto.isAdmin)
         }
 
         //@UseGuards(JwtGuard, RolesGuard)
@@ -47,4 +54,5 @@ export class UsersController {
         getUser(@Param('id', ParseIntPipe) id: number) {
             return this.usersService.getUser(id);
         }
+
 }

@@ -58,4 +58,12 @@ export class UsersService {
 
         return user;
     }
+
+    async changeUserRole(id: number, isAdmin: boolean) {
+        const userResult = await this.usersRepo.update(id, {is_admin: isAdmin});
+        if (userResult.affected===0) {
+            throw new NotFoundException('Пользователь не найден');
+        }
+        return {success: true}
+    }
 }
