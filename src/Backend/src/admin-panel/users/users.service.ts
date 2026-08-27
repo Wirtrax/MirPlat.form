@@ -5,12 +5,16 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './userDto/createUserDto';
 import { UpdateUserDto } from './userDto/updateUserDto';
 import { BadRequestException } from '@nestjs/common';
+import { Purchase } from 'src/entities/purchase.entity';
 
 @Injectable()
 export class UsersService {
     constructor(
         @InjectRepository(User)
-        private readonly usersRepo: Repository<User>
+        private readonly usersRepo: Repository<User>,
+
+        @InjectRepository(Purchase)
+        private readonly ordersRepo: Repository<Purchase>
     ) {}
 
     async getAllUsers(): Promise<User[]> {
@@ -58,4 +62,26 @@ export class UsersService {
 
         return user;
     }
+
+    async getUsersByItemId(itemId: number): Promise<User[]> {
+        const orders = await this.ordersRepo.find({
+            where: { item: {id: itemId } },
+            relations: {user: true}
+        })
+        if (orders.length === 0) {
+            throw new NotFoundException('Заказы с таким товаром не найдены');
+        }
+        const users = orders.map(o=>o.user)
+
+        return users;
+    }
+
+    async changeUserRole(id: number, isAdmin: boolean) {
+        const userResult = await this.usersRepo.update(id, {is_admin: isAdmin});
+        if (userResult.affected===0) {
+            throw new NotFoundException('Пользователь не найден');
+        }
+        return {success: true}
+    }
+
 }
