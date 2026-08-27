@@ -28,7 +28,7 @@ export class AttemptsController {
     @Patch(':id')
     changeStatus(
         @Param('id', ParseIntPipe) attemptId: number, 
-        @Body('status') attemptStatus: AttemptStatus
+        @Body('attemptStatus') attemptStatus: AttemptStatus
     ) {
         return this.attemptsService.changeStatus(attemptId, attemptStatus)
     }
