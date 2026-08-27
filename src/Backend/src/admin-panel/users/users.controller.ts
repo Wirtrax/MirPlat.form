@@ -19,6 +19,17 @@ export class UsersController {
             return this.usersService.getAllUsers();
         }
 
+        @Get('by-item/:id') 
+        getUsersByItemId(@Param('itemId') itemId: number) {
+            return this.usersService.getUsersByItemId(itemId);
+        }
+
+        //@UseGuards(JwtGuard, RolesGuard)
+        @Get(':id')
+        getUser(@Param('id', ParseIntPipe) id: number) {
+            return this.usersService.getUser(id);
+        }
+
         //@UseGuards(JwtGuard, RolesGuard)
         @Post()
         addNewUser(@Body() dto: CreateUserDto) {
@@ -30,11 +41,11 @@ export class UsersController {
         deleteUser(@Param('id', ParseIntPipe) id: number) {
             return this.usersService.deleteUser(id);
         }
-        
+
         //@UseGuards(JwtGuard, RolesGuard)
-        @Patch(':id')
-        updateUser(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
-            return this.usersService.updateUser(id, dto);
+        @Patch(':id/balance')
+        changeBalance(@Param('id', ParseIntPipe) id: number,@Body() dto: ChangeBalanceDto) {
+            return this.usersService.changeBalance(id, dto.amount);
         }
 
         //@UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
@@ -44,15 +55,11 @@ export class UsersController {
         }
 
         //@UseGuards(JwtGuard, RolesGuard)
-        @Patch(':id/balance')
-        changeBalance(@Param('id', ParseIntPipe) id: number,@Body() dto: ChangeBalanceDto) {
-            return this.usersService.changeBalance(id, dto.amount);
+        @Patch(':id')
+        updateUser(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
+            return this.usersService.updateUser(id, dto);
         }
 
-        //@UseGuards(JwtGuard, RolesGuard)
-        @Get(':id')
-        getUser(@Param('id', ParseIntPipe) id: number) {
-            return this.usersService.getUser(id);
-        }
+
 
 }
