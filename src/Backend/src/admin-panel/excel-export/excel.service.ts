@@ -231,7 +231,7 @@ export class ExcelService {
             console.log('Страница с данными добавлена в книгу')
 
             await workbook.xlsx.writeFile(filePath);
-            console.log('Книга загружена')
+            console.log(`Книга загружена ${filePath}`)
             
         } catch (error) {
             throw error;

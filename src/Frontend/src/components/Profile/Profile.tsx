@@ -31,7 +31,6 @@ import type { ProfileInfoCardProps } from './profileType';
 import type { createOrderResponse } from '../../service/features/shop/shopType';
 import type { AvatarTheme } from './avatarThemes';
 import AvatarModal from './AvatarModal/AvatarModal';
-import ModalOverlay from '../UI/Modal/ModalOverlay/ModalOverlay';
 
 export default function Profile() {
   console.log('Рендер компонента Profile');
@@ -42,6 +41,8 @@ export default function Profile() {
   const [avatarTheme, setAvatarTheme] = useState<AvatarTheme>(() => {
     return (localStorage.getItem('user_avatar_theme') as AvatarTheme) || 'default';
   });
+
+  const [showAllPurchases, setShowAllPurchases] = useState(false);
 
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
 
@@ -59,6 +60,8 @@ export default function Profile() {
   }
 
   const purchases: createOrderResponse[] = user.purchases || [];
+
+  const visiblePurchases = showAllPurchases ? purchases : purchases.slice(-4)
 
   const specializationLabel = options.find(option => option.value === user?.specialization)
   const levelLabel = EXPERIENCE_LEVELS.find(level => level.value === user?.programming_level)
@@ -137,10 +140,10 @@ export default function Profile() {
             </p>
           </div>
 
-          <div className={s['profile__balance']}>
-            <p className={s['profile__balance-label']}>Баланс «Приветов»:</p>
-            <p className={s['profile__balance-value']}>{user?.balance}</p>
-          </div>
+          <dl className={s['profile__balance']}>
+            <dt className={s['profile__balance-label']}>Баланс «Приветов»:</dt>
+            <dd className={s['profile__balance-value']}>{user?.balance}</dd>
+          </dl>
         </div>
 
         <Link to={ROUTES.ACTIVITIES} >
@@ -156,22 +159,33 @@ export default function Profile() {
           <h3 className={s['profile__purchases-title']}>Мои покупки</h3>
 
           {purchases.length > 0 ? (
-            <div role="list" className={s['profile__purchases-list']}>
-              {purchases.map((purchase, index) => (
-                <ProductCard
-                  key={purchase.id ?? index}
-                  purchase={purchase.item}
-                  withPrice={false}
-                  hasBuy={true}
-                  received={purchase.status === 'received'}
-                  onClick={() => setSelectedPurchase(purchase)}
-                />
-              ))}
-            </div>
+            <>
+              <div role="list" className={s['profile__purchases-list']}>
+                {visiblePurchases.map((purchase, index) => (
+                  <ProductCard
+                    key={purchase.id ?? index}
+                    purchase={purchase.item}
+                    withPrice={false}
+                    hasBuy={true}
+                    received={purchase.status === 'received'}
+                    onClick={() => setSelectedPurchase(purchase)}
+                  />
+                ))}
+              </div>
+
+              {purchases.length > 4 && !showAllPurchases && (
+                <button
+                  type="button"
+                  className={s['profile__show-all']}
+                  onClick={() => setShowAllPurchases(true)}
+                >
+                  Посмотреть все товары
+                </button>
+              )}
+            </>
           ) : (
             <p className={s['profile__empty-text']}>Пока тут ничего нет...</p>
           )}
-
           <Link to={ROUTES.SHOP}>
             <Button className={s['profile__shop-btn']}>В МАГАЗИН</Button>
           </Link>

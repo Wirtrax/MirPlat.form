@@ -9,26 +9,25 @@ import Button from '../../UI/Button/Button'
 
 import type { ITRebusStepProps } from './itRebusType'
 
-
-
-export default function ITRebusStep({ data, onNext }: ITRebusStepProps) {
+export default function ITRebusStep({ data, onNext, onCheck }: ITRebusStepProps) {
     const [answer, setAnswer] = useState('')
     const [isAnswered, setIsAnswered] = useState(false)
+    const [result, setResult] = useState<boolean | null>(null)
 
-    const handleCheck = () => {
+    const handleCheck = async () => {
         if (!answer.trim()) return
-        const userAnswer = normalizeAnswer(answer)
+        const checkResult = await onCheck(normalizeAnswer(answer))
 
+        setResult(checkResult)
         setIsAnswered(true)
     }
-    const handleNextStep = () => {
-        onNext(answer)
 
+    const handleNextStep = () => {
+        onNext()
         setAnswer('')
         setIsAnswered(false)
-
+        setResult(null)
     }
-
     return (
 
         <>
@@ -43,8 +42,8 @@ export default function ITRebusStep({ data, onNext }: ITRebusStepProps) {
                         disabled={isAnswered}
                     />
                     {isAnswered && (
-                        <span className={isCorrected ? s['rebus__status--correct'] : s['rebus__status--error']}>
-                            {isCorrected ? 'ответ верный' : 'ответ неверный'}
+                        <span className={result ? s['rebus__status--correct'] : s['rebus__status--error']}>
+                            {result ? 'ответ верный' : 'ответ неверный'}
                         </span>
                     )}
                 </div>

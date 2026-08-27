@@ -9,6 +9,11 @@
 
         background: var(--color-light);
         border-radius: rem(25);
+
+        @media(max-height: rem(650)) {
+            margin-top: rem(16);
+            margin-bottom: rem(45);
+        }
     }
 
     &__rules-title {

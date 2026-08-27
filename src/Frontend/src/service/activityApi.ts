@@ -1,6 +1,5 @@
 import type {
     TetrisLinkResponse,
-    TetrisSubmitResponse,
     PhotoCheckSubmitResponse,
     PhotoCheckStatusResponse,
     TetrisStatusResponse,
@@ -11,6 +10,10 @@ import type {
     QuizAnswer,
     CardGameGroupsResponse,
     FourGameSubmitResponse,
+    FindErrorStatus,
+    FindErrorAnswer,
+    FindErrorSubmitResponse,
+    FindErrorCode,
 } from './features/activity/activitySliceType';
 
 import { request } from './utils/query';
@@ -22,13 +25,12 @@ export const getTetrisLink = () => {
     });
 };
 
-export const sendTetrisPhoto = (photo_link: string) => {
-    return request<TetrisSubmitResponse>('/activities/tetris', {
+export const sendTetrisPhoto = (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    return request('/activities/tetris', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ photo_link }),
+        body: formData,
     });
 };
 
@@ -76,13 +78,25 @@ export const getQuizResult = () => {
 }
 
 //ребус
-export const submitRebus = (answers: string[]) => {
+export const submitRebus = (questionId: number, answer: string) => {
     return request<RebusSubmitResponse>('/activities/it_rebus', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ answers }),
+        body: JSON.stringify({ questionId, answer }),
+    });
+};
+
+export const submitRebusReward = (countOfRightAnswers: number) => {
+    return request('/activities/it_rebus/reward', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            countOfRightAnswers,
+        }),
     });
 };
 
@@ -108,7 +122,36 @@ export const submitFourGame = (count_of_guesed_group: number) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({count_of_guesed_group})
+            body: JSON.stringify({ count_of_guesed_group })
+        }
+    )
+}
+
+//найди ошибку
+export const submitFindError = (answers: FindErrorAnswer[]) => {
+    return request<FindErrorSubmitResponse>('/activities/find_mistake',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ answers }),
+        }
+    )
+}
+
+export const getCodeLines = () => {
+    return request<FindErrorCode[]>('/activities/find_mistake',
+        {
+            method: 'GET',
+        }
+    )
+}
+
+export const getFindErrorStatus = () => {
+    return request<FindErrorStatus>('/activities/find_mistake_status',
+        {
+            method: 'GET',
         }
     )
 }

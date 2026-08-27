@@ -7,35 +7,43 @@ import ITRebusStep from './ITRebusStep'
 import ITRebusSuccess from './ITRebusSuccess'
 import ProgressBar from './ProgressBar/ProgressBar'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
-import { fetchRebusStatus, fetchSubmitRebus } from '../../../service/features/activity/activitySlice'
+import { fetchRebusReward, fetchRebusStatus, fetchSubmitRebus } from '../../../service/features/activity/activitySlice'
 
-const REBUS_COMPLETED_KEY = 'it_rebus_completed'
 
 export default function ITRebusPage() {
     const dispatch = useAppDispatch()
-    const { rebusStatus, rewardRebus } = useAppSelector(state => state.activity)
+    const { rebusStatus, rebusRightAnswers } = useAppSelector(state => state.activity)
 
     const [currentStep, setCurrentStep] = useState(0)
-    const [userAnswers, setUserAnswers] = useState<string[]>([])
+    const [isFinished, setIsFinished] = useState(false)
 
     useEffect(() => {
         dispatch(fetchRebusStatus())
     }, [])
 
-    const handleNextStep = (answer: string) => {
-        const updateAnswers = [...userAnswers, answer]
+    const onCheck = async (answer: string) => {
+        const result = await dispatch(fetchSubmitRebus({
+            questionId: IT_REBUS[currentStep].id,
+            answer,
+        })).unwrap()
+
+        return result.result
+    }
+
+    const handleNextStep = () => {
 
         if (currentStep < IT_REBUS.length - 1) {
             setCurrentStep(prev => prev + 1)
         } else {
-            dispatch(fetchSubmitRebus(updateAnswers))
+            dispatch(fetchRebusReward(rebusRightAnswers))
+            setIsFinished(true)
         }
     }
 
     if (rebusStatus === true) {
         return <ITRebusSuccess score={0} length={IT_REBUS.length} isAlreadyCompleted={true} />
     }
-    if (rewardRebus !== null) return <ITRebusSuccess score={rewardRebus} length={IT_REBUS.length} isAlreadyCompleted={false} />
+    if (isFinished) return <ITRebusSuccess score={rebusRightAnswers * 2} length={IT_REBUS.length} isAlreadyCompleted={false} />
 
     const currentQuestion = IT_REBUS[currentStep]
 
@@ -48,10 +56,9 @@ export default function ITRebusPage() {
             <ITRebusStep
                 key={currentQuestion.id}
                 data={currentQuestion}
-                onNext={handleNextStep} />
+                onNext={handleNextStep}
+                onCheck={onCheck}
+            />
         </ActivityLayout>
     )
 }
-
-
-

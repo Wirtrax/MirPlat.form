@@ -7,7 +7,7 @@ import { Cron, CronExpression} from '@nestjs/schedule';
 
 @Injectable()
 export class DownloadService {
-    private readonly EXCEL_PATH = '../../../export';
+    private readonly EXCEL_PATH = './exports/ВЫГРУЗКА_МИР.xlsx';
     private readonly EXPORTS_DIR = path.dirname(this.EXCEL_PATH);
 
     constructor(

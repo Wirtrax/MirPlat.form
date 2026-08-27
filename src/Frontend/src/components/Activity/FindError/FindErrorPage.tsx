@@ -1,19 +1,43 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux"
+import { fetchFindErrorStatus, fetchGetCodeLines, fetchSubmitFindError } from "../../../service/features/activity/activitySlice"
 
 import type { GameStep } from "../gameStep"
 import FindErrorRules from "./FindErrorRules"
 import FindErrorStep from "./FindErrorStep"
 import FindErrorSuccess from "./FindErrorSuccess"
 
+import type { FindErrorAnswer } from "../../../service/features/activity/activitySliceType"
 
 export default function FindErrorPage() {
-    const [step, setStep] = useState<GameStep>('game')
+    const { findErrorStatus, correctAnswers, rewardFindError } = useAppSelector(state => state.activity);
+    const dispatch = useAppDispatch()
 
-    const handleEndGame = () => {
-        setStep('result')
+    const [step, setStep] = useState<GameStep>('rules')
+
+    useEffect(() => {
+        dispatch(fetchFindErrorStatus())
+        dispatch(fetchGetCodeLines())
+    }, [dispatch])
+
+    const handleEndGame = async (answers: FindErrorAnswer[]) => {
+        const result = await dispatch(fetchSubmitFindError(answers))
+
+        if (fetchSubmitFindError.fulfilled.match(result)) {
+            setStep('result')
+        }
     }
 
+    if (findErrorStatus) return <FindErrorSuccess status={true} />
+
     if (step === 'rules') return <FindErrorRules onStartGame={() => setStep('game')} />
-    if (step === 'game') return <FindErrorStep onEndGame={() => handleEndGame()} />
-    if (step === 'result') return <FindErrorSuccess />
+
+    if (step === 'game') return <FindErrorStep onEndGame={handleEndGame} />
+
+    if (step === 'result') return <FindErrorSuccess
+        status={false}
+        reward={rewardFindError ?? 0}
+        correctAnswers={correctAnswers ?? 0}
+    />
 }

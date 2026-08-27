@@ -4,12 +4,18 @@ import { ActivitiesController } from './activities.controller';
 import { QuizModule } from './quiz/quiz.module';
 import { TetrisModule } from './tetris/tetris.module';
 import { PhotoCheckModule } from './photo-check/photo-check.module';
+import { ItRebusModule } from './ITrebus/ItRebus.module';
+import { CardGame4x4Module } from './card-game-4x4/card-game-4x4.module';
+import { FindMistakeModule } from './findMistake/findMistake.module';
 
 @Module({
     imports: [
         TetrisModule,
         QuizModule,
         PhotoCheckModule,
+        ItRebusModule,
+        CardGame4x4Module,
+        FindMistakeModule,
     ],
     controllers: [ActivitiesController],
     providers: [],

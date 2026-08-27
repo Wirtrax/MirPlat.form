@@ -65,3 +65,5 @@ Content-Type: application/json
 }
 ### 
 GET http://localhost:3000/admin/orders/1/details?userId=4&itemId=1
+###
+GET http://localhost:3000/admin/excel/download

@@ -18,7 +18,7 @@ export class QuizController {
     }
 
     @JWTAuth()
-    @Get('quiz/status')
+    @Get('quiz_status')
     checkAttempt(@Req() request){
         return this.quizService.checkOnReply(request['userId']);
     }

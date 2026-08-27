@@ -1,0 +1,19 @@
+.error {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    &__title {
+        margin: 0;
+        font-size: rem(64);
+        font-weight: 700;
+    }
+
+    &__text {
+        margin: 0 0 rem(32);
+        font-size: rem(20);
+    }
+}
