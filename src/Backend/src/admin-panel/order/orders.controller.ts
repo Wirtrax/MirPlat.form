@@ -22,7 +22,7 @@ export class OrderController {
     
     //@UseGuards(JwtGuard, RolesGuard)
     @Get(':id')
-    getOrder(@Param('id') orderId: number) {
+    getOrder(@Param('id', ParseIntPipe) orderId: number) {
         return this.orderService.getOrder(orderId);
     }
 
