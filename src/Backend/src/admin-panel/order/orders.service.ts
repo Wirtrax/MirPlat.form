@@ -62,7 +62,7 @@ export class OrderService {
         }));
 
     }
-    async getOrder(orderId: number): Promise<OrderResponse> {
+    async getOrder(orderId: number){
         const order = await this.purchasesRepo.findOne({
             where: { id: orderId },
             relations: { item: true, user: true },
@@ -76,7 +76,8 @@ export class OrderService {
             userFullName: `${order.user.last_name} ${order.user.first_name} ${order.user.patronym ?? ''}`.trim(),
             userPhoneNumber: order.user.phone_number,
             userEmail: order.user.email,
-            status: order.status
+            status: order.status,
+            image: order.item.image
         }
     }
 
