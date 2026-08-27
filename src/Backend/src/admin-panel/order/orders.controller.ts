@@ -19,7 +19,14 @@ export class OrderController {
     getOrdersByItemId(@Param('itemId') itemId: number) {
         return this.orderService.getOrdersByItemId(itemId);
     }
+
+    //@UseGuards(JwtGuard, RolesGuard)
+    @Get('by-user/:userId')
+    getOrdersByUserId(@Param('userId', ParseIntPipe) userId: number) {
+        return this.orderService.getOrdersByUserId(userId);
+    }
     
+    //@UseGuards(JwtGuard, RolesGuard)
     @Get('by-code/:code')
     getOrderByCode(@Param('code') orderCode: string) {
         return this.orderService.getOrderByCode(orderCode);

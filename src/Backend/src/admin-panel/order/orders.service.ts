@@ -19,8 +19,10 @@ export interface OrderWithItemId extends OrderResponse {
 
 export interface OrderResponseByUserId {
     orderId: number;
+    userId: number;
     itemName: string;
     itemImage: string;
+    itemPrice: number;
 }
 
 @Injectable()
@@ -119,24 +121,23 @@ export class OrderService {
         }))
     }
 
-    async getOrdersByUserId(userId: number) {
-        const ordersByItemId = await this.purchasesRepo.find({
+    async getOrdersByUserId(userId: number): Promise<OrderResponseByUserId[]> {
+        const ordersByUserId = await this.purchasesRepo.find({
             where: {
-                item: {id: userId}
+                user: {id: userId}
             },
             relations: { item: true, user: true },
         })
-        if(ordersByItemId.length === 0) {
+        if(ordersByUserId.length === 0) {
             throw new NotFoundException('Заказов по данному пользователю не найдено');
         }
 
-        return ordersByItemId.map(u => ({
-            orderId: u.id,
-            itemName: u.item.name,
-            userFullName: `${u.user.last_name} ${u.user.first_name} ${u.user.patronym ?? ''}`.trim(),
-            userPhoneNumber: u.user.phone_number,
-            userEmail: u.user.email,
-            status: u.status
+        return ordersByUserId.map(o => ({
+            orderId: o.id,
+            userId: o.user.id,
+            itemName: o.item.name,
+            itemImage: o.item.image,
+            itemPrice: o.item.price
         }))
     }
 
