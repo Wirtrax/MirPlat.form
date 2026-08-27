@@ -68,10 +68,10 @@ export class UsersService {
             where: { item: {id: itemId } },
             relations: {user: true}
         })
-        if(!orders) {
-            throw new NotFoundException('Заказы с таким товаром не найдены')
+        if (orders.length === 0) {
+            throw new NotFoundException('Заказы с таким товаром не найдены');
         }
-        const users = await orders.map(o=>o.user)
+        const users = orders.map(o=>o.user)
 
         return users;
     }

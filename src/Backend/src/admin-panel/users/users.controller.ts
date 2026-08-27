@@ -19,8 +19,9 @@ export class UsersController {
             return this.usersService.getAllUsers();
         }
 
+        //@UseGuards(JwtGuard, RolesGuard)
         @Get('by-item/:id') 
-        getUsersByItemId(@Param('itemId') itemId: number) {
+        getUsersByItemId(@Param('id', ParseIntPipe) itemId: number) {
             return this.usersService.getUsersByItemId(itemId);
         }
 
