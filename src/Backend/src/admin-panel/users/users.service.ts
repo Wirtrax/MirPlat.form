@@ -14,7 +14,7 @@ export class UsersService {
         private readonly usersRepo: Repository<User>,
 
         @InjectRepository(Purchase)
-        private readonly ordersRepo: Repository<Purchase>
+        private readonly purchasesRepo: Repository<Purchase>
     ) {}
 
     async getAllUsers(): Promise<User[]> {
@@ -64,7 +64,7 @@ export class UsersService {
     }
 
     async getUsersByItemId(itemId: number): Promise<User[]> {
-        const orders = await this.ordersRepo.find({
+        const orders = await this.purchasesRepo.find({
             where: { item: {id: itemId } },
             relations: {user: true}
         })
