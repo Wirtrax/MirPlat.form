@@ -45,7 +45,7 @@ export class FindMistakeService {
         const result: CodeFragmentForExport[] = codeFragments.map(code => ({
             id: code.id,
             difficulty: code.difficulty,
-            codeLines: code.codeLines
+            codeLines: code.code_lines
         }));
 
         return result;
@@ -61,7 +61,7 @@ export class FindMistakeService {
                 throw new NotFoundException(`code fragment with id ${answer.id} does not exist`)
             }
 
-            if(codeFragment.wrongLineIndex === answer.indexInputLine) {
+            if(codeFragment.wrong_line_index === answer.indexInputLine) {
                 countOfRightAnswers += 1;
             }
         }
