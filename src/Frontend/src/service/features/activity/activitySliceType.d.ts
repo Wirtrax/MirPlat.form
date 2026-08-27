@@ -5,6 +5,15 @@ export interface TetrisLinkResponse {
 export interface TetrisStatusResponse {
     result: boolean;
 }
+export type TetrisStatusToast = 'WAITING' | 'ACCLAIMED' | 'DECLINED';
+
+export interface TetrisToast {
+    isChanged: boolean;
+    currentStatus: TetrisStatusToast;
+    reward: number;
+    reason: string | null;
+}
+
 
 export interface PhotoCheckSubmitResponse {
     message: string;
@@ -86,6 +95,10 @@ export interface FindErrorStatus {
 export interface ActivityState {
     tetrisLink: string | null;
     tetrisStatus: boolean | null;
+    isChangedTetrisToastStatus: boolean | null;
+    currentToastStatus: TetrisStatusToast | null;
+    rewardTetris: number | null;
+    reason: string | null;
 
     photoCheckStatus: 'claimed' | 'rejected' | null;
     photoCheckCompleted: boolean | null;
@@ -100,7 +113,7 @@ export interface ActivityState {
     rewardFourGame: number | null;
     cardsGame: CardGameGroup[] | null;
 
-    codeLines: FindErrorArray[] | null;
+    codeLines: FindErrorCode[] | null;
     correctAnswers: number | null;
     isComplited: boolean | null;
     rewardFindError: number | null;

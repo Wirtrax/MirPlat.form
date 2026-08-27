@@ -1,5 +1,7 @@
 import s from './ErrorPage.module.scss'
 
+import mascot_404 from '../../assets/mascot/mascot_404.webp'
+
 import { Link } from 'react-router-dom'
 import { ROUTES } from '../../routes/routes'
 
@@ -19,6 +21,7 @@ export default function ErrorPage() {
                 <Link to={ROUTES.HOME}>
                     <Button>НА ГЛАВНУЮ</Button>
                 </Link>
+                <img className={s.error__image} src={mascot_404} alt='mascot' />
             </main>
         </Background>
     )
