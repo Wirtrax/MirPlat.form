@@ -6,6 +6,7 @@ import { Item } from 'src/entities/item.entity';
 import { Repository } from 'typeorm';
 import { UpdateItemDto } from './itemDto/updateItemDto';
 import { CreateItemDto } from './itemDto/createItemDto';
+import { ILike } from 'typeorm';
 
 @Injectable()
 export class ItemsService {
@@ -25,8 +26,8 @@ export class ItemsService {
         return { success: true };
     }
 
-    async hideItem(id: number) {
-        return this.updateItem(id, {is_active: false});
+    async changeStatusItem(id: number, status: boolean) {
+        return this.updateItem(id, {is_active: status});
     }
 
     async addItem(createItemDto: CreateItemDto): Promise<CreateItemDto> {
@@ -57,6 +58,13 @@ export class ItemsService {
         catch {
             throw new NotFoundException('Изображения не найдены');
         }
-    
+    }
+
+    async searchItemsByName(query: string): Promise<Item[]> {
+        return this.itemsRepo.find({
+            where: {
+                name: ILike(`%${query}%`),
+            },
+        });
     }
 }

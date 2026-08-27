@@ -15,6 +15,30 @@ export class OrderController {
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
+    @Get('by-item/:itemId') 
+    getOrdersByItemId(@Param('itemId') itemId: number) {
+        return this.orderService.getOrdersByItemId(itemId);
+    }
+
+    //@UseGuards(JwtGuard, RolesGuard)
+    @Get('by-user/:userId')
+    getOrdersByUserId(@Param('userId', ParseIntPipe) userId: number) {
+        return this.orderService.getOrdersByUserId(userId);
+    }
+    
+    //@UseGuards(JwtGuard, RolesGuard)
+    @Get('by-code/:code')
+    getOrderByCode(@Param('code') orderCode: string) {
+        return this.orderService.getOrderByCode(orderCode);
+    }
+    
+    //@UseGuards(JwtGuard, RolesGuard)
+    @Get(':id')
+    getOrder(@Param('id', ParseIntPipe) orderId: number) {
+        return this.orderService.getOrder(orderId);
+    }
+
+    //@UseGuards(JwtGuard, RolesGuard)
     @Get('details')
     getDetailedReport(
         @Query('userId', ParseIntPipe) userId: number, 
@@ -31,4 +55,5 @@ export class OrderController {
     ) {
         return this.orderService.updateStatus(id, status);
     }
+
 }

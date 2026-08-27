@@ -22,7 +22,6 @@ export class AuthController {
     @Public()
     @Post('login')
     login(@Body() dto: LoginDto){
-        console.log('LOGIN dto:', JSON.stringify(dto)); 
         return this.authService.login(dto.login, dto.password);
     }
 

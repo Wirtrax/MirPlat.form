@@ -1,4 +1,4 @@
-import { Controller, Patch, Get, Param, ParseIntPipe, Body, Post, Delete, UseGuards} from '@nestjs/common';
+import { Controller, Patch, Query, Get, Param, ParseIntPipe, Body, Post, Delete, UseGuards} from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -20,11 +20,16 @@ export class ItemsController {
     getImages() {
         return this.itemsService.getImages();
     }
+    
+    @Get('search')
+    searchItems(@Query('q') query: string) {
+        return this.itemsService.searchItemsByName(query);
+    }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    @Patch(':id/hide')
-    hideItem(@Param('id', ParseIntPipe) id: number) {
-        return this.itemsService.hideItem(id);
+    @Patch(':id/status')
+    changeStatus(@Param('id', ParseIntPipe) id: number, @Body('status') status: boolean) {
+        return this.itemsService.changeStatusItem(id, status);
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
@@ -40,8 +45,8 @@ export class ItemsController {
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
-    @Delete(':id')
+    /*@Delete(':id')
     deleteItem(@Param('id', ParseIntPipe) id: number) {
         return this.itemsService.deleteItem(id);
-    }
+    }*/
 }
