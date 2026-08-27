@@ -13,6 +13,15 @@ export interface OrderResponse {
     userEmail: string;
     status: PurchaseStatus;
 }
+export interface OrderWithItemId extends OrderResponse {
+    itemId: number;
+}
+
+export interface OrderResponseByUserId {
+    orderId: number;
+    itemName: string;
+    itemImage: string;
+}
 
 @Injectable()
 export class OrderService {
@@ -70,6 +79,25 @@ export class OrderService {
         }
     }
 
+    async getOrderByCode(orderCode: string): Promise<OrderWithItemId> {
+        const orderByCode = await this.purchasesRepo.findOne({
+            where: { code: orderCode}, 
+            relations: { item: true, user: true }})
+        if(!orderByCode) {
+            throw new NotFoundException('Заказов по этому коду не найдено');
+        }
+
+        return {
+            orderId: orderByCode.id,
+            itemId: orderByCode.item.id,
+            itemName: orderByCode.item.name,
+            userFullName: `${orderByCode.user.last_name} ${orderByCode.user.first_name} ${orderByCode.user.patronym ?? ''}`.trim(),
+            userPhoneNumber: orderByCode.user.phone_number,
+            userEmail: orderByCode.user.email,
+            status: orderByCode.status
+        }
+    }
+
     async getOrdersByItemId(itemId: number) {
         const ordersByItemId = await this.purchasesRepo.find({
             where: {
@@ -88,6 +116,27 @@ export class OrderService {
             userPhoneNumber: p.user.phone_number,
             userEmail: p.user.email,
             status: p.status
+        }))
+    }
+
+    async getOrdersByUserId(userId: number) {
+        const ordersByItemId = await this.purchasesRepo.find({
+            where: {
+                item: {id: userId}
+            },
+            relations: { item: true, user: true },
+        })
+        if(ordersByItemId.length === 0) {
+            throw new NotFoundException('Заказов по данному пользователю не найдено');
+        }
+
+        return ordersByItemId.map(u => ({
+            orderId: u.id,
+            itemName: u.item.name,
+            userFullName: `${u.user.last_name} ${u.user.first_name} ${u.user.patronym ?? ''}`.trim(),
+            userPhoneNumber: u.user.phone_number,
+            userEmail: u.user.email,
+            status: u.status
         }))
     }
 

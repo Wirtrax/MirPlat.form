@@ -20,6 +20,11 @@ export class OrderController {
         return this.orderService.getOrdersByItemId(itemId);
     }
     
+    @Get('by-code/:code')
+    getOrderByCode(@Param('code') orderCode: string) {
+        return this.orderService.getOrderByCode(orderCode);
+    }
+    
     //@UseGuards(JwtGuard, RolesGuard)
     @Get(':id')
     getOrder(@Param('id', ParseIntPipe) orderId: number) {
