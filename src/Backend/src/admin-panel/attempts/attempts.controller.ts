@@ -13,7 +13,11 @@ export class AttemptsController {
     getAllAttempts() {
         return this.attemptsService.getAllAttempts();
     }
-
+    //@UseGuards(JwtGuard, RolesGuard)
+    @Get('by-user/:id')
+    getAttemptsByUserId(@Param('id', ParseIntPipe) userId: number) {
+        return this.attemptsService.getAttemptsByUserId(userId)
+    }
     //@UseGuards(JwtGuard, RolesGuard)
     @Get(':id')
     getAttemptById(@Param('id') attemptId: number) {

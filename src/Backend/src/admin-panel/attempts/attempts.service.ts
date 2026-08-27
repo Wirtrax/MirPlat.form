@@ -84,6 +84,26 @@ export class AttemptsService {
         }
     }
 
+    async getAttemptsByUserId(userId: number): Promise<OutputAttempt[]>{
+        const attemptsResult = await this.attemptsRepo.find({
+            where: {user: {id: userId}},
+            relations: {user: true, activity: true}
+        })
+        if(attemptsResult.length===0) {
+            throw new NotFoundException('Попытки по данным пользователям не найдены');
+        }
+        return attemptsResult.map(attempt => ({
+            attemptId: attempt.id,
+            userFullName: `${attempt.user.last_name} ${attempt.user.first_name} ${attempt.user.patronym ?? ''}`.trim(),
+            userPhoneNumber: attempt.user.phone_number,
+            userEmail: attempt.user.email,
+            activityName: attempt.activity.name,
+            attemptStatus: attempt.status,
+            reward: attempt.reward,
+            link: attempt.photo
+        }))
+    }
+
     async changeStatus(attemptId: number, attemptStatus: AttemptStatus) {
         const attempt = await this.attemptsRepo.findOne({
             where: { id: attemptId },
