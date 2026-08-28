@@ -48,7 +48,7 @@ export default function ITRebusPage() {
     if (rebusStatus === true) {
         return <ITRebusSuccess score={0} length={IT_REBUS.length} isAlreadyCompleted={true} />
     }
-    if (isFinished) return <ITRebusSuccess score={rightAnswers * 2} length={IT_REBUS.length} isAlreadyCompleted={false} />
+    if (isFinished) return <ITRebusSuccess score={rightAnswers} length={IT_REBUS.length} isAlreadyCompleted={false} />
 
     const currentQuestion = IT_REBUS[currentStep]
 

@@ -64,6 +64,10 @@ export interface FourGameSubmitResponse {
     reward: number;
 }
 
+export interface FourGameStatus{
+    result: boolean;
+}
+
 
 export interface FindErrorAnswer {
     id: number;
@@ -105,6 +109,7 @@ export interface ActivityState {
 
     rewardFourGame: number | null;
     cardsGame: CardGameGroup[] | null;
+    fourGameStatus: boolean | null;
 
     codeLines: FindErrorCode[] | null;
     correctAnswers: number | null;

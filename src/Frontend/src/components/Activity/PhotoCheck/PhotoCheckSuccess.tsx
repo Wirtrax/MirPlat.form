@@ -16,7 +16,7 @@ export default function PhotoCheckSuccess({ hasSubmittedPhoto }: PhotoCheckSucce
 
     const description = (
         <>
-            Тебе начислено 15 <Coin />
+            Тебе начислено 3 <Coin />
         </>
     )
 
