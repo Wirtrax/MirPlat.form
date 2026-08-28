@@ -1,4 +1,4 @@
-import { Body, Controller, Injectable, Post, Get, Req, BadRequestException, InternalServerErrorException } from "@nestjs/common";
+import { Body, Controller, Injectable, Post, Get, Req, BadRequestException, NotFoundException, ForbiddenException, InternalServerErrorException } from "@nestjs/common";
 import { JWTAuth } from "src/auth/jwt.decorator";
 import { CardGame4x4Service } from "./card-game-4x4.service";
 import { CardGameResultDto } from "./dto/card-game-result.dto";
@@ -15,6 +15,12 @@ export class CardGame4x4Controller {
         try {
             return this.cardGame4x4Service.getCardGroups()
         } catch(error) {
+            if (error instanceof NotFoundException ||
+                error instanceof ForbiddenException
+            ) {
+                throw error;
+            }
+
             throw new InternalServerErrorException('Unexpected error durin getCardGroup')
         }
     }
@@ -49,7 +55,14 @@ export class CardGame4x4Controller {
                 reward: reward,
             }
         } catch(error) {
-            throw error
+            if (error instanceof NotFoundException ||
+                error instanceof ForbiddenException ||
+                error instanceof BadRequestException
+            ) {
+                throw error;
+            }
+
+            throw new InternalServerErrorException('Error during sending reward')
         }
     }
 } 

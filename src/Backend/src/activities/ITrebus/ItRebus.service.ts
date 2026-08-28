@@ -43,11 +43,11 @@ export class ItRebusService {
             throw new NotFoundException(`Answers on question with id_${user_answer.questionId} do not exist `)
         }
 
-        if(user_answer.answer in right_answers) {
-            return true;
-        } else {
-            return false;
-        }
+        const lowerAnswer = user_answer.answer.toLowerCase();
+
+        return right_answers.some(answer => 
+            answer.toLowerCase() === lowerAnswer
+        );
     }
 
     async sendReward(user_id: number, countOfUserRightAnswers: number): Promise<void> {

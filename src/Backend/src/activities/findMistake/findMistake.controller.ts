@@ -1,4 +1,4 @@
-import { Body, Controller, Injectable, Post, Get, Req, BadRequestException, InternalServerErrorException } from "@nestjs/common";
+import { Body, Controller, Injectable, Post, Get, Req, BadRequestException, InternalServerErrorException, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { JWTAuth } from "src/auth/jwt.decorator";
 import { FindMistakeService } from "./findMistake.service";
 import { CodeAnswersDto } from "./dto/code-answers.dto";
@@ -45,6 +45,12 @@ export class FindMistakeController {
                 "isComplited": true,
             }
         } catch(error) {
+            if (error instanceof NotFoundException ||
+                error instanceof ForbiddenException
+            ) {
+                throw error;
+            }
+
             throw new InternalServerErrorException('Error during checking answers or sending reward')
         }
     }
