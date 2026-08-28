@@ -66,7 +66,7 @@ function App() {
 
     if (startParam.startsWith('handOverOrder')) {
       const code = startParam.replace('handOverOrder_', '');
-      router.navigate(`${ROUTES.HAND_OVER_ORDER}${code}`, { replace: true });
+      router.navigate(`${ROUTES.HAND_OVER_ORDER}/${code}`, { replace: true });
     }
   }, []);
 
