@@ -21,6 +21,8 @@ interface CodeAnswer {
 
 @Injectable()
 export class FindMistakeService {
+    private readonly FIND_MISTAKE_NAME = 'findMistake';
+
     constructor(
         @InjectRepository(FindMistake)
         private readonly findMistakeRepo: Repository<FindMistake>,
@@ -51,32 +53,18 @@ export class FindMistakeService {
         return result;
     }
 
-    async checkAnswer(user_answers: CodeAnswer[]): Promise<number> {
+    async checkAnswerAndSendReward(
+        user_id: number, 
+        user_answers: CodeAnswer[]
+    ): Promise<{
+        count: number, 
+        reward: number
+    }> {
+        let reward = 0;
         let countOfRightAnswers = 0;
-
-        for(const answer of user_answers) {
-            const codeFragment = await this.codeFragmentRepo.findOneBy({ id: answer.id })
-
-            if(!codeFragment) {
-                throw new NotFoundException(`code fragment with id ${answer.id} does not exist`)
-            }
-
-            if(codeFragment.wrong_line_index === answer.indexInputLine) {
-                countOfRightAnswers += 1;
-            }
-        }
-
-        return countOfRightAnswers;
-    }
-
-    async sendReward(user_id: number, countOfUserRightAnswers: number): Promise<number> {
-        const maxFragmentsCount = await this.getTotalFragmentCount(); 
-
-        if(countOfUserRightAnswers < 0 || countOfUserRightAnswers > maxFragmentsCount) {
-            throw new BadRequestException('Invalid number of right answers')
-        }
-
+        
         const find_mistake = await this.findMistakeRepo.findOne({ 
+            where: {},
             order: { id: 'ASC' }
         });
 
@@ -90,22 +78,37 @@ export class FindMistakeService {
             throw new ForbiddenException('Attempt is already exist')
         }
 
-        const reward_per_answer = find_mistake.reward_per_answer;
+        for(const answer of user_answers) {
+            const codeFragment = await this.codeFragmentRepo.findOneBy({ id: answer.id })
 
-        if(!reward_per_answer) {
-            throw new NotFoundException('reward_per_answer does not exist in find_mistake')
+            if(!codeFragment) {
+                throw new NotFoundException(`code fragment with id ${answer.id} does not exist`)
+            }
+
+            if(codeFragment.wrong_line_index === answer.indexInputLine) {
+                if(codeFragment.difficulty == Difficulty.EASY) {
+                    reward += find_mistake.reward_easy;
+                    countOfRightAnswers++;
+                } else if(codeFragment.difficulty === Difficulty.MEDIUM) {
+                    reward += find_mistake.reward_medium;
+                    countOfRightAnswers++;
+                } else if(codeFragment.difficulty === Difficulty.HARD) {
+                    reward += find_mistake.reward_hard;
+                    countOfRightAnswers++;
+                }
+            }
         }
-
-        const total_reward = reward_per_answer*countOfUserRightAnswers;
 
         try {
             await this.dataSource.transaction(async manager => {
-                await createAttempt(manager, user_id, total_reward, find_mistake.name);
-                await manager.increment(User, { id: user_id }, 'balance', total_reward);
+                await createAttempt(manager, user_id, reward, find_mistake.name);
+                await manager.increment(User, { id: user_id }, 'balance', reward);
             });
 
-            return total_reward;
-
+            return {
+                count: countOfRightAnswers,
+                reward: reward,
+            };
         } catch {
             throw new InternalServerErrorException('Error during sending reward')
         }  

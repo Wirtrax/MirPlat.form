@@ -9,7 +9,12 @@ export async function createAttempt(
     reward: number,
     activityName: string
 ): Promise<Attempt> {
-    const activity = await manager.findOneBy(Activity, {name: activityName})
+    const activity = await manager.findOne(
+        Activity, 
+        {where:
+            { name: activityName },
+        },
+    )
     if(!activity) {
         throw new NotFoundException(`Активность "${activityName}" не найдена`);
     }

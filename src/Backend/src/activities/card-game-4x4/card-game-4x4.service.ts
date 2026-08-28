@@ -44,8 +44,8 @@ export class CardGame4x4Service {
         user_id: number, 
         count_of_guesed_group: number
     ): Promise<number> {
-
-        const card_game_4x4 = await this.cardGame4x4Repo.findOne({ 
+        const card_game_4x4 = await this.cardGame4x4Repo.findOne({
+            where: {},
             order: { id: 'ASC' }
         });
 
@@ -66,7 +66,10 @@ export class CardGame4x4Service {
         }
 
         try {
-            const total_reward = reward*count_of_guesed_group;
+            const total_reward =  Math.min(
+                reward*count_of_guesed_group,
+                card_game_4x4.max_reward
+            ); 
 
             await this.dataSource.transaction(async manager => {
                 await createAttempt(manager, user_id, total_reward, card_game_4x4.name);

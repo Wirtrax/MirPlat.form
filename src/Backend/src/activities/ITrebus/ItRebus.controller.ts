@@ -56,6 +56,10 @@ export class ItRebusController {
             throw new BadRequestException('Invalid user ID');
         }
 
+        if(countOfRightAnswers < 0 || countOfRightAnswers > await this.itRebusService.getTotalQuestionCount()) {
+            throw new BadRequestException('Invalid number of right questions')
+        }
+
         try {
             await this.itRebusService.sendReward(userId, countOfRightAnswers)
         } catch(error) {

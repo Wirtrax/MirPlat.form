@@ -36,8 +36,9 @@ export class FindMistakeController {
         }
         
         try {
-            const countOfRightAnswers = await this.findMistakeService.checkAnswer(codeAnswers);
-            const reward = await this.findMistakeService.sendReward(userId, countOfRightAnswers);
+            const result = await this.findMistakeService.checkAnswerAndSendReward(userId, codeAnswers)
+            const countOfRightAnswers = result.count;
+            const reward = result.reward
 
             return {
                 "correct_answers": countOfRightAnswers,
