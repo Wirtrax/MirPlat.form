@@ -14,6 +14,7 @@ import type {
     FindErrorSubmitResponse,
     FindErrorCode,
     TetrisToast,
+    FourGameStatus,
 } from './features/activity/activitySliceType';
 
 import { request } from './utils/query';
@@ -40,7 +41,7 @@ export const getTetrisStatus = () => {
     })
 }
 
-export const getTetrisToast= () => {
+export const getTetrisToast = () => {
     return request<TetrisToast>('/activities/tetris_attempt_status',
         {
             method: 'GET',
@@ -133,6 +134,12 @@ export const submitFourGame = (count_of_guesed_group: number) => {
             body: JSON.stringify({ count_of_guesed_group })
         }
     )
+}
+
+export const getFourGameStatus = () => {
+    return request<FourGameStatus>('/activities/card_game_4x4_status', {
+        method: 'GET',
+    });
 }
 
 //найди ошибку

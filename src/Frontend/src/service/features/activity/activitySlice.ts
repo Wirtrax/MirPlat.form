@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { ActivityState, FindErrorAnswer, QuizAnswer, RebusAnswer } from "./activitySliceType";
-import { getCardsGame, getCodeLines, getFindErrorStatus, getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, getTetrisToast, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitFindError, submitFourGame, submitRebus, submitRebusReward } from "../../activityApi";
+import { getCardsGame, getCodeLines, getFindErrorStatus, getFourGameStatus, getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, getTetrisToast, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitFindError, submitFourGame, submitRebus, submitRebusReward } from "../../activityApi";
 
 // тетрис
 export const fetchTetrisLink = createAsyncThunk(
@@ -96,6 +96,12 @@ export const fetchSubmitFourGame = createAsyncThunk(
         return await submitFourGame(count_of_guesed_group);
     }
 )
+export const fetchFourGameStatus = createAsyncThunk(
+    'activity/fetchFourGameStatus',
+    async () => {
+        return await getFourGameStatus();
+    }
+)
 
 //найти ошибку
 export const fetchSubmitFindError = createAsyncThunk(
@@ -139,6 +145,7 @@ const initialState: ActivityState = {
 
     cardsGame: null,
     rewardFourGame: null,
+    fourGameStatus: null,
 
     codeLines: null,
     correctAnswers: null,
@@ -339,6 +346,19 @@ const activitySlice = createSlice({
             .addCase(fetchSubmitFourGame.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось получить награду';
+            })
+            //4x4 получить статус
+            .addCase(fetchFourGameStatus.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchFourGameStatus.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.fourGameStatus = action.payload.result;
+            })
+            .addCase(fetchFourGameStatus.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить статус';
             })
 
             //найти ошибку отправка ответов
