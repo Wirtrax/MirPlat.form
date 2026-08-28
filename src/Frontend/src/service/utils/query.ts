@@ -27,6 +27,16 @@ export const request = async <T>(endpoint: string, options: RequestInit = {}): P
     headers,
   });
 
-  if (!res.ok) throw new Error(`Ошибка: ${res.status}`)
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null)
+
+    const message =
+      typeof errorData?.message === 'string'
+        ? errorData.message
+        : `Ошибка: ${res.status}`
+
+    throw new Error(message)
+  }
+
   return res.json() as Promise<T>
 };

@@ -38,10 +38,6 @@ export interface QuizStatusResponse {
     reward: number;
 }
 
-export interface RebusSubmitResponse {
-    result: boolean;
-}
-
 export interface RebusAnswer {
     questionId: number;
     answer: string;
@@ -62,9 +58,7 @@ export interface CardGameGroup {
     group_id: string;
 }
 
-export interface CardGameGroupsResponse {
-    groups: CardGameGroup[];
-}
+export type CardGameGroupsResponse = CardGameGroup[];
 
 export interface FourGameSubmitResponse {
     reward: number;
@@ -108,7 +102,6 @@ export interface ActivityState {
 
     rebusStatus: boolean | null;
     rebusResult: boolean | null;
-    rebusRightAnswers: number;
 
     rewardFourGame: number | null;
     cardsGame: CardGameGroup[] | null;

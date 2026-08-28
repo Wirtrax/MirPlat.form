@@ -5,15 +5,14 @@ import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { clearTetrisToast, fetchTetrisToast } from '../../service/features/activity/activitySlice';
+import { showToast } from '../../utils/showToast';
 
 import Background from '../UI/Background/Background';
 import AboutSection from './AboutSection/AboutSection';
 import ActivitiesSection from './ActivitiesSection/ActivitiesSection';
 import LotterySection from './LotterySection/LotterySection';
 import WelcomeSection from './WelcomeSection/WelcomeSection';
-import { fetchTetrisToast } from '../../service/features/activity/activitySlice';
-import { showToast } from '../../utils/showToast';
-
 
 
 export default function MainPage() {
@@ -42,30 +41,47 @@ export default function MainPage() {
   useEffect(() => {
     dispatch(fetchTetrisToast())
   }, [dispatch])
+
   useEffect(() => {
-    if (!isChangedTetrisToastStatus) return
+    if (!isChangedTetrisToastStatus) return;
+
+    const toastKey = `${currentToastStatus}-${rewardTetris}-${reason}`;
+    const shownToastKey = localStorage.getItem('tetrisToastKey');
+
+    if (toastKey === shownToastKey) return;
 
     if (currentToastStatus === 'ACCLAIMED') {
       showToast(
         <>
           Задание «Стек-тетрис» выполнено!
           <b>+{rewardTetris} Приветов начислено</b>
-          Количество баллов можно увидеть в
-          <b style={{ textDecoration: 'underline' }}><Link to={ROUTES.PROFILE}>профиле.</Link></b>
+          Количество баллов можно увидеть в{' '}
+          <b style={{ textDecoration: 'underline' }}>
+            <Link to={ROUTES.PROFILE}>профиле.</Link>
+          </b>
         </>
-      )
+      );
     }
 
     if (currentToastStatus === 'DECLINED') {
       showToast(
         <>
           Фото для задания «Стек-тетрис» не прошло проверку.
-          <b>Причина: {reason}</b> <br />
+          <b>Причина: {reason}</b>
+          <br />
           Попробуйте направить фотографию собранного тетриса еще раз.
         </>
-      )
+      );
     }
-  }, [isChangedTetrisToastStatus, currentToastStatus, rewardTetris, reason])
+
+    localStorage.setItem('tetrisToastKey', toastKey);
+    dispatch(clearTetrisToast());
+  }, [
+    isChangedTetrisToastStatus,
+    currentToastStatus,
+    rewardTetris,
+    reason,
+  ]);
 
 
   return (

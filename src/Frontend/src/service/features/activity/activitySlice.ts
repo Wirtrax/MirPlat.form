@@ -136,7 +136,6 @@ const initialState: ActivityState = {
 
     rebusStatus: null,
     rebusResult: null,
-    rebusRightAnswers: 0,
 
     cardsGame: null,
     rewardFourGame: null,
@@ -214,7 +213,6 @@ const activitySlice = createSlice({
             })
             .addCase(fetchTetrisToast.rejected, (state, action) => {
                 state.status = 'failed';
-                state.error = action.error.message ?? 'Не удалось получить ссылку на Тетрис';
             })
 
 
@@ -275,18 +273,14 @@ const activitySlice = createSlice({
                 state.error = action.error.message ?? 'Не удалось получить статус квиза';
             })
 
-            //отправка отвта ребуса
+            //отправка ответа ребуса
             .addCase(fetchSubmitRebus.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
             })
             .addCase(fetchSubmitRebus.fulfilled, (state, action) => {
                 state.status = 'success';
-                state.rebusResult = action.payload.result;
-
-                if (action.payload.result) {
-                    state.rebusRightAnswers += 1;
-                }
+                state.rebusResult = action.payload;
             })
             .addCase(fetchSubmitRebus.rejected, (state, action) => {
                 state.status = 'failed';
@@ -327,7 +321,7 @@ const activitySlice = createSlice({
             })
             .addCase(fetchCardGame.fulfilled, (state, action) => {
                 state.status = 'success';
-                state.cardsGame = action.payload.groups;
+                state.cardsGame = action.payload;
             })
             .addCase(fetchCardGame.rejected, (state, action) => {
                 state.status = 'failed';
@@ -391,4 +385,5 @@ const activitySlice = createSlice({
     }
 })
 
+export const { clearTetrisToast } = activitySlice.actions
 export default activitySlice.reducer;

@@ -1,22 +1,24 @@
 import s from './Shop.module.scss';
 import currency from '../../assets/ico/interface/currency.svg';
 import clsx from 'clsx';
-import Background from '../UI/Background/Background';
-import Substrate from '../UI/Substrate/Substrate';
-import ProductCard from '../UI/ProductCard/ProductCard';
+
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useState, useEffect } from 'react';
 import { fetchProduct } from '../../service/features/shop/shopSlice';
 import { fetchUser } from '../../service/features/user/userSlice';
-import Loader from '../UI/Loader/Loader';
+import { showToast } from '../../utils/showToast';
+import { createOrder } from '../../service/api';
+import { getErrorMessage } from '../../utils/getErrorMessage';
 
 import Modal from '../UI/Modal/Modal';
 import ProductModal from '../UI/Modal/ProductModal/ProductModal';
 import PurchaseSuccessModal from '../UI/Modal/PurchaseSuccessModal/PurchaseSuccessModal';
-
-import { createOrder } from '../../service/api';
-import type { Product } from '../../service/features/shop/shopType';
 import ShopContent from './ShopContent';
+import Background from '../UI/Background/Background';
+import Substrate from '../UI/Substrate/Substrate';
+
+import type { Product } from '../../service/features/shop/shopType';
+
 
 function Shop() {
   const dispatch = useAppDispatch();
@@ -26,6 +28,10 @@ function Shop() {
   useEffect(() => {
     dispatch(fetchProduct());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (error) showToast(getErrorMessage(error));
+  }, [error]);
 
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
   const selectedProduct = products.find((p: Product) => p.id === selectedProductId) ?? null;
@@ -54,7 +60,7 @@ function Shop() {
       setSuccessCode(code);
       dispatch(fetchUser());
     } catch (e: unknown) {
-      console.log('ошибка генерации qr', e);
+      showToast('Ошибка генерации QR')
     } finally {
       setIsBuying(false);
     }

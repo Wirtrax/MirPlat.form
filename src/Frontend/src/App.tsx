@@ -79,7 +79,7 @@ function App() {
       <Toaster
         position='top-center'
         theme='light'
-        duration={20000}
+        duration={4000}
         expand={false}
         closeButton={false}
         toastOptions={{
