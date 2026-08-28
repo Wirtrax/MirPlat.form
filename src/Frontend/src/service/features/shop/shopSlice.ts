@@ -26,9 +26,9 @@ const productSlice = createSlice({
         state.status = 'success';
         state.products = action.payload;
       })
-      .addCase(fetchProduct.rejected, (state) => {
+      .addCase(fetchProduct.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = 'Не удалось загрузить товары';
+        state.error = action.error.message ?? null
         state.products = [];
       });
   },

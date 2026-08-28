@@ -5,7 +5,6 @@ import type {
     TetrisStatusResponse,
     QuizSubmitResponse,
     QuizStatusResponse,
-    RebusSubmitResponse,
     RebusStatusResponse,
     QuizAnswer,
     CardGameGroupsResponse,
@@ -88,7 +87,7 @@ export const getQuizResult = () => {
 
 //ребус
 export const submitRebus = (questionId: number, answer: string) => {
-    return request<RebusSubmitResponse>('/activities/it_rebus', {
+    return request<boolean>('/activities/it_rebus', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

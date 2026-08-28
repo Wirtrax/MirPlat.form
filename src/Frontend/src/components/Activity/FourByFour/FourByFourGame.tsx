@@ -17,10 +17,10 @@ const shuffleArray = (array: GameCard[]) => {
     return [...array].sort(() => Math.random() - 0.5)
 }
 const groupIcons = {
-    group_1: WhiteUser,
-    group_2: BlueUser,
-    group_3: GreenUser,
-    group_4: GreenFillUser,
+    white: WhiteUser,
+    blue: BlueUser,
+    green: GreenUser,
+    greenFill: GreenFillUser,
 }
 
 export default function FourByFourGame({ onEndGame, cards }: FourByFourGameProps) {
