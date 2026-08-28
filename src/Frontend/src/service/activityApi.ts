@@ -5,7 +5,6 @@ import type {
     TetrisStatusResponse,
     QuizSubmitResponse,
     QuizStatusResponse,
-    RebusSubmitResponse,
     RebusStatusResponse,
     QuizAnswer,
     CardGameGroupsResponse,
@@ -14,6 +13,8 @@ import type {
     FindErrorAnswer,
     FindErrorSubmitResponse,
     FindErrorCode,
+    TetrisToast,
+    FourGameStatus,
 } from './features/activity/activitySliceType';
 
 import { request } from './utils/query';
@@ -38,6 +39,14 @@ export const getTetrisStatus = () => {
     return request<TetrisStatusResponse>('/activities/tetris_status', {
         method: 'GET',
     })
+}
+
+export const getTetrisToast = () => {
+    return request<TetrisToast>('/activities/tetris_attempt_status',
+        {
+            method: 'GET',
+        }
+    )
 }
 
 //фоточек
@@ -79,7 +88,7 @@ export const getQuizResult = () => {
 
 //ребус
 export const submitRebus = (questionId: number, answer: string) => {
-    return request<RebusSubmitResponse>('/activities/it_rebus', {
+    return request<boolean>('/activities/it_rebus', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -125,6 +134,12 @@ export const submitFourGame = (count_of_guesed_group: number) => {
             body: JSON.stringify({ count_of_guesed_group })
         }
     )
+}
+
+export const getFourGameStatus = () => {
+    return request<FourGameStatus>('/activities/card_game_4x4_status', {
+        method: 'GET',
+    });
 }
 
 //найди ошибку

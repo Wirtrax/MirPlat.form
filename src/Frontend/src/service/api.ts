@@ -1,3 +1,4 @@
+import type { OrderWithItemId, PurchaseStatus } from '../types/OrderResponseType';
 import type { createOrderResponse, Product } from './features/shop/shopType';
 import type { CreateUser, User } from './features/user/userType';
 
@@ -19,7 +20,7 @@ export const login = async () => {
     },
   });
   setAuthToken(data.token);
-  return data
+  return data;
 };
 
 export const logout = () => {
@@ -64,4 +65,36 @@ export const createOrder = (id: number): Promise<createOrderResponse> => {
       Authorization: `Bearer ${getAuthToken()}`,
     },
   });
+};
+
+export const getOrderByCode = (code: string): Promise<OrderWithItemId> => {
+  return request(
+    `/orders/by-code/${code}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    },
+    'admin'
+  );
+};
+
+export const updateOrder = (
+  id: number,
+  data: { status: PurchaseStatus }
+): Promise<{
+  success: boolean;
+}> => {
+  return request(
+    `/orders/${id}/status`,
+    {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+      body: JSON.stringify(data),
+    },
+    'admin'
+  );
 };

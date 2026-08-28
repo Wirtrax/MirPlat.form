@@ -1,0 +1,44 @@
+.order__wrapper {
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+
+    padding: rem(20);
+    background-color: rgba(28, 28, 33, 1);
+}
+
+.order {
+    &__info {
+        text-align: center;
+        color: white;
+
+        &-item {
+            font-weight: 500;
+        }
+    }
+
+    &__button {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: rem(8);
+        border: none;
+
+        &--accepted {
+            background-color: #34d34e;
+
+            &:hover {
+                background-color: #10b95c;
+            }
+        }
+
+        &--rejected {
+            background-color: #f15a5a;
+
+            &:hover {
+                background-color: #ec4863;
+            }
+        }
+    }
+}

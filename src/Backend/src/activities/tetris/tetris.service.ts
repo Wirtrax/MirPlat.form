@@ -2,7 +2,6 @@ import { Injectable, NotFoundException, ForbiddenException, InternalServerErrorE
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Tetris } from 'src/entities/activities/tetris.entity';
-import { Activity  } from 'src/entities/activity.entity';
 import { Attempt, AttemptStatus, DeclineReason } from 'src/entities/attempt.entity';
 import { checkOnReply } from '../helpers/attempt.helper';
 import { isAttemptExist } from '../helpers/attempt.helper';
@@ -16,8 +15,6 @@ export class TetrisService {
     constructor (
         @InjectRepository(Tetris)
         private tetrisRepository: Repository<Tetris>,
-        @InjectRepository(Activity)
-        private activityRepository: Repository<Activity>,
         @InjectRepository(Attempt)
         private attemptRepository: Repository<Attempt>,
 
@@ -58,9 +55,11 @@ export class TetrisService {
         reward: number,
         reason: DeclineReason | null,
     }> {
-        const attempt = await this.attemptRepository.findOneBy({
-            user: { id: user_id },
-            activity: { name: this.TETRIS_NAME}
+        const attempt = await this.attemptRepository.findOne({ 
+            where: {
+                user: { id: user_id },
+                activity: { name: this.TETRIS_NAME}
+            }
         })
 
         if(!attempt) {
@@ -93,13 +92,8 @@ export class TetrisService {
         photo: Express.Multer.File,
     ): Promise<void> {
         const tetris = await this.findTetrisRefByName()
-        const activity = await this.activityRepository.findOneBy({ name: 'tetris' });
 
-        if (!activity) {
-            throw new NotFoundException('Activity "tetris" not found');
-        }
-
-        const isAlreadyExist = await isAttemptExist(user_id, activity.name, this.attemptRepository)
+        const isAlreadyExist = await isAttemptExist(user_id, tetris.name, this.attemptRepository)
 
         if(isAlreadyExist) {
             throw new ForbiddenException('Attempt is already exist')
@@ -117,7 +111,7 @@ export class TetrisService {
 
                 const attempt = this.attemptRepository.create({
                     user: { id: user_id },
-                    activity: { id: activity.id },
+                    activity: { name: tetris.name },
                     is_photo: true,
                     photo: photo_link,
                     status: AttemptStatus.WAITING,

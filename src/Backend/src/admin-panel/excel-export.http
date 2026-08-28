@@ -1,2 +1,2 @@
 ### Получить Excel файл
-GET http://localhost:3000/excel/download
+GET http://localhost:3000/admin/excel/download

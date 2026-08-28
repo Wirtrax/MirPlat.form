@@ -15,8 +15,8 @@ export class CodeFragment {
     difficulty: Difficulty;
 
     @Column({ type: 'text', array: true, default: [] })
-    codeLines: string[];
+    code_lines: string[];
 
     @Column()
-    wrongLineIndex: number;
+    wrong_line_index: number;
 }

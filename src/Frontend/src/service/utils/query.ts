@@ -15,18 +15,29 @@ export const setAuthToken = (token: string | null): void => {
 
 export const getAuthToken = (): string | null => authToken;
 
-export const request = async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
+export const request = async <T>(
+  endpoint: string,
+  options: RequestInit = {},
+  typeRoute: 'admin' | 'admin_panel' | 'api' = 'api'
+): Promise<T> => {
   const headers = new Headers(options.headers);
   if (!headers.has('Authorization') && authToken) {
     headers.set('Authorization', `Bearer ${authToken}`);
   }
 
-  const res = await fetch(`${API_URL}${endpoint}`, {
+  const res = await fetch(`${API_URL}${typeRoute}${endpoint}`, {
     // credentials: 'include',
     ...options,
     headers,
   });
 
-  if (!res.ok) throw new Error(`Ошибка: ${res.status}`)
-  return res.json() as Promise<T>
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+
+    const message = typeof errorData?.message === 'string' ? errorData.message : `Ошибка: ${res.status}`;
+
+    throw new Error(message);
+  }
+
+  return res.json() as Promise<T>;
 };

@@ -7,6 +7,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { CreateUserDto } from './userDto/createUserDto';
 import { UpdateUserDto } from './userDto/updateUserDto';
 import { ChangeBalanceDto } from './userDto/changeBalanceDto'; 
+import { ChangeRoleDto } from './userDto/changeRoleDto';
 
 @Controller('users')
 export class UsersController {
@@ -16,6 +17,18 @@ export class UsersController {
         @Get()
         getAllUsers() {
             return this.usersService.getAllUsers();
+        }
+
+        //@UseGuards(JwtGuard, RolesGuard)
+        @Get('by-item/:id') 
+        getUsersByItemId(@Param('id', ParseIntPipe) itemId: number) {
+            return this.usersService.getUsersByItemId(itemId);
+        }
+
+        //@UseGuards(JwtGuard, RolesGuard)
+        @Get(':id')
+        getUser(@Param('id', ParseIntPipe) id: number) {
+            return this.usersService.getUser(id);
         }
 
         //@UseGuards(JwtGuard, RolesGuard)
@@ -29,12 +42,6 @@ export class UsersController {
         deleteUser(@Param('id', ParseIntPipe) id: number) {
             return this.usersService.deleteUser(id);
         }
-        
-        //@UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
-        @Patch(':id')
-        updateUser(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
-            return this.usersService.updateUser(id, dto);
-        }
 
         //@UseGuards(JwtGuard, RolesGuard)
         @Patch(':id/balance')
@@ -42,9 +49,18 @@ export class UsersController {
             return this.usersService.changeBalance(id, dto.amount);
         }
 
-        //@UseGuards(JwtGuard, RolesGuard)
-        @Get(':id')
-        getUser(@Param('id', ParseIntPipe) id: number) {
-            return this.usersService.getUser(id);
+        //@UseGuards(JwtGuard, RolesGuard, SuperAdminGuard)
+        @Patch(':id/role')
+        updateUserRole(@Param('id', ParseIntPipe) id: number, @Body() dto: ChangeRoleDto) {
+            return this.usersService.changeUserRole(id, dto.isAdmin)
         }
+
+        //@UseGuards(JwtGuard, RolesGuard)
+        @Patch(':id')
+        updateUser(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateUserDto) {
+            return this.usersService.updateUser(id, dto);
+        }
+
+
+
 }

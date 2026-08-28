@@ -12,7 +12,8 @@ import { fetchRebusReward, fetchRebusStatus, fetchSubmitRebus } from '../../../s
 
 export default function ITRebusPage() {
     const dispatch = useAppDispatch()
-    const { rebusStatus, rebusRightAnswers } = useAppSelector(state => state.activity)
+    const { rebusStatus } = useAppSelector(state => state.activity)
+    const [rightAnswers, setRightAnswers] = useState(0)
 
     const [currentStep, setCurrentStep] = useState(0)
     const [isFinished, setIsFinished] = useState(false)
@@ -27,7 +28,11 @@ export default function ITRebusPage() {
             answer,
         })).unwrap()
 
-        return result.result
+        if (result) {
+            setRightAnswers(prev => prev + 1)
+        }
+
+        return result
     }
 
     const handleNextStep = () => {
@@ -35,7 +40,7 @@ export default function ITRebusPage() {
         if (currentStep < IT_REBUS.length - 1) {
             setCurrentStep(prev => prev + 1)
         } else {
-            dispatch(fetchRebusReward(rebusRightAnswers))
+            dispatch(fetchRebusReward(rightAnswers))
             setIsFinished(true)
         }
     }
@@ -43,7 +48,7 @@ export default function ITRebusPage() {
     if (rebusStatus === true) {
         return <ITRebusSuccess score={0} length={IT_REBUS.length} isAlreadyCompleted={true} />
     }
-    if (isFinished) return <ITRebusSuccess score={rebusRightAnswers * 2} length={IT_REBUS.length} isAlreadyCompleted={false} />
+    if (isFinished) return <ITRebusSuccess score={rightAnswers} length={IT_REBUS.length} isAlreadyCompleted={false} />
 
     const currentQuestion = IT_REBUS[currentStep]
 

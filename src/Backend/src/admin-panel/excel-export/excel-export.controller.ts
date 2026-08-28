@@ -10,22 +10,20 @@ export class ExcelExportController {
         private readonly downloadService: DownloadService,
     ) {}
 
-    //@UseGuards(JwtGuard, RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Get('download')
-    async downloadExcel(@Res({ passthrough: true }) res: Response): Promise<StreamableFile> {
-        try {
-            const { buffer, filename } = await this.downloadService.getExcelFile();
+    async downloadExcel(@Res({ passthrough: true }) res: Response):
+        Promise<StreamableFile> 
+    {
+        const { buffer, filename } = await this.downloadService.getExcelFile();
 
-            const encodedFilename = encodeURIComponent(filename);
+        const encodedFilename = encodeURIComponent(filename);
 
-            res.set({
-                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition': `attachment; filename*=UTF-8''${encodedFilename}`,
-            });
+        res.set({
+            'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition': `attachment; filename*=UTF-8''${encodedFilename}`,
+        });
 
-            return new StreamableFile(buffer);
-        } catch (error) {
-            throw error
-        }
+        return new StreamableFile(buffer);
     }
 }
