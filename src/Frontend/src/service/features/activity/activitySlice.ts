@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { ActivityState, FindErrorAnswer, QuizAnswer, RebusAnswer } from "./activitySliceType";
-import { getCardsGame, getCodeLines, getFindErrorStatus, getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitFindError, submitFourGame, submitRebus, submitRebusReward } from "../../activityApi";
+import { getCardsGame, getCodeLines, getFindErrorStatus, getPhotoCheckStatus, getQuizResult, getRebusStatus, getTetrisLink, getTetrisStatus, getTetrisToast, sendPhotoCheck, sendTetrisPhoto, submiteQuiz, submitFindError, submitFourGame, submitRebus, submitRebusReward } from "../../activityApi";
 
 // тетрис
 export const fetchTetrisLink = createAsyncThunk(
@@ -21,6 +21,12 @@ export const fetchTetrisStatus = createAsyncThunk(
     'activity/fetchTetrisStatus',
     async () => {
         return await getTetrisStatus()
+    }
+)
+export const fetchTetrisToast = createAsyncThunk(
+    'activity/fetchTetrisToast',
+    async () => {
+        return await getTetrisToast()
     }
 )
 
@@ -117,6 +123,10 @@ export const fetchFindErrorStatus = createAsyncThunk(
 const initialState: ActivityState = {
     tetrisLink: null,
     tetrisStatus: null,
+    isChangedTetrisToastStatus: null,
+    currentToastStatus: null,
+    rewardTetris: null,
+    reason: null,
 
     photoCheckStatus: null,
     photoCheckCompleted: null,
@@ -144,7 +154,11 @@ const initialState: ActivityState = {
 const activitySlice = createSlice({
     name: 'activity',
     initialState,
-    reducers: {},
+    reducers: {
+        clearTetrisToast: (state) => {
+            state.isChangedTetrisToastStatus = false;
+        },
+    },
     extraReducers: (builder) => {
         builder
             // получение ссылки на тетрис
@@ -186,6 +200,23 @@ const activitySlice = createSlice({
                 state.status = 'failed';
                 state.error = action.error.message ?? 'Не удалось получить статус';
             })
+            // получение инф-и о пуше тетриса
+            .addCase(fetchTetrisToast.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(fetchTetrisToast.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.isChangedTetrisToastStatus = action.payload.isChanged;
+                state.currentToastStatus = action.payload.currentStatus
+                state.rewardTetris = action.payload.reward
+                state.reason = action.payload.reason
+            })
+            .addCase(fetchTetrisToast.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message ?? 'Не удалось получить ссылку на Тетрис';
+            })
+
 
             // фоточек отправка флага
             .addCase(submitPhotoCheck.pending, (state) => {

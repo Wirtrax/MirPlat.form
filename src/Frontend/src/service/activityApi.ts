@@ -14,6 +14,7 @@ import type {
     FindErrorAnswer,
     FindErrorSubmitResponse,
     FindErrorCode,
+    TetrisToast,
 } from './features/activity/activitySliceType';
 
 import { request } from './utils/query';
@@ -38,6 +39,14 @@ export const getTetrisStatus = () => {
     return request<TetrisStatusResponse>('/activities/tetris_status', {
         method: 'GET',
     })
+}
+
+export const getTetrisToast= () => {
+    return request<TetrisToast>('/activities/tetris_attempt_status',
+        {
+            method: 'GET',
+        }
+    )
 }
 
 //фоточек
