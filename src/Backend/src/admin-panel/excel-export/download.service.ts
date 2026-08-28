@@ -7,7 +7,7 @@ import { Cron, CronExpression} from '@nestjs/schedule';
 
 @Injectable()
 export class DownloadService {
-    private readonly EXCEL_PATH = './exports/ВЫГРУЗКА_МИР.xlsx';
+    private readonly EXCEL_PATH = './exports/export.xlsx';
     private readonly EXPORTS_DIR = path.dirname(this.EXCEL_PATH);
 
     constructor(
@@ -35,7 +35,6 @@ export class DownloadService {
      */
     async getExcelFile(): Promise<{ buffer: Buffer; filename: string}> {
         try {
-            
             if (!fs.existsSync(this.EXPORTS_DIR)) {
                 
                 fs.mkdirSync(this.EXPORTS_DIR, { recursive: true });

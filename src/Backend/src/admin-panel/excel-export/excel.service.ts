@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as ExcelJS from 'exceljs';
 import * as path from 'path'
 import * as fs from 'fs'
@@ -115,7 +115,7 @@ export class ExcelService {
                 console.log('Файл считан')
                 
             } catch (error) {
-                throw error
+                throw new InternalServerErrorException('Cant open excel file')
             }
 
         } else {
