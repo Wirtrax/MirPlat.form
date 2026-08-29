@@ -14,6 +14,7 @@ import Background from '../../UI/Background/Background';
 import Button from '../../UI/Button/Button';
 
 import type { ActivityProps } from './activityLayoutType';
+import Loader from '../../UI/Loader/Loader';
 
 
 export default function ActivityLayout({
@@ -25,7 +26,7 @@ export default function ActivityLayout({
     buttonDisabled,
     onButtonClick,
 }: ActivityProps) {
-    const { error } = useAppSelector(state => state.activity)
+    const { error, status } = useAppSelector(state => state.activity)
 
     const navigate = useNavigate()
 
@@ -37,21 +38,26 @@ export default function ActivityLayout({
         navigate(ROUTES.ACTIVITIES)
     }
 
+
     return (
         <Background>
-            <section className={clsx(s['wrapper'], 'container')}>
-                <span className={s['close-icon']} onClick={handleClose}>
-                    <CloseIcon />
-                </span>
-                <h1 className={s['title']}>{title}</h1>
-                {timer}
-                {description && <p className={s['description']}>{description}</p>}
-                {children}
-                {
-                    buttonText &&
-                    <Button className={s['activity__button']} disabled={buttonDisabled} onClick={onButtonClick}>{buttonText}</Button>
-                }
-            </section>
+            {status === 'loading' ? (
+                <Loader />
+            ) : (
+                <section className={clsx(s['wrapper'], 'container')}>
+                    <span className={s['close-icon']} onClick={handleClose}>
+                        <CloseIcon />
+                    </span>
+                    <h1 className={s['title']}>{title}</h1>
+                    {timer}
+                    {description && <p className={s['description']}>{description}</p>}
+                    {children}
+                    {
+                        buttonText &&
+                        <Button className={s['activity__button']} disabled={buttonDisabled} onClick={onButtonClick}>{buttonText}</Button>
+                    }
+                </section>
+            )}
         </Background>
     )
 }

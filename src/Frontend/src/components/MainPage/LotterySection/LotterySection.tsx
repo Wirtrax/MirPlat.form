@@ -24,7 +24,7 @@ export default function LotterySection() {
           Если назвали твой номер, подойди к ведущему и покажи свой лотерейный билет. <span>Удачи!</span>
         </p>
 
-        <LotteryCountdown endDate="2026-08-09T15:00:00+03:00" />
+        <LotteryCountdown endDate="2026-09-04T15:00:00+03:00" />
       </div>
     </section>
   );

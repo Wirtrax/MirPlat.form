@@ -39,3 +39,29 @@
         }
     }
 }
+
+.habr-link {
+    width: rem(49);
+    height: rem(49);
+    border-radius: 50%;
+    background-color: var(--color-gray-70);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background-color 0.2s ease-in;
+
+    &:hover {
+        background-color: var(--color-accent);
+    }
+}
+
+.habr-icon {
+    width: rem(40);
+    height: rem(42);
+    margin-top: rem(6);
+    margin-left: rem(2);
+    display: block;
+    object-fit: contain;
+}
