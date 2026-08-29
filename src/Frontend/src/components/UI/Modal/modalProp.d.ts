@@ -17,6 +17,7 @@ export interface ProductModalProps {
   code?: string;
   isLoading?: boolean;
   errorMessage?: string;
+  received?: boolean;
 }
 export interface PurchaseSuccessContentProps {
   qrValue: string;

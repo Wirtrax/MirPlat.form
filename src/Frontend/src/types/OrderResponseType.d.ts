@@ -5,7 +5,6 @@ export interface OrderResponse {
   userPhoneNumber: string;
   userEmail: string;
   status: PurchaseStatus;
-  image: string;
 }
 
 export interface OrderWithItemId extends OrderResponse {

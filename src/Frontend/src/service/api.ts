@@ -1,4 +1,4 @@
-import type { OrderWithItemId, PurchaseStatus } from '../types/OrderResponseType';
+import type { OrderWithItemId } from '../types/OrderResponseType';
 import type { createOrderResponse, Product } from './features/shop/shopType';
 import type { CreateUser, User } from './features/user/userType';
 
@@ -58,6 +58,15 @@ export const getProducts = () => {
   });
 };
 
+export const getItemByIdItem = (id: number): Promise<Product> => {
+  return request(`/item/${id}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  });
+};
+
 export const createOrder = (id: number): Promise<createOrderResponse> => {
   return request(`/item/${id}/purchase`, {
     method: 'POST',
@@ -80,21 +89,28 @@ export const getOrderByCode = (code: string): Promise<OrderWithItemId> => {
   );
 };
 
-export const updateOrder = (
-  id: number,
-  data: { status: PurchaseStatus }
+export const cancelOrderViaCode = (
+  code: string
 ): Promise<{
   success: boolean;
 }> => {
-  return request(
-    `/orders/${id}/status`,
-    {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${getAuthToken()}`,
-      },
-      body: JSON.stringify(data),
+  return request(`/purchase/${code}/cancel`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
     },
-    'admin'
-  );
+  });
+};
+
+export const acceptOrderViaCode = (
+  code: string
+): Promise<{
+  success: boolean;
+}> => {
+  return request(`/purchase/${code}/receive`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  });
 };

@@ -55,7 +55,7 @@ function Shop() {
 
     try {
       const response = await createOrder(selectedProduct.id);
-      const code = `https://t.me/MirPlatform5152_bot/MirPlatform?startapp=handOverOrder_${response.code}`; //вывестив константу путь без параметров
+      const code = `${import.meta.env.VITE_TELEGRAM_FULL_URL_ON_BOT}?startapp=handOverOrder_${response.code}`;
       console.log(code);
       setSuccessCode(code);
       dispatch(fetchUser());

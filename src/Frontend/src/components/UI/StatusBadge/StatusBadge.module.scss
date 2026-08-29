@@ -1,0 +1,35 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(6);
+  padding: rem(4) rem(10);
+  border-radius: rem(999);
+  font-size: rem(13);
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    flex-shrink: 0;
+    width: rem(6);
+    height: rem(6);
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+}
+
+.status--pending {
+  color: var(--color-status-amber);
+  background-color: var(--color-status-amber-bg);
+}
+
+.status--received {
+  color: var(--color-status-blue);
+  background-color: var(--color-status-blue-bg);
+}
+
+.status--canceled {
+  color: var(--color-status-red);
+  background-color: var(--color-status-red-bg);
+}
