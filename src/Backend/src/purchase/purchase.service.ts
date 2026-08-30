@@ -81,7 +81,9 @@ async create(itemId: number, userId: number) {
 }
 
   async receive(code: string) {
-    const purchase = await this.purchaseRepo.findOneBy({ code });
+    const purchase = await this.purchaseRepo.findOne({
+      where: {code},
+      relations: { user: true } });
     if (!purchase) {
         throw new NotFoundException('Покупка не найдена');
     }
