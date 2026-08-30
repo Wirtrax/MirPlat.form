@@ -1,5 +1,5 @@
 import s from './Profile.module.scss';
-import avatarStyle from './AvatarModal/AvatarModal.module.scss'
+import avatarStyle from './AvatarModal/AvatarModal.module.scss';
 
 import avatar from '../../assets/avatar/avatarIcon.webp';
 import editPen from '../../assets/ico/profile/pen.svg';
@@ -61,10 +61,10 @@ export default function Profile() {
 
   const purchases: createOrderResponse[] = user.purchases || [];
 
-  const visiblePurchases = showAllPurchases ? purchases : purchases.slice(-4)
+  const visiblePurchases = showAllPurchases ? purchases : purchases.slice(-4);
 
-  const specializationLabel = options.find(option => option.value === user?.specialization)
-  const levelLabel = EXPERIENCE_LEVELS.find(level => level.value === user?.programming_level)
+  const specializationLabel = options.find((option) => option.value === user?.specialization);
+  const levelLabel = EXPERIENCE_LEVELS.find((level) => level.value === user?.programming_level);
 
   console.log(purchases);
 
@@ -119,18 +119,15 @@ export default function Profile() {
           <div className={s['profile__user-info']}>
             <div className={s['profile__user-avatar-wrapper']}>
               <picture
-                // style={{ backgroundColor: user?.profile_picture }} 
-                className={clsx(s['profile__user-avatar'],
+                // style={{ backgroundColor: user?.profile_picture }}
+                className={clsx(
+                  s['profile__user-avatar'],
                   avatarTheme !== 'default' && s[`profile__user-avatar--${avatarTheme}`]
                 )}
-                onClick={() => setIsAvatarModalOpen(true)}
-              >
+                onClick={() => setIsAvatarModalOpen(true)}>
                 <img src={avatar} alt="Аватар пользователя" />
               </picture>
-              <button
-                className={s['profile__edit-btn']}
-                onClick={() => setIsAvatarModalOpen(true)}
-              >
+              <button className={s['profile__edit-btn']} onClick={() => setIsAvatarModalOpen(true)}>
                 <img src={editPen} alt="Редактировать" />
               </button>
             </div>
@@ -146,7 +143,7 @@ export default function Profile() {
           </dl>
         </div>
 
-        <Link to={ROUTES.ACTIVITIES} >
+        <Link to={ROUTES.ACTIVITIES}>
           <Button className={s['profile__activities-btn']}>АКТИВНОСТИ</Button>
         </Link>
 
@@ -174,11 +171,7 @@ export default function Profile() {
               </div>
 
               {purchases.length > 4 && !showAllPurchases && (
-                <button
-                  type="button"
-                  className={s['profile__show-all']}
-                  onClick={() => setShowAllPurchases(true)}
-                >
+                <button type="button" className={s['profile__show-all']} onClick={() => setShowAllPurchases(true)}>
                   Посмотреть все товары
                 </button>
               )}
@@ -198,22 +191,16 @@ export default function Profile() {
             src={selectedPurchase.item?.image}
             title={selectedPurchase.item?.name}
             code={selectedPurchase.code}
+            received={selectedPurchase.status === 'received'}
           />
         </Modal>
       )}
 
-      {
-        isAvatarModalOpen && (
-          <Modal
-            className={avatarStyle['modal']}
-            onClose={() => setIsAvatarModalOpen(false)}>
-            <AvatarModal
-              currentTheme={avatarTheme}
-              onSelectTheme={handleSelectTheme}
-            />
-          </Modal>
-        )
-      }
+      {isAvatarModalOpen && (
+        <Modal className={avatarStyle['modal']} onClose={() => setIsAvatarModalOpen(false)}>
+          <AvatarModal currentTheme={avatarTheme} onSelectTheme={handleSelectTheme} />
+        </Modal>
+      )}
     </Background>
   );
 }

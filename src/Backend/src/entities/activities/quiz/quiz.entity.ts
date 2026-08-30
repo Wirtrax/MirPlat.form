@@ -9,5 +9,5 @@ export class Quiz {
     name: string;
 
     @Column()
-    reward: number;
+    reward_per_answer: number;
 }

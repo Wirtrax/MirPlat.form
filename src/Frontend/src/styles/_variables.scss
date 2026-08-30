@@ -23,6 +23,15 @@
   --color-alternative-accent: #FFB34A; // Светло-оранжевый — дополнительные акценты
   --color-accent-inactive: #ffd59b; // Бледный — акценты в пассивном состоянии
 
+  // ===== СТАТУСЫ (бейджи) =====
+  --color-status-amber: #b7791f; // Текст статуса "в ожидании"
+  --color-status-amber-bg: #fdf2e3; // Фон статуса "в ожидании"
+  --color-status-blue: #2b6cb0; // Текст статуса "получен" 
+  --color-status-blue-bg: #e8f1fd; // Фон статуса "получен" 
+  --color-status-red: #d64545; // Текст статуса "отменён"
+  --color-status-red-bg: #fdeaea; // Фон статуса "отменён"
+
+
   // ===== ОШИБКИ =====
   --color-red: #f00; // Красный — ошибки, валидация
 

@@ -3,6 +3,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import { useEffect } from 'react';
 import { useAppDispatch } from './hooks/redux';
 import { devLoginUser, fetchUser, loginUser } from './service/features/user/userSlice';
+import { Toaster } from 'sonner';
 
 import Root from './routes/Root';
 import ProtectedRoute from './routes/ProtectedRoute';
@@ -21,6 +22,7 @@ import QuizPage from './components/Activity/Quiz/QuizPage';
 import ITRebusPage from './components/Activity/ITRebus/ITRebusPage';
 import FindErrorPage from './components/Activity/FindError/FindErrorPage';
 import ErrorPage from './components/ErrorPage/ErrorPage';
+import AcceptedViaQR from './components/AcceptedViaQR/AcceptedViaQR';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,7 +40,7 @@ const router = createBrowserRouter(
         <Route path={ROUTES.QUIZ} element={<QuizPage />} />
         <Route path={ROUTES.IT_REBUS} element={<ITRebusPage />} />
         <Route path={ROUTES.FIND_ERROR} element={<FindErrorPage />} />
-
+        <Route path={`${ROUTES.HAND_OVER_ORDER}/:code`} element={<AcceptedViaQR />} />
 
         <Route path={ROUTES.HOME} element={<Root />}>
           <Route index element={<MainPage />} />
@@ -56,13 +58,26 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const tg = window.Telegram.WebApp;
+    tg?.ready();
+
+    const startParam = tg?.initDataUnsafe?.start_param as string | undefined;
+    if (!startParam) return;
+
+    if (startParam.startsWith('handOverOrder')) {
+      const code = startParam.replace('handOverOrder_', '');
+      router.navigate(`${ROUTES.HAND_OVER_ORDER}/${code}`, { replace: true });
+    }
+  }, []);
+
+  useEffect(() => {
     const initApp = async () => {
       try {
         if (import.meta.env.DEV) {
-          await dispatch(devLoginUser()).unwrap()
+          await dispatch(devLoginUser()).unwrap();
         } else {
-          await dispatch(loginUser()).unwrap()
-          await dispatch(fetchUser()).unwrap()
+          await dispatch(loginUser()).unwrap();
+          await dispatch(fetchUser()).unwrap();
         }
       } catch (error) {
         console.log(error);
@@ -72,7 +87,28 @@ function App() {
     initApp();
   }, [dispatch]);
 
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster
+        position="top-center"
+        theme="light"
+        duration={4000}
+        expand={false}
+        closeButton={false}
+        toastOptions={{
+          style: {
+            fontFamily: 'var(--font-family-base)',
+            fontSize: '14px',
+            color: 'var(--color-dark-30)',
+            borderRadius: '25px',
+            fontWeight: '400',
+            padding: '20px 22px',
+          },
+        }}
+      />
+    </>
+  );
 }
 
 export default App;

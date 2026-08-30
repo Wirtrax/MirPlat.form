@@ -3,13 +3,18 @@ import s from './ActivityLayout.module.scss';
 
 import CloseIcon from '../../../assets/icons/closeIcon.svg?react'
 
+import { useEffect } from 'react';
+import { showToast } from '../../../utils/showToast';
+import { getErrorMessage } from '../../../utils/getErrorMessage';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../hooks/redux';
+import { ROUTES } from '../../../routes/routes';
 
 import Background from '../../UI/Background/Background';
+import Button from '../../UI/Button/Button';
 
 import type { ActivityProps } from './activityLayoutType';
-import Button from '../../UI/Button/Button';
-import { ROUTES } from '../../../routes/routes';
+
 
 export default function ActivityLayout({
     title,
@@ -20,12 +25,18 @@ export default function ActivityLayout({
     buttonDisabled,
     onButtonClick,
 }: ActivityProps) {
+    const { error } = useAppSelector(state => state.activity)
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (error) showToast(getErrorMessage(error))
+    }, [error])
 
     const handleClose = () => {
         navigate(ROUTES.ACTIVITIES)
     }
+
     return (
         <Background>
             <section className={clsx(s['wrapper'], 'container')}>

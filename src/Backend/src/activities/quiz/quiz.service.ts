@@ -64,9 +64,7 @@ export class QuizService {
         }
     });
 
-    const success = correctCount === questions.length;
-
-    const reward = success? quiz.reward : 0;
+    const reward = correctCount*quiz.reward_per_answer;
 
     await this.dataSource.transaction(async manager => {
         await createAttempt(manager, userId, reward, quiz.name);

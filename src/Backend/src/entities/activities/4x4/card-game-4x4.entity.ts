@@ -10,4 +10,7 @@ export class CardGame4x4 {
 
     @Column()
     reward_per_group: number;
+
+    @Column()
+    max_reward: number;
 }

@@ -9,5 +9,11 @@ export class FindMistake {
     name: string;
 
     @Column()
-    reward_per_answer: number;
+    reward_easy: number;
+
+    @Column()
+    reward_medium: number;
+
+    @Column()
+    reward_hard: number;
 }

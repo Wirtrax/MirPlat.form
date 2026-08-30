@@ -6,28 +6,26 @@ import FourByFourSuccess from "./FourByFourSuccess"
 
 import type { GameStep } from "../gameStep"
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux"
-import { fetchCardGame, fetchSubmitFourGame } from "../../../service/features/activity/activitySlice"
+import { fetchCardGame, fetchFourGameStatus, fetchSubmitFourGame } from "../../../service/features/activity/activitySlice"
 
 export default function FourByFourPage() {
   const dispatch = useAppDispatch()
-  const { rewardFourGame, cardsGame } = useAppSelector(state => state.activity)
+  const { rewardFourGame, cardsGame, fourGameStatus } = useAppSelector(state => state.activity)
   const [step, setStep] = useState<GameStep>('rules')
 
   useEffect(() => {
+    dispatch(fetchFourGameStatus())
     dispatch(fetchCardGame())
   }, [])
 
+  const handleEndGame = async (guessedCount: number) => {
+    const count_group = guessedCount / 4
 
-  const handleEndGame = (guessedCount: number) => {
-    const count_group = (guessedCount / 4)
-    dispatch(fetchSubmitFourGame(count_group))
+    await dispatch(fetchSubmitFourGame(count_group)).unwrap()
+    setStep('result')
   }
 
-  useEffect(() => {
-    if (rewardFourGame !== null) {
-      setStep('result')
-    }
-  }, [rewardFourGame])
+  if (fourGameStatus) return <FourByFourSuccess coins={rewardFourGame} />
 
   if (step === 'rules') return <FourByFourRules onStartGame={() => setStep('game')} />
 
