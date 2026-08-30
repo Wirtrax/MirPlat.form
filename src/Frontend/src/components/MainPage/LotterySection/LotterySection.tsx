@@ -1,11 +1,13 @@
 import s from './LotterySection.module.scss';
 
 import clsx from 'clsx';
+import { memo } from 'react';
 
 import CardLottery from './CardLottery/CardLottery';
 import LotteryCountdown from './LotteryCountdown/LotteryCountdown';
 
-export default function LotterySection() {
+
+const LotterySection = memo(function LotterySection() {
   return (
     <section className={clsx(s.lottery)}>
       <div className="container">
@@ -28,4 +30,6 @@ export default function LotterySection() {
       </div>
     </section>
   );
-}
+})
+
+export default LotterySection

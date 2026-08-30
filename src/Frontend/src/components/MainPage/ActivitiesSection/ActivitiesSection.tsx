@@ -3,14 +3,14 @@ import s from './ActivitiesSection.module.scss';
 import QR_Icon from '../../../assets/ico/interface/qr.svg?react';
 
 import clsx from 'clsx';
-import { lazy, Suspense, useState } from 'react';
+import { lazy, memo, Suspense, useState } from 'react';
 
 import ActivitiesCard from './ActivitiesCard/ActivitiesCard';
 import Modal from '../../UI/Modal/Modal';
 
 const QrScanner = lazy(() => import('../../QrScanner/QrScanner'))
 
-export default function ActivitiesSection() {
+const ActivitiesSection = memo(function ActivitiesSection() {
   const [openCard, setOpenCard] = useState<string | null>(null);
   const [openScanner, setOpenScanner] = useState(false)
 
@@ -31,7 +31,7 @@ export default function ActivitiesSection() {
       {
         openScanner &&
         <Modal
-        className={s.modal}
+          className={s.modal}
           onClose={() => setOpenScanner(false)}
         >
           <Suspense fallback={<div>Загрузка сканера...</div>}>
@@ -42,4 +42,6 @@ export default function ActivitiesSection() {
 
     </section>
   );
-}
+})
+
+export default ActivitiesSection

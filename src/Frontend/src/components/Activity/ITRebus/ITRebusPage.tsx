@@ -51,6 +51,10 @@ export default function ITRebusPage() {
     if (isFinished) return <ITRebusSuccess score={rightAnswers} length={IT_REBUS.length} isAlreadyCompleted={false} />
 
     const currentQuestion = IT_REBUS[currentStep]
+    console.log({
+        currentStep,
+        currentQuestion,
+    })
 
     return (
         <ActivityLayout

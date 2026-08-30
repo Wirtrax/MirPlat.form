@@ -37,13 +37,11 @@ export default function ActivityLayout({
     const handleClose = () => {
         navigate(ROUTES.ACTIVITIES)
     }
-
+    console.log('error:', error)
 
     return (
         <Background>
-            {status === 'loading' ? (
-                <Loader />
-            ) : (
+
                 <section className={clsx(s['wrapper'], 'container')}>
                     <span className={s['close-icon']} onClick={handleClose}>
                         <CloseIcon />
@@ -57,7 +55,7 @@ export default function ActivityLayout({
                         <Button className={s['activity__button']} disabled={buttonDisabled} onClick={onButtonClick}>{buttonText}</Button>
                     }
                 </section>
-            )}
+     
         </Background>
     )
 }

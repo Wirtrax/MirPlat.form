@@ -1,36 +1,35 @@
-import { useState, useCallback, forwardRef, useImperativeHandle } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import type { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
 import s from './Slider.module.scss';
 import clsx from 'clsx';
+
+import { useState, forwardRef, useImperativeHandle, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import type { Swiper as SwiperType } from 'swiper';
 import type { sliderPropsI, sliderHandleI } from './sliderProps';
 
 const Slider = forwardRef<sliderHandleI, sliderPropsI>(function Slider(
   { children, options, slidesPerView = 1, showDots = true, onSlideChange },
   ref
 ) {
-  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [slidesCount, setSlidesCount] = useState(children.length);
+  const swiperRef = useRef<SwiperType | null>(null);
 
-  const goTo = useCallback(
-    (index: number) => {
-      swiperInstance?.slideTo(index);
-    },
-    [swiperInstance]
-  );
+  const goTo = (index: number) => {
+    swiperRef.current?.slideTo(index);
+  }
 
   useImperativeHandle(
     ref,
     () => ({
-      scrollNext: () => swiperInstance?.slideNext(),
-      scrollPrev: () => swiperInstance?.slidePrev(),
-      scrollTo: (index: number) => swiperInstance?.slideTo(index),
-      canScrollNext: () => (swiperInstance ? !swiperInstance.isEnd : false),
-      selectedIndex: () => swiperInstance?.activeIndex ?? 0,
+      scrollNext: () => swiperRef.current?.slideNext(),
+      scrollPrev: () => swiperRef.current?.slidePrev(),
+      scrollTo: (index: number) => swiperRef.current?.slideTo(index),
+      canScrollNext: () => (swiperRef.current ? !swiperRef.current.isEnd : false),
+      selectedIndex: () => swiperRef.current?.activeIndex ?? 0,
     }),
-    [swiperInstance]
+    []
   );
 
   return (
@@ -40,7 +39,7 @@ const Slider = forwardRef<sliderHandleI, sliderPropsI>(function Slider(
         slidesPerView={slidesPerView}
         className={clsx(s['embla__viewport'])}
         onSwiper={(swiper) => {
-          setSwiperInstance(swiper);
+          swiperRef.current = swiper
           setSlidesCount(swiper.slides.length);
         }}
         onSlideChange={(swiper) => {

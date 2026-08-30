@@ -41,27 +41,23 @@ function Background({ children, variant = 'default' }: backgroundT) {
       case 'default':
       default:
         return (
-          <>
-            <span className={s['background']}>
-              <CornerSquare position="top-left" />
-              <CornerSquare position="none" mainSize={20} />
-              <CornerSquare position="bottom-right" />
-            </span>
-          </>
+          <span className={s['background']}>
+            <CornerSquare position="top-left" />
+            <CornerSquare position="none" mainSize={20} />
+            <CornerSquare position="bottom-right" />
+          </span>
         );
     }
   };
 
   return (
-    <>
-      <div className={s.wrapper}>
-        <span className={s.filter}></span>
+    <div className={s.wrapper}>
+      <span className={s.filter}></span>
 
-        {renderBackground()}
+      {renderBackground()}
 
-        <div className={s.main}>{children}</div>
-      </div>
-    </>
+      <div className={s.main}>{children}</div>
+    </div>
   );
 }
 

@@ -5,7 +5,6 @@ import TG_Icon from '../../../../assets/footer/tg.svg?react';
 import Habr_Icon from '../../../../assets/footer/habr.svg?react';
 import Site_Icon from '../../../../assets/footer/site.svg?react';
 
-import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
 export default function AboutTeam() {
