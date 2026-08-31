@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import clsx from 'clsx';
 
 import { useAppDispatch } from '../../../hooks/redux';
-import { createUser } from '../../../service/features/user/userSlice';
+import { createUser, fetchUser } from '../../../service/features/user/userSlice';
 
 import Button from '../../UI/Button/Button';
 import Input from '../../UI/Input/Input';
@@ -81,7 +81,8 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
             console.log('Отправлено:', userData);
             dispatch(createUser(userData))
               .unwrap()
-              .then(() => {
+              .then(async () => {
+                await dispatch(fetchUser()).unwrap();
                 onSuccess();
               })
               .catch((err) => {
