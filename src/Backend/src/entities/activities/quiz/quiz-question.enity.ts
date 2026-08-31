@@ -11,10 +11,4 @@ export class QuizQuestion {
 
     @Column()
     answer_text: string;
-
-    @ManyToOne(() => Quiz)
-    quiz: Quiz;
-
-    @Column({nullable: true})
-    position: number;
 }
