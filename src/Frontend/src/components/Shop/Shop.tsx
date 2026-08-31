@@ -60,7 +60,7 @@ function Shop() {
       setSuccessCode(code);
       dispatch(fetchUser());
     } catch (e: unknown) {
-      showToast('Ошибка генерации QR')
+      showToast('Не удалось оформить покупку. Попробуйте ещё раз')
     } finally {
       setIsBuying(false);
     }
