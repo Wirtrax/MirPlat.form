@@ -63,6 +63,7 @@ function Shop() {
       const message = e instanceof Error ? e.message : null;
       showToast(getErrorMessage(message));
     } finally {
+      dispatch(fetchProduct())
       setIsBuying(false);
     }
   };
