@@ -7,7 +7,7 @@ import avatarImg from '../../../assets/avatar/avatarIcon.webp';
 import { useState } from 'react';
 
 import { AVATAR_THEMES, type AvatarTheme } from '../avatarThemes';
-import Slider from '../../Instructions/Slider/Slider';
+import Slider from '../../UI/Slider/Slider';
 import Button from '../../UI/Button/Button';
 
 interface AvatarModalProps {

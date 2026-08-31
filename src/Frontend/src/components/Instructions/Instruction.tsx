@@ -12,10 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
 
 import Button from '../UI/Button/Button';
-import Slider from './Slider/Slider';
+import Slider from '../UI/Slider/Slider';
 import Background from '../UI/Background/Background';
 
-import type { sliderHandleI } from './Slider/sliderProps';
+import type { sliderHandleI } from '../UI/Slider/sliderProps';
 
 type Platform = 'ios' | 'android';
 

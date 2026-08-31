@@ -15,6 +15,13 @@ export const getErrorMessage = (message: string | null) => {
         return 'Что-то пошло не так. Попробуйте ещё раз.'
     }
 
-    return errorMessages[message]
-        ?? 'Что-то пошло не так. Попробуйте ещё раз.'
+    if (errorMessages[message]) {
+        return errorMessages[message]
+    }
+
+    if (message.includes('Validation failed')) {
+        return 'Неподходящий формат фото. Загрузите изображение в формате JPG, JPEG или PNG.'
+    }
+
+    return 'Что-то пошло не так. Попробуйте ещё раз.'
 }

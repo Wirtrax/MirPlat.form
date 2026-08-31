@@ -8,11 +8,14 @@ import ITRebusSuccess from './ITRebusSuccess'
 import ProgressBar from './ProgressBar/ProgressBar'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { fetchRebusReward, fetchRebusStatus, fetchSubmitRebus } from '../../../service/features/activity/activitySlice'
+import { useActivityError } from '../../../hooks/useActivityError'
+import Background from '../../UI/Background/Background'
+import Loader from '../../UI/Loader/Loader'
 
 
 export default function ITRebusPage() {
     const dispatch = useAppDispatch()
-    const { rebusStatus } = useAppSelector(state => state.activity)
+    const { rebusStatus, error } = useAppSelector(state => state.activity)
     const [rightAnswers, setRightAnswers] = useState(0)
 
     const [currentStep, setCurrentStep] = useState(0)
@@ -21,6 +24,8 @@ export default function ITRebusPage() {
     useEffect(() => {
         dispatch(fetchRebusStatus())
     }, [])
+
+    useActivityError(error)
 
     const onCheck = async (answer: string) => {
         const result = await dispatch(fetchSubmitRebus({
@@ -44,6 +49,8 @@ export default function ITRebusPage() {
             setIsFinished(true)
         }
     }
+
+    if (rebusStatus === null) return <Background><Loader /></Background>
 
     if (rebusStatus === true) {
         return <ITRebusSuccess score={0} length={IT_REBUS.length} isAlreadyCompleted={true} />

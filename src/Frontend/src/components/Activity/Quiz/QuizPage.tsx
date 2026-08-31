@@ -13,10 +13,11 @@ import { fetchCompleteQuiz, fetchQuizResult } from '../../../service/features/ac
 import type { QuizAnswer } from '../../../service/features/activity/activitySliceType';
 import Background from '../../UI/Background/Background';
 import Loader from '../../UI/Loader/Loader';
+import { useActivityError } from '../../../hooks/useActivityError';
 
 export default function QuizPage() {
     const dispatch = useAppDispatch()
-    const { quizStatus, quizReward, status } = useAppSelector(state => state.activity)
+    const { quizStatus, quizReward, error } = useAppSelector(state => state.activity)
 
     const [currentStep, setCurrentStep] = useState(0);
     const [userAnswers, setUserAnswers] = useState<QuizAnswer[]>([]);
@@ -26,6 +27,8 @@ export default function QuizPage() {
     useEffect(() => {
         dispatch(fetchQuizResult())
     }, [])
+
+    useActivityError(error)
 
     const handleNextStep = (answer: string) => {
         const quizAnswer: QuizAnswer = {
@@ -43,7 +46,7 @@ export default function QuizPage() {
         }
     }
 
-    if (status === 'loading' && quizStatus === null) return <Background><Loader /></Background>
+    if (quizStatus === null) return <Background><Loader /></Background>
 
     if (quizStatus === true && quizReward !== null && quizReward > 0) {
         return <QuizSuccess success />;

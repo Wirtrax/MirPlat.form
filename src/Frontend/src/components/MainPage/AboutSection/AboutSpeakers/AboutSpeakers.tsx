@@ -2,7 +2,7 @@ import s from './AboutSpeakers.module.scss';
 
 import { speakersMock } from '../../../../mock/speakers';
 
-import Slider from '../../../Instructions/Slider/Slider';
+import Slider from '../../../UI/Slider/Slider';
 
 export default function AboutSpeakers() {
   return (

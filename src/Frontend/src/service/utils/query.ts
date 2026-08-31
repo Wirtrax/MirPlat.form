@@ -39,5 +39,7 @@ export const request = async <T>(
     throw new Error(message);
   }
 
-  return res.json() as Promise<T>;
+  const text = await res.text();
+
+  return text ? JSON.parse(text) : null as T;
 };

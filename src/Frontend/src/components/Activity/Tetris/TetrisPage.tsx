@@ -5,9 +5,13 @@ import Tetris from './Tetris';
 import TetrisSuccess from './TetrisSuccess';
 import { fetchTetrisStatus, submitTetrisPhoto } from '../../../service/features/activity/activitySlice';
 
+import Background from '../../UI/Background/Background';
+import Loader from '../../UI/Loader/Loader';
+import { useActivityError } from '../../../hooks/useActivityError';
+
 
 export default function TetrisPage() {
-    const { tetrisStatus } = useAppSelector(state => state.activity)
+    const { tetrisStatus, error } = useAppSelector(state => state.activity)
     const dispatch = useAppDispatch()
 
     const [isJustSubmitted, setIsJustSubmitted] = useState(false);
@@ -16,10 +20,15 @@ export default function TetrisPage() {
         dispatch(fetchTetrisStatus())
     }, [])
 
+    useActivityError(error)
+
     const handleSubmit = async (file: File) => {
         await dispatch(submitTetrisPhoto(file)).unwrap()
         setIsJustSubmitted(true)
     }
+
+    if (tetrisStatus === null) return <Background><Loader /></Background>
+
 
     if (tetrisStatus) {
         return <TetrisSuccess hasSubmittedPhoto={true} />;

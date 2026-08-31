@@ -3,7 +3,8 @@ import s from './Footer.module.scss';
 import footerLogo from '../../assets/interface/plat.formFooter.webp';
 import VK_Icon from '../../assets/footer/vk.svg?react';
 import TG_Icon from '../../assets/footer/tg.svg?react';
-import Habr_Icon from '../../assets/footer/habr.svg?react';
+// import Habr from '../../assets/footer/habr.svg?react';
+import Habr_Icon from '../../assets/footer/habr.png';
 
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
@@ -37,9 +38,11 @@ export default function Footer() {
 
         <a href={import.meta.env.VITE_HABR_URL}
           target="_blank"
+          className={s['habr-link']}
           rel="noreferrer">
-          <Habr_Icon />
+          <img src={Habr_Icon} alt="Habr" className={s['habr-icon']} />
         </a>
+
       </div>
     </div>
   );

@@ -1,12 +1,14 @@
 import s from './WelcomeSection.module.scss';
 
 import clsx from 'clsx';
+import { memo } from 'react';
 
 import avatarIcon from '../../../assets/avatar/avatarIcon.webp';
 
 import BackgroundMain from './BackgroundMain';
 
-export default function WelcomeSection() {
+
+const WelcomeSection = memo(function WelcomeSection() {
   return (
     <section className={s.section}>
       <div className={clsx(s.wrapper, 'container')}>
@@ -27,4 +29,6 @@ export default function WelcomeSection() {
       <BackgroundMain />
     </section>
   );
-}
+})
+
+export default WelcomeSection
