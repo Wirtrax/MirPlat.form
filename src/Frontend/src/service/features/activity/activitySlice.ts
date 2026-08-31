@@ -146,6 +146,7 @@ const initialState: ActivityState = {
     cardsGame: null,
     rewardFourGame: null,
     fourGameStatus: null,
+    fourGameStatusReward: null,
 
     codeLines: null,
     correctAnswers: null,
@@ -355,6 +356,7 @@ const activitySlice = createSlice({
             .addCase(fetchFourGameStatus.fulfilled, (state, action) => {
                 state.status = 'success';
                 state.fourGameStatus = action.payload.result;
+                state.fourGameStatusReward = action.payload.reward;
             })
             .addCase(fetchFourGameStatus.rejected, (state, action) => {
                 state.status = 'failed';
