@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { PurchaseModule } from './purchase/purchase.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -26,6 +27,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       autoLoadEntities: true,
       logging:['query','error'],
       synchronize: true, // TODO: Remove this before release to production
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'media'),
+      serveRoot: '/media'
     }),
     UserModule,
     ItemModule,
