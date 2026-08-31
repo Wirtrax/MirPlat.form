@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { Item } from 'src/entities/item.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -18,6 +18,10 @@ export class ItemService {
 
   findAll(): Promise<Item[]> {
     return this.itemRepo.find();
+  }
+
+  findAllPurchasable(): Promise<Item[]>{
+    return this.itemRepo.findBy({is_active: true, quantity: MoreThan(0)})
   }
 
   findOne(id: number) {

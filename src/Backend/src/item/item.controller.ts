@@ -30,7 +30,7 @@ export class ItemController {
 
   @Get()
   findAll() {
-    return this.itemService.findAll();
+    return this.itemService.findAllPurchasable();
   }
 
   @Get(':id')
