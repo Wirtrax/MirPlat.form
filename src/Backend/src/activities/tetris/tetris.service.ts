@@ -7,6 +7,7 @@ import { checkOnReply } from '../helpers/attempt.helper';
 import { isAttemptExist } from '../helpers/attempt.helper';
 import { MediaService } from 'src/media/media.service';
 import { DataSource } from 'typeorm/browser';
+import { Activity } from 'src/entities/activity.entity';
 
 @Injectable()
 export class TetrisService {
@@ -104,9 +105,21 @@ export class TetrisService {
             throw new ForbiddenException('Attempt is already exist')
         }
 
+        let photo_link: string | null = null;
+
         try {
             await this.dataSource.transaction(async manager => {
-                let photo_link: string;
+                
+                const tetris = await manager.findOne(
+                    Activity, 
+                    { where:
+                        { name: this.TETRIS_NAME },
+                    },
+                )
+
+                if(!tetris) {
+                    throw new NotFoundException(`Активность "${this.TETRIS_NAME}" не найдена`);
+                }
 
                 try{
                     photo_link = await this.mediaService.saveFile(photo)
@@ -116,7 +129,7 @@ export class TetrisService {
 
                 const attempt = this.attemptRepository.create({
                     user: { id: user_id },
-                    activity: { name: tetris.name },
+                    activity: { id: tetris.id },
                     is_photo: true,
                     photo: photo_link,
                     status: AttemptStatus.WAITING,
@@ -127,6 +140,9 @@ export class TetrisService {
                 await this.attemptRepository.save(attempt);
             })                      
         } catch(error) {
+            if(photo_link) {
+                await this.mediaService.deleteFile(photo_link)
+            }
             throw new InternalServerErrorException('Error during creating attempt')
         }
     }

@@ -75,7 +75,11 @@ export class TetrisController {
             .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY })) 
             file: Express.Multer.File,
         @Req() req: Request,
+        //@Query('userId') user_id: string, // УДАЛИТЬ
         ) {
+        // const user_id_num = parseInt(user_id, 10) //УДАЛИТЬ 
+        // const userId = user_id_num; // УДАЛИТЬ
+
         const userId = req['userId'];
 
         if (!userId) {
@@ -90,7 +94,8 @@ export class TetrisController {
             await this.tetrisService.savePhotoAndCreateAttempt(userId, file)
         } catch(error) {
             if (error instanceof NotFoundException ||
-                error instanceof ForbiddenException
+                error instanceof ForbiddenException ||
+                error instanceof InternalServerErrorException
             ) {
                 throw error;
             }
