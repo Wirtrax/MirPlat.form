@@ -7,13 +7,15 @@ import { Repository } from 'typeorm';
 import { UpdateItemDto } from './itemDto/updateItemDto';
 import { CreateItemDto } from './itemDto/createItemDto';
 import { ILike } from 'typeorm';
+import { MediaService } from 'src/media/media.service';
 
 @Injectable()
 export class ItemsService {
     constructor(
         @InjectRepository(Item)
         private readonly itemsRepo : Repository<Item>,
-        private readonly configService: ConfigService
+        private readonly configService: ConfigService,
+        private readonly mediaService: MediaService
     ) {}
 
     async getAllItems(): Promise<Item[]> {
@@ -30,8 +32,13 @@ export class ItemsService {
         return this.updateItem(id, {is_active: status});
     }
 
-    async addItem(createItemDto: CreateItemDto): Promise<CreateItemDto> {
-        return this.itemsRepo.save(createItemDto);
+    async addItem(createItemDto: CreateItemDto, image: Express.Multer.File): Promise<Item> {
+        const fileName = await this.mediaService.saveFile(image);
+        const item = this.itemsRepo.create({
+            ...createItemDto,
+            image: fileName
+        });
+        return this.itemsRepo.save(item);
     }
 
     async deleteItem(id: number) {
