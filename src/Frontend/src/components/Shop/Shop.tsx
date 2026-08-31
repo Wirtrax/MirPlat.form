@@ -60,7 +60,8 @@ function Shop() {
       setSuccessCode(code);
       dispatch(fetchUser());
     } catch (e: unknown) {
-      showToast('Не удалось оформить покупку. Попробуйте ещё раз')
+      const message = e instanceof Error ? e.message : null;
+      showToast(getErrorMessage(message));
     } finally {
       setIsBuying(false);
     }

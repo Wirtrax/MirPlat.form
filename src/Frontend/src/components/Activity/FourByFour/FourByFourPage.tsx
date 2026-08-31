@@ -13,7 +13,7 @@ import Loader from "../../UI/Loader/Loader"
 
 export default function FourByFourPage() {
   const dispatch = useAppDispatch()
-  const { rewardFourGame, cardsGame, fourGameStatus, error } = useAppSelector(state => state.activity)
+  const { rewardFourGame, cardsGame, fourGameStatus, fourGameStatusReward, error } = useAppSelector(state => state.activity)
   const [step, setStep] = useState<GameStep>('rules')
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function FourByFourPage() {
 
   if (fourGameStatus === null || cardsGame === null) return <Background><Loader /></Background>
 
-  if (fourGameStatus) return <FourByFourSuccess coins={rewardFourGame} />
+  if (fourGameStatus) return <FourByFourSuccess coins={fourGameStatusReward} />
 
   if (step === 'rules') return <FourByFourRules onStartGame={() => setStep('game')} />
 
