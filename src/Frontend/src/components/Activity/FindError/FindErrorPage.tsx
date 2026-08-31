@@ -9,9 +9,12 @@ import FindErrorStep from "./FindErrorStep"
 import FindErrorSuccess from "./FindErrorSuccess"
 
 import type { FindErrorAnswer } from "../../../service/features/activity/activitySliceType"
+import { useActivityError } from "../../../hooks/useActivityError"
+import Background from "../../UI/Background/Background"
+import Loader from "../../UI/Loader/Loader"
 
 export default function FindErrorPage() {
-    const { findErrorStatus, correctAnswers, rewardFindError } = useAppSelector(state => state.activity);
+    const { findErrorStatus, correctAnswers, rewardFindError, error, codeLines } = useAppSelector(state => state.activity);
     const dispatch = useAppDispatch()
 
     const [step, setStep] = useState<GameStep>('rules')
@@ -21,6 +24,8 @@ export default function FindErrorPage() {
         dispatch(fetchGetCodeLines())
     }, [dispatch])
 
+    useActivityError(error)
+
     const handleEndGame = async (answers: FindErrorAnswer[]) => {
         const result = await dispatch(fetchSubmitFindError(answers))
 
@@ -28,6 +33,8 @@ export default function FindErrorPage() {
             setStep('result')
         }
     }
+
+    if (findErrorStatus === null || codeLines === null) return <Background><Loader /></Background>
 
     if (findErrorStatus) return <FindErrorSuccess status={true} />
 

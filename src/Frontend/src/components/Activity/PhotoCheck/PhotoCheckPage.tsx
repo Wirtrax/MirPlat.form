@@ -8,15 +8,18 @@ import PhotoCheck from "./PhotoCheck";
 
 import Loader from "../../UI/Loader/Loader";
 import Background from "../../UI/Background/Background";
+import { useActivityError } from "../../../hooks/useActivityError";
 
 
 export default function PhotoCheckPage() {
     const dispatch = useAppDispatch()
-    const { photoCheckCompleted } = useAppSelector(state => state.activity)
+    const { photoCheckCompleted, error } = useAppSelector(state => state.activity)
 
     useEffect(() => {
         dispatch(fetchPhotoCheckStatus())
     }, [dispatch])
+
+    useActivityError(error)
 
     const [isJustSubmitted, setIsJustSubmitted] = useState(false)
 
