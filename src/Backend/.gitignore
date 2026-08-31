@@ -1,7 +1,8 @@
 /dist
 /node_modules
 /exports
-
+/media/*
+!/media/.gitkeep
 src/.http
 *.log
 .env
