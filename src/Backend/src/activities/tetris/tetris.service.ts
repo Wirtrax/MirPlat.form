@@ -63,7 +63,12 @@ export class TetrisService {
         })
 
         if(!attempt) {
-            throw new NotFoundException(`Tetris attempt for user ${user_id} does not exist`)
+            return {
+                isChanged: false,
+                currentStatus: AttemptStatus.WAITING,
+                reward: 0,
+                reason: null,
+            }
         }
 
         if(attempt.status === AttemptStatus.WAITING) {

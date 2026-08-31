@@ -28,7 +28,7 @@ export class CardGame4x4Controller {
     @JWTAuth()
     @Get('card_game_4x4_status')
     async checkAttempt(@Req() request) {
-        return this.cardGame4x4Service.checkOnReplyCardGame4x4(request['userId'])
+        return this.cardGame4x4Service.checkOnReplyCardGame(request['userId'])
     }
 
     @JWTAuth()
