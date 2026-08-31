@@ -31,49 +31,55 @@ export class QuizService {
 
     async getQuestionText(quizId: number): Promise<QuizQuestion[]> {
         return await this.quizQuestionRepo.find({
-            where: { quiz: { id: quizId }},
+            where: {},
             select: {id: true, question_text: true},
             order: {id: 'ASC'}
         });
     }
     async checkAnswersAndSendReward(userId: number, answers: {questionId: number, answer: string}[]): Promise<{ reward: number }> {
 
-    const quiz = await this.quizRepo.find().then(q => q[0])
+        const quiz = await this.quizRepo.find().then(q => q[0])
 
-    if (!quiz) {
-        throw new NotFoundException('Квиз не найден');
-    }
-
-    const already = await this.attemptRepo.existsBy({
-        user: { id: userId },
-        activity: { name: quiz.name },
-    });
-    if (already) throw new ForbiddenException('Активность уже пройдена');
-
-    const questions = await this.quizQuestionRepo.find({
-        where: { quiz: { id: quiz.id } },
-        order: { id: 'ASC' },
-    });
-
-    let correctCount = 0;
-
-    questions.forEach((question) => {
-        const userAnswer = answers.find(a => a.questionId === question.id)
-        if (userAnswer && this.checkAnswer(question, userAnswer.answer)) {
-            correctCount++;
+        if (!quiz) {
+            throw new NotFoundException('Квиз не найден');
         }
-    });
 
-    const reward = correctCount*quiz.reward_per_answer;
+        const already = await this.attemptRepo.existsBy({
+            user: { id: userId },
+            activity: { name: quiz.name },
+        });
 
-    await this.dataSource.transaction(async manager => {
-        await createAttempt(manager, userId, reward, quiz.name);
+        if (already) {
+            throw new ForbiddenException('Активность уже пройдена');
+        }    
 
-        if (reward>0)
-            await manager.increment(User, { id: userId }, 'balance', reward);
-    });
+        const questions = await this.quizQuestionRepo.find({
+            where: {},
+            order: { id: 'ASC' },
+        });
 
-    return { reward: reward };
+        if(!questions) {
+            throw new NotFoundException('Вопросы квиза не найдены')
+        }
+
+        let correctCount = 0;
+
+        questions.forEach((question) => {
+            const userAnswer = answers.find(a => a.questionId === question.id)
+            if (userAnswer && this.checkAnswer(question, userAnswer.answer)) {
+                correctCount++;
+            }
+        });
+
+        const reward = correctCount*quiz.reward_per_answer;
+
+        await this.dataSource.transaction(async manager => {
+            await createAttempt(manager, userId, reward, quiz.name);
+            if (reward>0)
+                await manager.increment(User, { id: userId }, 'balance', reward);
+        });
+
+        return { reward: reward };
     }
 
     checkAnswer(question: QuizQuestion, userAnswer: string): boolean {
