@@ -14,8 +14,8 @@ import { EXPERIENCE_LEVELS } from '../UI/RadioList/RadioList';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
-import { useState } from 'react';
-import { useAppSelector } from '../../hooks/redux';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { ROUTES } from '../../routes/routes';
 
 import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard';
@@ -31,12 +31,18 @@ import type { ProfileInfoCardProps } from './profileType';
 import type { createOrderResponse } from '../../service/features/shop/shopType';
 import type { AvatarTheme } from './avatarThemes';
 import AvatarModal from './AvatarModal/AvatarModal';
+import { fetchUser } from '../../service/features/user/userSlice';
 
 export default function Profile() {
   console.log('Рендер компонента Profile');
 
+  const dispatch = useAppDispatch()
   const { user, status } = useAppSelector((state) => state.user);
   const [selectedPurchase, setSelectedPurchase] = useState<createOrderResponse | null>(null);
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   const [avatarTheme, setAvatarTheme] = useState<AvatarTheme>(() => {
     return (localStorage.getItem('user_avatar_theme') as AvatarTheme) || 'default';
@@ -52,9 +58,8 @@ export default function Profile() {
     setIsAvatarModalOpen(false);
   };
 
-  if (status === 'loading' || status === 'idle') {
-    return <Loader />;
-  }
+  if (!user && (status === 'loading' || status === 'idle')) return <Background><Loader /></Background>
+
   if (!user) {
     return <div>Данные не найдены</div>;
   }
