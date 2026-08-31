@@ -7,9 +7,11 @@ import { ItemsService } from './items.service';
 import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
 import { ConfigModule } from '@nestjs/config/dist/config.module';
 import { ConfigService } from '@nestjs/config/dist/config.service';
+import { MediaModule } from 'src/media/media.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Item]),
+  MediaModule,
   ConfigModule,
     ServeStaticModule.forRootAsync({
       imports: [ConfigModule],

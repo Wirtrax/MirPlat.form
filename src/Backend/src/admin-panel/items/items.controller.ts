@@ -1,5 +1,6 @@
-import { Controller, Patch, Query, Get, Param, ParseIntPipe, Body, Post, Delete, UseGuards} from '@nestjs/common';
+import { Controller, Patch, UploadedFile, ParseFilePipeBuilder,HttpStatus, Query, Get, Param, ParseIntPipe, Body, Post, Delete, UseGuards, UseInterceptors} from '@nestjs/common';
 import { ItemsService } from './items.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { UpdateItemDto } from './itemDto/updateItemDto';
@@ -40,8 +41,17 @@ export class ItemsController {
 
     //@UseGuards(JwtGuard, RolesGuard)
     @Post()
-    addItem(@Body()createItemDto: CreateItemDto){
-        return this.itemsService.addItem(createItemDto);
+    @UseInterceptors(FileInterceptor('image'))
+    addItem(
+        @UploadedFile(
+            new ParseFilePipeBuilder()
+                .addFileTypeValidator({ fileType: 'jpeg' })
+                .addMaxSizeValidator({ maxSize: 5 * 1024 * 1024 })
+                .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY })
+        ) image: Express.Multer.File,
+        @Body() createItemDto: CreateItemDto,
+    ) {
+        return this.itemsService.addItem(createItemDto, image);
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
