@@ -11,7 +11,6 @@ import { MediaService } from 'src/media/media.service';
     imports: [
         TypeOrmModule.forFeature([
             Tetris,
-            Activity,
             Attempt, 
         ]),
     ],

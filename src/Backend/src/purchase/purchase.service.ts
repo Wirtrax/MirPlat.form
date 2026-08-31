@@ -1,6 +1,6 @@
 import { ForbiddenException, HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, DataSource } from 'typeorm';
+import { InjectRepository, InjectDataSource } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Purchase, PurchaseStatus } from 'src/entities/purchase.entity';
 import { Item } from 'src/entities/item.entity';
@@ -14,41 +14,39 @@ export class PurchaseService {
     @InjectRepository(Item)
     private readonly itemRepo: Repository<Item>,
     @InjectRepository(Purchase)
-    private readonly purchaseRepo: Repository<Purchase>
+    private readonly purchaseRepo: Repository<Purchase>,
+    @InjectDataSource() 
+    private readonly dataSource: DataSource
   ) {}
 
-  async create(itemId: number, userId: number) {
+async create(itemId: number, userId: number) {
     const user = await this.userRepo.findOneBy({ id: userId });
-    if (user === null) {
-      throw new NotFoundException('User not found');
-    }
+    if (!user) throw new NotFoundException('Пользователь не найден');
 
     const item = await this.itemRepo.findOneBy({ id: itemId });
-    if (item === null) {
-      throw new NotFoundException('Item not found');
-    }
+    if (!item) throw new NotFoundException('Товар не найден');
 
     if (!item.is_active) {
-      throw new ForbiddenException('This item is not for sale');
+        throw new ForbiddenException('Извините, данный товар недоступен для продажи');
     }
 
     if (item.quantity <= 0) {
-      throw new ForbiddenException('Sorry, this item is sold out');
+        throw new ForbiddenException('Извините, данный товар уже раскуплен');
     }
 
     if (user.balance < item.price) {
-      throw new HttpException('The user has insufficient funds.', HttpStatus.PAYMENT_REQUIRED);
+        throw new HttpException('У Вас недостаточно средств для покупки', HttpStatus.PAYMENT_REQUIRED);
     }
 
     const code = randomBytes(8).toString('hex');
-    const purchase = this.purchaseRepo.create({ item, user, code });
 
-    user.balance -= item.price;
-    item.quantity -= 1;
-    this.userRepo.save(user);
-    this.itemRepo.save(item);
-    return this.purchaseRepo.save(purchase);
-  }
+    return await this.dataSource.transaction(async manager => {
+        await manager.decrement(User, { id: userId }, 'balance', item.price);
+        await manager.decrement(Item, { id: itemId }, 'quantity', 1);
+        const purchase = manager.create(Purchase, { item, user, code });
+        return await manager.save(purchase);
+    });
+}
 
   findAll() {
     return this.purchaseRepo.find();
@@ -59,41 +57,43 @@ export class PurchaseService {
   }
 
   async cancel(code: string) {
-    const purchase = await this.purchaseRepo.findOne({ where: { code }, relations: { item: true, user: true } });
-    if (purchase == null) {
-      throw new NotFoundException('Purchase not found');
+    const purchase = await this.purchaseRepo.findOne({
+        where: { code },
+        relations: { item: true, user: true },
+    });
+    if (!purchase) {
+        throw new NotFoundException('Покупка не найдена');
     }
-    if (purchase.status != PurchaseStatus.WAITING) {
-      throw new ForbiddenException('Purchase already received or cancelled');
+    if (purchase.status !== PurchaseStatus.WAITING) {
+        throw new ForbiddenException('Покупка уже завершена или отменена');
     }
 
-    const user = purchase.user;
-    const item = purchase.item;
+    if (!purchase.user.is_admin) {
+        throw new ForbiddenException('Вы не являетесь администратором');
+    }
 
-    purchase.status = PurchaseStatus.CANCELED;
-    user.balance += item.price;
-    item.quantity += 1;
-    this.itemRepo.save(item).catch((err) => {
-      throw new InternalServerErrorException(err);
+    return await this.dataSource.transaction(async manager => {
+      await manager.increment(User, { id: purchase.user.id }, 'balance', purchase.item.price);
+      await manager.increment(Item, { id: purchase.item.id }, 'quantity', 1);
+      await manager.update(Purchase, { code }, { status: PurchaseStatus.CANCELED });
+      return { success: true };
     });
-    this.userRepo.save(user).catch((err) => {
-      throw new InternalServerErrorException(err);
-    });
-    return this.purchaseRepo.save(purchase).catch((err) => {
-      throw new InternalServerErrorException(err);
-    });
-  }
+}
 
   async receive(code: string) {
-    const purchase = await this.purchaseRepo.findOneBy({ code });
-    if (purchase == null) {
-      throw new NotFoundException('Purchase not found');
+    const purchase = await this.purchaseRepo.findOne({
+      where: {code},
+      relations: { user: true } });
+    if (!purchase) {
+        throw new NotFoundException('Покупка не найдена');
     }
-    if (purchase.status != PurchaseStatus.WAITING) {
-      throw new ForbiddenException('Purchase already received or cancelled');
+    if (purchase.status !== PurchaseStatus.WAITING) {
+        throw new ForbiddenException('Покупка уже получена или отменена');
     }
-
-    purchase.status = PurchaseStatus.RECEIVED;
-    return this.purchaseRepo.save(purchase);
-  }
+    if (!purchase.user.is_admin) {
+      throw new ForbiddenException('Вы не являетесь администратором');
+    }
+    await this.purchaseRepo.update({ code }, { status: PurchaseStatus.RECEIVED });
+    return { success: true };
+}
 }

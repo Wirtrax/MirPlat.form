@@ -1,4 +1,4 @@
-import { Body, Controller, Injectable, Post, Get, Req, BadRequestException, NotFoundException, ForbiddenException, InternalServerErrorException } from "@nestjs/common";
+import { Body, Query, Controller, Injectable, Post, Get, Req, BadRequestException, NotFoundException, ForbiddenException, InternalServerErrorException } from "@nestjs/common";
 import { JWTAuth } from "src/auth/jwt.decorator";
 import { CardGame4x4Service } from "./card-game-4x4.service";
 import { CardGameResultDto } from "./dto/card-game-result.dto";
@@ -26,7 +26,7 @@ export class CardGame4x4Controller {
     }
 
     @JWTAuth()
-    @Post('card_game_4x4_status')
+    @Get('card_game_4x4_status')
     async checkAttempt(@Req() request) {
         return this.cardGame4x4Service.checkOnReplyCardGame4x4(request['userId'])
     }
@@ -36,16 +36,16 @@ export class CardGame4x4Controller {
     async checkAnswers(
         @Body() cardGameResultDto: CardGameResultDto,
         @Req() request,
+        //@Query('userId') user_id: string, // УДАЛИТЬ
     ) {
+        //const user_id_num = parseInt(user_id, 10) //УДАЛИТЬ 
+        //const userId = user_id_num; // УДАЛИТЬ
+
         const userId = request['userId'];
         const count_of_guesed_group = cardGameResultDto.count_of_guesed_group;
 
         if (typeof userId !== 'number' || isNaN(userId)) {
             throw new BadRequestException('Invalid user ID');
-        }
-
-        if(count_of_guesed_group < 0) {
-            throw new BadRequestException('Invalid count_of_guessed_group')
         }
 
         try {
@@ -57,11 +57,11 @@ export class CardGame4x4Controller {
         } catch(error) {
             if (error instanceof NotFoundException ||
                 error instanceof ForbiddenException ||
-                error instanceof BadRequestException
+                error instanceof BadRequestException ||
+                error instanceof InternalServerErrorException
             ) {
                 throw error;
-            }
-
+            } 
             throw new InternalServerErrorException('Error during sending reward')
         }
     }

@@ -19,7 +19,6 @@ import Substrate from '../UI/Substrate/Substrate';
 
 import type { Product } from '../../service/features/shop/shopType';
 
-
 function Shop() {
   const dispatch = useAppDispatch();
   const { products, status, error } = useAppSelector((state) => state.product);
@@ -56,7 +55,8 @@ function Shop() {
 
     try {
       const response = await createOrder(selectedProduct.id);
-      const code = response?.code;
+      const code = `${import.meta.env.VITE_TELEGRAM_FULL_URL_ON_BOT}?startapp=handOverOrder_${response.code}`;
+      console.log(code);
       setSuccessCode(code);
       dispatch(fetchUser());
     } catch (e: unknown) {
@@ -76,12 +76,7 @@ function Shop() {
           <img src={currency} alt="currency" />
         </Substrate>
 
-        <ShopContent
-          status={status}
-          error={error}
-          products={products}
-          handleOpenProduct={handleOpenProduct}
-        />
+        <ShopContent status={status} error={error} products={products} handleOpenProduct={handleOpenProduct} />
       </div>
 
       {selectedProduct && (
