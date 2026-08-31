@@ -56,11 +56,18 @@ async create(itemId: number, userId: number) {
     return this.purchaseRepo.findOneBy({ code });
   }
 
-  async cancel(code: string) {
+  async cancel(code: string, adminId: number) {
     const purchase = await this.purchaseRepo.findOne({
         where: { code },
         relations: { item: true, user: true },
     });
+
+    const admin = await this.userRepo.findOneBy({ id: adminId })
+
+    if (!admin) {
+      throw new NotFoundException('Неизвестный администратор');
+    }
+
     if (!purchase) {
         throw new NotFoundException('Покупка не найдена');
     }
@@ -68,7 +75,7 @@ async create(itemId: number, userId: number) {
         throw new ForbiddenException('Покупка уже завершена или отменена');
     }
 
-    if (!purchase.user.is_admin) {
+    if (!admin.is_admin) {
         throw new ForbiddenException('Вы не являетесь администратором');
     }
 
@@ -80,20 +87,27 @@ async create(itemId: number, userId: number) {
     });
 }
 
-  async receive(code: string) {
+  async receive(code: string, adminId: number) {
     const purchase = await this.purchaseRepo.findOne({
       where: {code},
-      relations: { user: true } });
+      relations: { user: true } 
+    });
+
+    const admin = await this.userRepo.findOneBy({ id: adminId });
+    if (!admin) {
+      throw new NotFoundException('Неизвестный администратор');
+    }
+    
     if (!purchase) {
         throw new NotFoundException('Покупка не найдена');
     }
     if (purchase.status !== PurchaseStatus.WAITING) {
         throw new ForbiddenException('Покупка уже получена или отменена');
     }
-    if (!purchase.user.is_admin) {
+    if (!admin.is_admin) {
       throw new ForbiddenException('Вы не являетесь администратором');
     }
     await this.purchaseRepo.update({ code }, { status: PurchaseStatus.RECEIVED });
     return { success: true };
-}
+  }
 }

@@ -22,16 +22,16 @@ export class PurchaseController {
   @Post(':code/receive')
   @ApiNotFoundResponse({description:"Purchase not found"})
   @ApiForbiddenResponse({description:"Purchase already received or canceled"})
-  receive(@Param('code') code: string) {
-    return this.purchaseService.receive(code);
+  receive(@Req() request, @Param('code') code: string) {
+    return this.purchaseService.receive(code, request['userId']);
   }
 
   @Post(':code/cancel')
   @JWTAuth()
   @ApiNotFoundResponse({description:"Purchase not found"})
   @ApiForbiddenResponse({description:"Purchase already received or canceled"})
-  update(@Param('code') code: string) {
-    return this.purchaseService.cancel(code);
+  update(@Req() request, @Param('code') code: string) {
+    return this.purchaseService.cancel(code, request['userId']);
   }
 
 }
