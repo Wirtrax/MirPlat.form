@@ -82,7 +82,33 @@ export class CardGame4x4Service {
         }
     }
 
-    async checkOnReplyCardGame4x4(user_id: number): Promise<{ result: boolean }> {
-        return checkOnReply(user_id, this.cardGame4x4Repo, this.attemptRepo)
+
+    async checkOnReplyCardGame(
+    userId: number,
+    ): Promise<{ 
+        result: boolean,
+        reward: number
+    }> {
+        const activity = await this.cardGame4x4Repo.find().then(c => c[0])
+        if (!activity) {
+            throw new NotFoundException(`Активность не найдена`);
+        }
+
+        const attempt = await this.attemptRepo.findOneBy({
+            user: { id: userId },
+            activity: { name: activity.name}
+        })
+
+        if (!attempt) {
+            return {
+                result: false,
+                reward: 0
+            }
+        }
+
+        return {
+            result: true,
+            reward: attempt.reward,
+        }
     }
 } 
