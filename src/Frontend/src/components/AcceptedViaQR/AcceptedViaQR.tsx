@@ -63,11 +63,11 @@ function AcceptedViaQR() {
 
     try {
       const response = await acceptOrderViaCode(code);
-      // if (response.success) {
-      setOrder((prev) => (prev ? { ...prev, status: 'received' } : prev));
-      toast.success('Вы подтвердили заказ');
-      setResult('accepted');
-      // }
+      if (response.success) {
+        setOrder((prev) => (prev ? { ...prev, status: 'received' } : prev));
+        toast.success('Вы подтвердили заказ');
+        setResult('accepted');
+      }
     } catch (error) {
       toast.error('Подтвердить заказ не удалось');
     } finally {
@@ -83,11 +83,11 @@ function AcceptedViaQR() {
 
     try {
       const response = await cancelOrderViaCode(code);
-      // if (response.success) {
-      setOrder((prev) => (prev ? { ...prev, status: 'canceled' } : prev));
-      toast.success('Вы отменили заказ');
-      setResult('rejected');
-      // }
+      if (response.success) {
+        setOrder((prev) => (prev ? { ...prev, status: 'canceled' } : prev));
+        toast.success('Вы отменили заказ');
+        setResult('rejected');
+      }
     } catch (error) {
       toast.error('Отменить заказ не удалось');
     } finally {

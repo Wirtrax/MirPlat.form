@@ -95,7 +95,7 @@ export const cancelOrderViaCode = (
   success: boolean;
 }> => {
   return request(`/purchase/${code}/cancel`, {
-    method: 'POST',
+    method: 'PATCH',
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,
     },
@@ -108,7 +108,7 @@ export const acceptOrderViaCode = (
   success: boolean;
 }> => {
   return request(`/purchase/${code}/receive`, {
-    method: 'POST',
+    method: 'PATCH',
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,
     },
