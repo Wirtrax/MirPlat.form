@@ -7,8 +7,6 @@ import ErrorStep from './ErrorStep/ErrorStep';
 export default function Registration() {
   const [step, setStep] = useState<'form' | 'success' | 'error'>('form');
 
-  console.log('step:', step);
-
   return (
     <>
       {step === 'form' && <RegistrationForm onSuccess={() => setStep('success')} onError={() => setStep('error')} />}
