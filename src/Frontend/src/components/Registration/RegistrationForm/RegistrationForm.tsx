@@ -1,18 +1,18 @@
 import s from './RegistrationForm.module.scss';
 
-import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import clsx from 'clsx';
 
 import { useAppDispatch } from '../../../hooks/redux';
 import { createUser, fetchUser } from '../../../service/features/user/userSlice';
 
+import Background from '../../UI/Background/Background';
 import Button from '../../UI/Button/Button';
 import Input from '../../UI/Input/Input';
 import Radio from '../../UI/Radio/Radio';
 import RadioList from '../../UI/RadioList/RadioList';
 import Select from '../../UI/Select/Select';
-import Background from '../../UI/Background/Background';
 import { options } from './specializationOptions';
 
 interface RegistrationFormProps {

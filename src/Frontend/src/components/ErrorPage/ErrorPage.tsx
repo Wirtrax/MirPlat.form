@@ -1,12 +1,13 @@
-import s from './ErrorPage.module.scss'
+import s from './ErrorPage.module.scss';
 
-import mascot_404 from '../../assets/mascot/mascot_404.webp'
+import mascot_404 from '../../assets/mascot/mascot_404.webp';
 
-import { Link } from 'react-router-dom'
-import { ROUTES } from '../../routes/routes'
+import { Link } from 'react-router-dom';
 
-import Background from '../UI/Background/Background'
-import Button from '../UI/Button/Button'
+import { ROUTES } from '../../routes/routes';
+
+import Background from '../UI/Background/Background';
+import Button from '../UI/Button/Button';
 
 export default function ErrorPage() {
     return (

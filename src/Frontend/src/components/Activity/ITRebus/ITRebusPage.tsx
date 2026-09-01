@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
-import { IT_REBUS } from '../../../mock/itRebus'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useActivityError } from '../../../hooks/useActivityError';
+import { fetchRebusReward, fetchRebusStatus, fetchSubmitRebus } from '../../../service/features/activity/activitySlice';
+import { IT_REBUS } from '../../../mock/itRebus';
 
-import ActivityLayout from '../ActivityLayout/ActivityLayout'
-import ITRebusStep from './ITRebusStep'
-import ITRebusSuccess from './ITRebusSuccess'
-import ProgressBar from './ProgressBar/ProgressBar'
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
-import { fetchRebusReward, fetchRebusStatus, fetchSubmitRebus } from '../../../service/features/activity/activitySlice'
-import { useActivityError } from '../../../hooks/useActivityError'
-import Background from '../../UI/Background/Background'
-import Loader from '../../UI/Loader/Loader'
+import Background from '../../UI/Background/Background';
+import Loader from '../../UI/Loader/Loader';
+import ActivityLayout from '../ActivityLayout/ActivityLayout';
+import ITRebusStep from './ITRebusStep';
+import ITRebusSuccess from './ITRebusSuccess';
+import ProgressBar from './ProgressBar/ProgressBar';
 
 
 export default function ITRebusPage() {

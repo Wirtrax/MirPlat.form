@@ -1,14 +1,15 @@
 import s from './AvatarModal.module.scss';
 import profileStyles from '../Profile.module.scss';
-import clsx from 'clsx';
 
 import avatarImg from '../../../assets/avatar/avatarIcon.webp';
 
+import clsx from 'clsx';
 import { useState } from 'react';
 
-import { AVATAR_THEMES, type AvatarTheme } from '../avatarThemes';
 import Slider from '../../UI/Slider/Slider';
 import Button from '../../UI/Button/Button';
+
+import { AVATAR_THEMES, type AvatarTheme } from '../avatarThemes';
 
 interface AvatarModalProps {
     currentTheme: AvatarTheme;

@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux"
-import { fetchFindErrorStatus, fetchGetCodeLines, fetchSubmitFindError } from "../../../service/features/activity/activitySlice"
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useActivityError } from '../../../hooks/useActivityError';
+import { fetchFindErrorStatus, fetchGetCodeLines, fetchSubmitFindError } from '../../../service/features/activity/activitySlice';
 
-import type { GameStep } from "../gameStep"
-import FindErrorRules from "./FindErrorRules"
-import FindErrorStep from "./FindErrorStep"
-import FindErrorSuccess from "./FindErrorSuccess"
+import Background from '../../UI/Background/Background';
+import Loader from '../../UI/Loader/Loader';
 
-import type { FindErrorAnswer } from "../../../service/features/activity/activitySliceType"
-import { useActivityError } from "../../../hooks/useActivityError"
-import Background from "../../UI/Background/Background"
-import Loader from "../../UI/Loader/Loader"
+import FindErrorRules from './FindErrorRules';
+import FindErrorStep from './FindErrorStep';
+import FindErrorSuccess from './FindErrorSuccess';
+
+import type { GameStep } from '../gameStep';
+import type { FindErrorAnswer } from '../../../service/features/activity/activitySliceType';
 
 export default function FindErrorPage() {
     const { findErrorStatus, correctAnswers, rewardFindError, error, codeLines } = useAppSelector(state => state.activity);

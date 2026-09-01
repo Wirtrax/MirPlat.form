@@ -1,13 +1,14 @@
 import s from './ActivitiesCard.module.scss';
 
+import Coin from '../../../../assets/interface/coin.svg?react';
+
 import { Link, useNavigate } from 'react-router-dom';
 
-import Coin from '../../../../assets/interface/coin.svg?react';
+import { ROUTES } from '../../../../routes/routes';
 
 import Button from '../../../UI/Button/Button';
 
 import type { ActivityDetailsProps } from './ActivitiesCard.types';
-import { ROUTES } from '../../../../routes/routes';
 
 
 export default function ActivityDetails({ card }: ActivityDetailsProps) {

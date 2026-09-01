@@ -1,9 +1,10 @@
-import clsx from 'clsx';
 import s from './ActivityLayout.module.scss';
 
-import CloseIcon from '../../../assets/icons/closeIcon.svg?react'
+import CloseIcon from '../../../assets/icons/closeIcon.svg?react';
 
 import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+
 import { ROUTES } from '../../../routes/routes';
 
 import Background from '../../UI/Background/Background';

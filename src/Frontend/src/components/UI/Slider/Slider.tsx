@@ -1,9 +1,10 @@
 import 'swiper/css';
 import s from './Slider.module.scss';
+
 import clsx from 'clsx';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useState, forwardRef, useImperativeHandle, useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 import type { Swiper as SwiperType } from 'swiper';
 import type { sliderPropsI, sliderHandleI } from './sliderProps';

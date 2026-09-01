@@ -1,15 +1,16 @@
-import s from './Quiz.module.scss'
+import s from './Quiz.module.scss';
 import buttonStyles from '../../UI/Button/Button.module.scss';
-import clsx from 'clsx';
 
+import clsx from 'clsx';
 import { useState } from "react";
+
+import { normalizeAnswer } from '../../../utils/normalizeAnswer';
 
 import Substrate from "../../UI/Substrate/Substrate";
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
 
 import type { QuizStepProps } from './quizType';
-import { normalizeAnswer } from '../../../utils/normalizeAnswer';
 
 export default function QuizStep({ data, onNext }: QuizStepProps) {
   const [answer, setAnswer] = useState('');

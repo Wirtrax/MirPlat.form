@@ -1,5 +1,5 @@
-import React from 'react';
 import s from './ModalOverlay.module.scss';
+
 import clsx from 'clsx';
 
 import type { ModalOverlayProps } from '../modalProp';

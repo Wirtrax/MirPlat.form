@@ -1,4 +1,5 @@
 import s from './Timer.module.scss';
+
 import clsx from 'clsx';
 
 import { useEffect, useState } from "react"

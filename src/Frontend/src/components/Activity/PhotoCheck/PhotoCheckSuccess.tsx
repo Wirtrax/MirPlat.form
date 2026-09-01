@@ -4,8 +4,9 @@ import Coin from '../../../assets/interface/coin.svg?react';
 
 import { Link, useNavigate } from 'react-router-dom';
 
-import ResultStep from '../../UI/ResultStep/ResultStep';
 import { ROUTES } from '../../../routes/routes';
+
+import ResultStep from '../../UI/ResultStep/ResultStep';
 
 interface PhotoCheckSuccessProps {
     hasSubmittedPhoto: boolean;

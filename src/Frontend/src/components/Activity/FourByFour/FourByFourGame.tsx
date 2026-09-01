@@ -1,5 +1,4 @@
 import s from './FourByFour.module.scss';
-import clsx from 'clsx';
 
 import WhiteUser from '../../../assets/activity/fourByFour/whiteUser.svg?react';
 import BlueUser from '../../../assets/activity/fourByFour/blueUser.svg?react';
@@ -7,6 +6,7 @@ import GreenUser from '../../../assets/activity/fourByFour/greenUser.svg?react';
 import GreenFillUser from '../../../assets/activity/fourByFour/greenFillUser.svg?react';
 
 import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 
 import ActivityLayout from '../ActivityLayout/ActivityLayout';
 import Timer from '../Timer/Timer';

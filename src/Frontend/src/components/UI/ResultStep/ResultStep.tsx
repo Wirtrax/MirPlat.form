@@ -1,15 +1,16 @@
 import s from './ResultStep.module.scss';
+
+import CloseIcon from '../../../assets/icons/closeIcon.svg?react';
+
 import clsx from 'clsx';
-
-import CloseIcon from '../../../assets/icons/closeIcon.svg?react'
-
 import { useNavigate } from 'react-router-dom';
 
-import Button from '../Button/Button';
+import { ROUTES } from '../../../routes/routes';
+
 import Background from '../Background/Background';
+import Button from '../Button/Button';
 
 import type { ResultStepProps } from './ResultStep.type';
-import { ROUTES } from '../../../routes/routes';
 
 export default function ResultStep({
   title,

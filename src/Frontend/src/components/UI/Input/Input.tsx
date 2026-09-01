@@ -1,8 +1,8 @@
 import s from './Input.module.scss';
 
-import type { InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 import { IMaskInput } from 'react-imask';
+import type { InputHTMLAttributes } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;

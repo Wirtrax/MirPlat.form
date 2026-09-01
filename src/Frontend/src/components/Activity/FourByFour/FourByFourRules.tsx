@@ -2,9 +2,9 @@ import s from './FourByFour.module.scss';
 
 import ActivityLayout from '../ActivityLayout/ActivityLayout';
 import Button from '../../UI/Button/Button';
+import Timer from '../Timer/Timer';
 
 import type { FourByFourRulesProps } from './fourByFourType';
-import Timer from '../Timer/Timer';
 
 export default function FourByFourRules({ onStartGame }: FourByFourRulesProps) {
     return (

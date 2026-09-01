@@ -1,8 +1,9 @@
 import s from './PhotoCheck.module.scss';
 
-import PhotoCheckIcon from '../../../assets/activity/photoTetris.svg?react'
+import PhotoCheckIcon from '../../../assets/activity/photoTetris.svg?react';
 
 import { useEffect, useState } from 'react';
+
 import ActivityLayout from '../ActivityLayout/ActivityLayout';
 import Substrate from '../../UI/Substrate/Substrate';
 

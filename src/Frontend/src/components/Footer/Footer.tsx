@@ -7,6 +7,7 @@ import TG_Icon from '../../assets/footer/tg.svg?react';
 import Habr_Icon from '../../assets/footer/habr.png';
 
 import { Link } from 'react-router-dom';
+
 import { ROUTES } from '../../routes/routes';
 
 export default function Footer() {

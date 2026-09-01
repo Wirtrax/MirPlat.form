@@ -1,7 +1,8 @@
 import s from './FindError.module.scss';
+
 import clsx from 'clsx';
 
-import ActivityLayout from "../ActivityLayout/ActivityLayout";
+import ActivityLayout from '../ActivityLayout/ActivityLayout';
 import Button from '../../UI/Button/Button';
 
 import type { FindErrorRulesProps } from './findErrorType';

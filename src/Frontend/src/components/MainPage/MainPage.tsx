@@ -1,10 +1,10 @@
 import s from './MainPage.module.scss';
 
 import { useEffect } from 'react';
-
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ROUTES } from '../../routes/routes';
+
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { ROUTES } from '../../routes/routes';
 import { clearTetrisToast, fetchTetrisToast } from '../../service/features/activity/activitySlice';
 import { showToast } from '../../utils/showToast';
 
