@@ -27,9 +27,9 @@ export class UserService {
 
   async updateLastLoginDate(userId: number): Promise<void> {
     await this.usersRepo.update(
-      { id: userId },
-      { last_login: new Date() }
-    );
+          { id: userId },
+          { last_login: new Date() }
+      );
   }
 
   create(createUserDto: CreateUserDto, telegram_id: string): Promise<User>{
@@ -48,9 +48,6 @@ export class UserService {
   }
 
   async update(updateUserDto: UpdateUserDto, id: number): Promise<void>{
-    await this.usersRepo.update({id}, updateUserDto);
-  }
-    async update(updateUserDto: UpdateUserDto, id: number): Promise<void>{
     await this.usersRepo.update({id}, updateUserDto);
   }
 }
