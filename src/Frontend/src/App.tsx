@@ -93,13 +93,14 @@ function App() {
       <Toaster
         position="top-center"
         theme="light"
-        duration={4000}
+        duration={5000}
         expand={false}
         closeButton={false}
         toastOptions={{
           style: {
             fontFamily: 'var(--font-family-base)',
             fontSize: '14px',
+            lineHeight: '1.2',
             color: 'var(--color-dark-30)',
             borderRadius: '25px',
             fontWeight: '400',
