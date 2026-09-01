@@ -26,7 +26,6 @@ export const request = async <T>(
   }
 
   const res = await fetch(`${API_URL}${typeRoute}${endpoint}`, {
-    // credentials: 'include',
     ...options,
     headers,
   });

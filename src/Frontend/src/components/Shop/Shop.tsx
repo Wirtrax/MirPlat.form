@@ -58,7 +58,6 @@ function Shop() {
     try {
       const response = await createOrder(selectedProduct.id);
       const code = `${import.meta.env.VITE_TELEGRAM_FULL_URL_ON_BOT}?startapp=handOverOrder_${response.code}`;
-      console.log(code);
       setSuccessCode(code);
       dispatch(fetchUser());
     } catch (e: unknown) {

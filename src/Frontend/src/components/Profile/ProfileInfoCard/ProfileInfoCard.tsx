@@ -5,7 +5,6 @@ import Substrate from '../../UI/Substrate/Substrate';
 import type { ProfileInfoCardProps } from './ProfileInfoCard.types';
 
 export default function ProfileInfoCard({ title, items }: ProfileInfoCardProps) {
-  console.log('Рендер компонента ProfileInfoCard');
   return (
     <Substrate>
       <section className={s['profile-info-card']}>

@@ -48,9 +48,8 @@ const userSlice = createSlice({
       .addCase(devLoginUser.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(createUser.fulfilled, (state, action) => {
+      .addCase(createUser.fulfilled, (state) => {
         state.status = 'success';
-        // state.user = action.payload;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.status = 'success';

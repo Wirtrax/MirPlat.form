@@ -133,7 +133,6 @@
         height: rem(45);
 
         opacity: 0;
-        // visibility: hidden;
 
         transition:
             opacity 0.2s ease,
@@ -142,7 +141,6 @@
 
     &__card-icon--visible {
         opacity: 1;
-        // visibility: visible;
     }
 
     &__timer {

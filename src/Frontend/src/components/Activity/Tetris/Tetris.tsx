@@ -33,10 +33,7 @@ export default function Tetris({ onSubmitPhoto }: TetrisProps) {
   }, [preview]);
 
   const onButtonClick = () => {
-    console.log('КЛИК ПО ОТПРАВИТЬ', photo);
-
     if (photo) {
-      console.log('ОТПРАВЛЯЕМ FILE');
       onSubmitPhoto(photo)
     }
   }

@@ -34,7 +34,6 @@ const QrScanner = ({ onClose }: QrScannerProps) => {
                         qrbox: { width: 250, height: 250 },
                     },
                     (decodedText) => {
-                        console.log("Сканировано:", decodedText);
                     },
                     () => { }
                 );
