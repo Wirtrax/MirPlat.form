@@ -32,22 +32,24 @@ export default function QuizPage() {
 
     useActivityError(error)
 
-    const handleNextStep = (answer: string) => {
+    const handleNextStep = async (answer: string) => {
         const quizAnswer: QuizAnswer = {
             questionId: currentQuestion.id,
             answer,
-        }
+        };
 
         const updatedAnswers = [...userAnswers, quizAnswer];
-        setUserAnswers(updatedAnswers)
+        setUserAnswers(updatedAnswers);
 
         if (currentStep < QUIZ_QUESTIONS.length - 1) {
-            setCurrentStep(prev => prev + 1)
-        } else {
-            dispatch(fetchCompleteQuiz(updatedAnswers))
+            setCurrentStep(prev => prev + 1);
+            return;
         }
-    }
 
+        await dispatch(fetchCompleteQuiz(updatedAnswers)).unwrap();
+        await dispatch(fetchQuizResult()).unwrap();
+    }
+    
     if (quizStatus === null) return <Background><Loader /></Background>
 
     if (quizStatus === true && quizReward !== null && quizReward > 0) {
