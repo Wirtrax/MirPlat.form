@@ -10,8 +10,12 @@ export default function SuccessStep() {
   const dispatch = useAppDispatch();
 
   const goNext = async (route: string) => {
-    await dispatch(fetchUser()).unwrap();
-    navigate(route);
+    try {
+      await dispatch(fetchUser()).unwrap();
+      navigate(route, { replace: true });
+    } catch (error) {
+      navigate(ROUTES.REGISTRATION);
+    }
   };
 
   return (
