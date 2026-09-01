@@ -2,18 +2,14 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../../routes/routes';
 
-// import { useAppDispatch } from '../../../hooks/redux';
-// import { fetchUser } from '../../../service/features/user/userSlice';
-
 import ResultStep from '../../UI/ResultStep/ResultStep';
 
 
 export default function SuccessStep() {
   const navigate = useNavigate();
-  // const dispatch = useAppDispatch()
 
   const handleContinue = async () => {
-    // await dispatch(fetchUser()).unwrap();
+    sessionStorage.removeItem('justRegistered');
     navigate(ROUTES.INSTRUCTION);
   };
 
@@ -27,7 +23,7 @@ export default function SuccessStep() {
         to={ROUTES.HOME}
         onClick={async (e) => {
           e.preventDefault();
-          // await dispatch(fetchUser()).unwrap();
+          sessionStorage.removeItem('justRegistered');
           navigate(ROUTES.HOME);
         }}
       >ПРОПУСТИТЬ</Link>

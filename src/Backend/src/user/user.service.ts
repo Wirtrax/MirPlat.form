@@ -25,8 +25,11 @@ export class UserService {
     return this.usersRepo.findOneBy({ telegram_id});
   }
 
-  async updateLastLoginDate(user: User): Promise<void> {
-    user.last_login = new Date();
+  async updateLastLoginDate(userId: number): Promise<void> {
+    await this.usersRepo.update(
+          { id: userId },
+          { last_login: new Date() }
+      );
   }
 
   create(createUserDto: CreateUserDto, telegram_id: string): Promise<User>{
@@ -47,5 +50,4 @@ export class UserService {
   async update(updateUserDto: UpdateUserDto, id: number): Promise<void>{
     await this.usersRepo.update({id}, updateUserDto);
   }
-  
 }
