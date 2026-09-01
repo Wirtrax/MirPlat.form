@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AdminPanelModule } from './admin-panel/admin-panel.module';
 import { ExcelExportModule } from './admin-panel/excel-export/excel-export.module';
 import { UserModule } from './user/user.module';
@@ -10,12 +10,12 @@ import { ItemModule } from './item/item.module';
 import { AuthModule } from './auth/auth.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { PurchaseModule } from './purchase/purchase.module';
+import { MediaModule } from './media/media.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true}),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DBHOST,
@@ -23,14 +23,20 @@ import { join } from 'path';
       username: process.env.DBUSERNAME,
       password: process.env.DBPASSWORD,
       database: process.env.DBNAME,
-      entities: [__dirname + '/entities/*.entity{.ts,.js}'],//в маске добавил .js
+      entities: [__dirname + '/entities/*.entity{.ts,.js}'],
       autoLoadEntities: true,
-      logging:['query','error'],
+      logging: ['query', 'error'],
       synchronize: true, // TODO: Remove this before release to production
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'media'),
-      serveRoot: '/media'
+    ServeStaticModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => [
+        {
+          rootPath: config.get('MEDIA_PATH'),
+          serveRoot: '/media/',
+        },
+      ],
+      inject: [ConfigService],
     }),
     UserModule,
     ItemModule,
@@ -38,7 +44,8 @@ import { join } from 'path';
     AdminPanelModule,
     ExcelExportModule,
     ActivitiesModule,
-    ],
+    MediaModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

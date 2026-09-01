@@ -5,3 +5,4 @@
 src/.http
 *.log
 .env
+media/
