@@ -80,7 +80,7 @@ function App() {
           await dispatch(fetchUser()).unwrap();
         }
       } catch (error) {
-        console.log(error);
+
       }
     };
 
