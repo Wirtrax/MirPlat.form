@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config/dist/config.service';
 import { rejects } from 'assert/strict';
 import { access, unlink, writeFile } from 'fs';
 import { join, resolve } from 'path';
@@ -6,14 +7,14 @@ import { join, resolve } from 'path';
 
 @Injectable()
 export class MediaService {
-  private readonly mediaPath = join(__dirname, '..', '..', 'media');
+  constructor(private readonly configService: ConfigService) {}
 
   async saveFile(file: Express.Multer.File): Promise<string> {
     const uniqueName = Date.now() + '-' + file.originalname;
-    const filePath = join(this.mediaPath, uniqueName);
+    const mediaPath = this.configService.get('MEDIA_PATH');
     
     return new Promise((resolve, reject) => {
-      writeFile(filePath, file.buffer, (err) => {
+      writeFile(join(mediaPath, uniqueName), file.buffer, (err) => {
         if (err) reject(err)
         else resolve(uniqueName)
       })
@@ -21,7 +22,8 @@ export class MediaService {
   }
 
   async deleteFile(filename: string): Promise<void> {
-    const filePath = join(this.mediaPath, filename);
+    const mediaPath = this.configService.get('MEDIA_PATH');
+    const filePath = join(mediaPath, filename);
 
     return new Promise((resolve, reject) => {
       access(filePath, (err) => {
@@ -38,4 +40,9 @@ export class MediaService {
       });
     });
   }
+  
+  buildImageUrl(fileName: string): string {
+        const baseUrl = this.configService.get('BASE_URL');
+        return `${baseUrl}/media/${fileName}`;
+    }
 }
