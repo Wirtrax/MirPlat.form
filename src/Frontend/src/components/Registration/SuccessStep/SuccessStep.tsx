@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/redux';
-import { fetchUser } from '../../../service/features/user/userSlice';
+import { fetchUser, loginUser } from '../../../service/features/user/userSlice';
 import { ROUTES } from '../../../routes/routes';
 
 import ResultStep from '../../UI/ResultStep/ResultStep';
@@ -11,6 +11,7 @@ export default function SuccessStep() {
 
   const goNext = async (route: string) => {
     try {
+      await dispatch(loginUser()).unwrap();
       await dispatch(fetchUser()).unwrap();
       navigate(route, { replace: true });
     } catch (error) {
