@@ -5,6 +5,7 @@ import { JwtGuard } from '../auth/guards/jwt.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { UpdateItemDto } from './itemDto/updateItemDto';
 import { CreateItemDto } from './itemDto/createItemDto';
+import { join } from 'path';
 
 @Controller('items')
 export class ItemsController {
@@ -13,6 +14,8 @@ export class ItemsController {
     //@UseGuards(JwtGuard, RolesGuard)
     @Get()
     getAllItems(){
+        console.log('MEDIA_PATH from env:', process.env.MEDIA_PATH);
+        
         return this.itemsService.getAllItems();
     }
 
@@ -35,8 +38,21 @@ export class ItemsController {
 
     //@UseGuards(JwtGuard, RolesGuard)
     @Patch(':id')
-    updateItem(@Param('id', ParseIntPipe) id: number, @Body() updateItemDto:UpdateItemDto  ){
-        return this.itemsService.updateItem(id, updateItemDto);
+    @UseInterceptors(FileInterceptor('image'))
+    updateItem(
+        @Param('id', ParseIntPipe) id: number,
+        @UploadedFile(
+            new ParseFilePipeBuilder()
+                .addFileTypeValidator({ fileType: /(jpeg|png)/ })
+                .addMaxSizeValidator({ maxSize: 5 * 1024 * 1024 })
+                .build({
+                    fileIsRequired: false,
+                    errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+                })
+        ) image: Express.Multer.File | undefined,
+        @Body() updateItemDto: UpdateItemDto,
+    ) {
+        return this.itemsService.updateItem(id, updateItemDto, image);
     }
 
     //@UseGuards(JwtGuard, RolesGuard)
@@ -45,7 +61,7 @@ export class ItemsController {
     addItem(
         @UploadedFile(
             new ParseFilePipeBuilder()
-                .addFileTypeValidator({ fileType: 'jpeg' })
+                .addFileTypeValidator({ fileType: /(jpeg|png)/ })
                 .addMaxSizeValidator({ maxSize: 5 * 1024 * 1024 })
                 .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY })
         ) image: Express.Multer.File,

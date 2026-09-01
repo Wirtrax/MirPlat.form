@@ -22,11 +22,21 @@ export class ItemsService {
         return this.itemsRepo.find();
     }
 
-    async updateItem(id: number, updateItemDto: Partial<UpdateItemDto>) {
-        const result = await this.itemsRepo.update(id, updateItemDto);
-        if (result.affected === 0) throw new NotFoundException('Товар не найден');
-        return { success: true };
+    async updateItem(id: number, updateItemDto: Partial<UpdateItemDto>, image?: Express.Multer.File) {
+    const item = await this.itemsRepo.findOneBy({ id });
+    if (!item) {
+        throw new NotFoundException('Товар не найден');
     }
+
+    const updateData: any = { ...updateItemDto };
+    if (image) {
+        const fileName = await this.mediaService.saveFile(image);
+        updateData.image = fileName;
+    }
+
+    await this.itemsRepo.update(id, updateData);
+    return { success: true };
+}
 
     async changeStatusItem(id: number, status: boolean) {
         return this.updateItem(id, {is_active: status});
