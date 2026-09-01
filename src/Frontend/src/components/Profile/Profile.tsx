@@ -32,8 +32,6 @@ import type { ProfileInfoCardProps } from './profileType';
 import type { createOrderResponse } from '../../service/features/shop/shopType';
 
 export default function Profile() {
-  console.log('Рендер компонента Profile');
-
   const dispatch = useAppDispatch()
   const { user, status } = useAppSelector((state) => state.user);
   const [selectedPurchase, setSelectedPurchase] = useState<createOrderResponse | null>(null);
@@ -68,8 +66,6 @@ export default function Profile() {
 
   const specializationLabel = options.find((option) => option.value === user?.specialization);
   const levelLabel = EXPERIENCE_LEVELS.find((level) => level.value === user?.programming_level);
-
-  console.log(purchases);
 
   const fullName = `${user?.last_name} ${user?.first_name} ${user?.patronym}`.trim();
   const contactCardData: ProfileInfoCardProps = {
@@ -122,7 +118,6 @@ export default function Profile() {
           <div className={s['profile__user-info']}>
             <div className={s['profile__user-avatar-wrapper']}>
               <picture
-                // style={{ backgroundColor: user?.profile_picture }}
                 className={clsx(
                   s['profile__user-avatar'],
                   avatarTheme !== 'default' && s[`profile__user-avatar--${avatarTheme}`]

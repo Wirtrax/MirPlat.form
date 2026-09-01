@@ -78,17 +78,12 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
               phone_number: cleanPhone,
               send_notifications: values.news,
             };
-            console.log('Отправлено:', userData);
             dispatch(createUser(userData))
               .unwrap()
-              .then(async () => {
-                await dispatch(loginUser()).unwrap();
-                await dispatch(fetchUser()).unwrap();
-                sessionStorage.setItem('justRegistered', 'true');
+              .then(() => {
                 onSuccess();
               })
               .catch((err) => {
-                console.log('error: ', err);
                 onError();
               });
           }}>

@@ -49,7 +49,6 @@ function AcceptedViaQR() {
         const itemData = await getItemByIdItem(orderData.itemId);
         setOrder({ ...orderData, image: itemData.image });
       } catch (error) {
-        console.log('заказ не найден', error);
         setIsNotFound(true);
       } finally {
         setIsLoading(false);

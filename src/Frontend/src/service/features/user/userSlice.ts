@@ -27,6 +27,7 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
 const initialState: UserState = {
   user: null,
   status: 'idle',
+  registrationStatus: 'idle',
   error: null,
 };
 
@@ -40,7 +41,7 @@ const userSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(createUser.pending, (state) => {
-        state.status = 'loading';
+        state.registrationStatus = 'loading';
       })
       .addCase(fetchUser.pending, (state) => {
         state.status = 'loading';
@@ -49,8 +50,7 @@ const userSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(createUser.fulfilled, (state, action) => {
-        state.status = 'success';
-        // state.user = action.payload;
+        state.registrationStatus = 'success';
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.status = 'success';

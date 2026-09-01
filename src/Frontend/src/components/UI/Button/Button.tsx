@@ -15,7 +15,6 @@ const Button: React.FC<ButtonProps> = ({
   ariaLabel,
   style,
 }) => {
-  console.log('Рендер компонента Button');
   return (
     <button
       onClick={onClick}
