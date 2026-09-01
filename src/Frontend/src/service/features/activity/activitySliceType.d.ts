@@ -5,7 +5,7 @@ export interface TetrisLinkResponse {
 export interface TetrisStatusResponse {
     result: boolean;
 }
-export type TetrisStatusToast = 'WAITING' | 'ACCLAIMED' | 'DECLINED';
+export type TetrisStatusToast = 'waiting' | 'accepted' | 'declined';
 
 export interface TetrisToast {
     isChanged: boolean;

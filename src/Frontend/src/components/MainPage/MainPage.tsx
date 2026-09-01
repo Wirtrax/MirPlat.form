@@ -50,20 +50,25 @@ export default function MainPage() {
 
     if (toastKey === shownToastKey) return;
 
-    if (currentToastStatus === 'ACCLAIMED') {
+    if (currentToastStatus === 'accepted') {
       showToast(
         <>
-          Задание «Стек-тетрис» выполнено!
+          Задание «Стек-тетрис» выполнено! <br />
           <b>+{rewardTetris} Приветов начислено</b>
-          Количество баллов можно увидеть в{' '}
-          <b style={{ textDecoration: 'underline' }}>
-            <Link to={ROUTES.PROFILE}>профиле.</Link>
-          </b>
+          <div style={{ marginTop: '8px' }}>
+            Количество баллов можно увидеть в{' '}
+            <b
+              style={{ textDecoration: 'underline', cursor: 'pointer' }}
+              onClick={() => navigate(ROUTES.PROFILE)}
+            >
+              профиле.
+            </b>
+          </div>
         </>
       );
     }
 
-    if (currentToastStatus === 'DECLINED') {
+    if (currentToastStatus === 'declined') {
       showToast(
         <>
           Фото для задания «Стек-тетрис» не прошло проверку.
@@ -82,6 +87,9 @@ export default function MainPage() {
     rewardTetris,
     reason,
   ]);
+
+
+  
 
 
   return (
