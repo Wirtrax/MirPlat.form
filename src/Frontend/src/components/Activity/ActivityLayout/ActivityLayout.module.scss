@@ -51,6 +51,7 @@
 
 .activity__button {
     line-height: 110%;
+    margin-bottom: rem(30);
 
     @media (max-height: rem(710)) {
         margin-bottom: rem(30);

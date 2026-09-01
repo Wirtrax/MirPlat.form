@@ -1,6 +1,9 @@
 import s from './QrScanner.module.scss';
-import { useEffect, useRef } from 'react';
+
 import { Html5Qrcode } from 'html5-qrcode';
+
+import { useEffect, useRef } from 'react';
+
 
 interface QrScannerProps {
     onClose?: () => void;

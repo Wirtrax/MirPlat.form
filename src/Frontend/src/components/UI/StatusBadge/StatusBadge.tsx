@@ -1,5 +1,7 @@
-import clsx from 'clsx';
 import s from './StatusBadge.module.scss';
+
+import clsx from 'clsx';
+
 import { STATUS_LABELS, type StatusVariant } from './statusConfig';
 
 interface StatusBadgeProps {

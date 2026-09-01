@@ -1,7 +1,8 @@
-import { useState } from 'react';
-
 import s from './Select.module.scss';
+
 import ArrowIсonSelect from '../../../assets/interface/arrowIconSelect.svg?react';
+
+import { useState } from 'react';
 
 import type { SelectProps } from './selectProps';
 

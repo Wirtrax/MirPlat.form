@@ -219,7 +219,7 @@ const activitySlice = createSlice({
                 state.rewardTetris = action.payload.reward
                 state.reason = action.payload.reason
             })
-            .addCase(fetchTetrisToast.rejected, (state, action) => {
+            .addCase(fetchTetrisToast.rejected, (state) => {
                 state.status = 'failed';
             })
 

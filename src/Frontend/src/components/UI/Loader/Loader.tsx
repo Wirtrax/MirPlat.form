@@ -1,4 +1,5 @@
 import s from './Loader.module.scss';
+
 import clsx from 'clsx';
 
 interface LoaderProps {

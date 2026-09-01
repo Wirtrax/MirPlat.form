@@ -8,30 +8,28 @@ import PhoneIcon from '../../assets/profile/contacts/phone.svg?react';
 import SpecializationIcon from '../../assets/profile/contacts/specialization.svg?react';
 import LevelIcon from '../../assets/profile/contacts/level.svg?react';
 
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { options } from '../Registration/RegistrationForm/specializationOptions';
+import { ROUTES } from '../../routes/routes';
+import { fetchUser } from '../../service/features/user/userSlice';
 import { EXPERIENCE_LEVELS } from '../UI/RadioList/RadioList';
 
-import { Link } from 'react-router-dom';
-import clsx from 'clsx';
-
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { ROUTES } from '../../routes/routes';
-
+import AvatarModal from './AvatarModal/AvatarModal';
 import ProfileInfoCard from './ProfileInfoCard/ProfileInfoCard';
-import Button from '../UI/Button/Button';
-import ProductCard from '../UI/ProductCard/ProductCard';
 import Background from '../UI/Background/Background';
+import Button from '../UI/Button/Button';
 import Loader from '../UI/Loader/Loader';
-
 import Modal from '../UI/Modal/Modal';
 import ProductModal from '../UI/Modal/ProductModal/ProductModal';
+import ProductCard from '../UI/ProductCard/ProductCard';
 
+import type { AvatarTheme } from './avatarThemes';
 import type { ProfileInfoCardProps } from './profileType';
 import type { createOrderResponse } from '../../service/features/shop/shopType';
-import type { AvatarTheme } from './avatarThemes';
-import AvatarModal from './AvatarModal/AvatarModal';
-import { fetchUser } from '../../service/features/user/userSlice';
 
 export default function Profile() {
   console.log('Рендер компонента Profile');

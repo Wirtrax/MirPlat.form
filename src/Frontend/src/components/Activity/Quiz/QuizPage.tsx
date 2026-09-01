@@ -1,19 +1,21 @@
-import s from './Quiz.module.scss'
+import s from './Quiz.module.scss';
 
-import mascot from '../../../assets/mascot/mascotWithQuestion.webp'
+import mascot from '../../../assets/mascot/mascotWithQuestion.webp';
 
 import { useEffect, useState } from 'react';
+
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useActivityError } from '../../../hooks/useActivityError';
 import { QUIZ_QUESTIONS } from '../../../mock/quiz';
+import { fetchCompleteQuiz, fetchQuizResult } from '../../../service/features/activity/activitySlice';
 
 import ActivityLayout from "../ActivityLayout/ActivityLayout";
 import QuizStep from './QuizStep';
 import QuizSuccess from './QuizSuccess';
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { fetchCompleteQuiz, fetchQuizResult } from '../../../service/features/activity/activitySlice';
-import type { QuizAnswer } from '../../../service/features/activity/activitySliceType';
 import Background from '../../UI/Background/Background';
 import Loader from '../../UI/Loader/Loader';
-import { useActivityError } from '../../../hooks/useActivityError';
+
+import type { QuizAnswer } from '../../../service/features/activity/activitySliceType';
 
 export default function QuizPage() {
     const dispatch = useAppDispatch()
@@ -30,22 +32,24 @@ export default function QuizPage() {
 
     useActivityError(error)
 
-    const handleNextStep = (answer: string) => {
+    const handleNextStep = async (answer: string) => {
         const quizAnswer: QuizAnswer = {
             questionId: currentQuestion.id,
             answer,
-        }
+        };
 
         const updatedAnswers = [...userAnswers, quizAnswer];
-        setUserAnswers(updatedAnswers)
+        setUserAnswers(updatedAnswers);
 
         if (currentStep < QUIZ_QUESTIONS.length - 1) {
-            setCurrentStep(prev => prev + 1)
-        } else {
-            dispatch(fetchCompleteQuiz(updatedAnswers))
+            setCurrentStep(prev => prev + 1);
+            return;
         }
-    }
 
+        await dispatch(fetchCompleteQuiz(updatedAnswers)).unwrap();
+        await dispatch(fetchQuizResult()).unwrap();
+    }
+    
     if (quizStatus === null) return <Background><Loader /></Background>
 
     if (quizStatus === true && quizReward !== null && quizReward > 0) {

@@ -1,7 +1,8 @@
+import s from './Shop.module.scss';
+
 import Background from '../UI/Background/Background';
 import Loader from '../UI/Loader/Loader';
 import ProductCard from '../UI/ProductCard/ProductCard';
-import s from './Shop.module.scss';
 
 import type { ShopContentProps } from "./shopType";
 

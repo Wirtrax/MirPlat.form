@@ -1,13 +1,13 @@
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useEffect, useState } from 'react';
+
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useActivityError } from '../../../hooks/useActivityError';
+import { fetchTetrisStatus, submitTetrisPhoto } from '../../../service/features/activity/activitySlice';
 
 import Tetris from './Tetris';
 import TetrisSuccess from './TetrisSuccess';
-import { fetchTetrisStatus, submitTetrisPhoto } from '../../../service/features/activity/activitySlice';
-
 import Background from '../../UI/Background/Background';
 import Loader from '../../UI/Loader/Loader';
-import { useActivityError } from '../../../hooks/useActivityError';
 
 
 export default function TetrisPage() {

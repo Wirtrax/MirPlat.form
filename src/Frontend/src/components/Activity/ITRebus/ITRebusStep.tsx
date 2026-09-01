@@ -1,13 +1,13 @@
-import s from './ITRebus.module.scss'
+import s from './ITRebus.module.scss';
 
-import { useState } from 'react'
-import { normalizeAnswer } from '../../../utils/normalizeAnswer'
+import { useState } from 'react';
+import { normalizeAnswer } from '../../../utils/normalizeAnswer';
 
-import Substrate from '../../UI/Substrate/Substrate'
-import Input from '../../UI/Input/Input'
-import Button from '../../UI/Button/Button'
+import Substrate from '../../UI/Substrate/Substrate';
+import Input from '../../UI/Input/Input';
+import Button from '../../UI/Button/Button';
 
-import type { ITRebusStepProps } from './itRebusType'
+import type { ITRebusStepProps } from './itRebusType';
 
 export default function ITRebusStep({ data, onNext, onCheck }: ITRebusStepProps) {
     const [answer, setAnswer] = useState('')

@@ -1,15 +1,17 @@
 import s from './FindError.module.scss';
+
+import { useState } from 'react';
 import clsx from 'clsx';
 
-import { useState } from "react";
 import { useAppSelector } from '../../../hooks/redux';
 
-import Substrate from "../../UI/Substrate/Substrate";
-import ActivityLayout from "../ActivityLayout/ActivityLayout";
-import Timer from "../Timer/Timer";
-import Button from '../../UI/Button/Button';
 import Background from '../../UI/Background/Background';
 import Loader from '../../UI/Loader/Loader';
+import Substrate from '../../UI/Substrate/Substrate';
+
+import ActivityLayout from '../ActivityLayout/ActivityLayout';
+import Button from '../../UI/Button/Button';
+import Timer from '../Timer/Timer';
 
 import type { FindErrorGameProps } from "./findErrorType";
 import type {
@@ -66,7 +68,6 @@ export default function FindErrorStep({ onEndGame }: FindErrorGameProps) {
   }
 
   const handleChoose = (index: number) => {
-    if (selectedLine !== null) return
     setSelectedLine(index)
   }
 
