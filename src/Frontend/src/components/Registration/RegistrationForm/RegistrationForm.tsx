@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import clsx from 'clsx';
 
 import { useAppDispatch } from '../../../hooks/redux';
-import { createUser, fetchUser } from '../../../service/features/user/userSlice';
+import { createUser, fetchUser, loginUser } from '../../../service/features/user/userSlice';
 
 import Background from '../../UI/Background/Background';
 import Button from '../../UI/Button/Button';
@@ -82,6 +82,7 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
             dispatch(createUser(userData))
               .unwrap()
               .then(async () => {
+                await dispatch(loginUser()).unwrap();
                 await dispatch(fetchUser()).unwrap();
                 onSuccess();
               })

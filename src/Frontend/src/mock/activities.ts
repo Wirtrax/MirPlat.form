@@ -20,7 +20,7 @@ export interface Activity {
 export const activitiesMock: Activity[] = [
   {
     id: 'tetris',
-    reward: 50,
+    reward: 15,
     title: 'Стек-тетрис',
     description: [
       'Собери реальную головоломку «Стек-тетрис», повторяя правильную комбинацию фигур. Когда закончишь — сделай фото результата и отправь его через форму на лендинге.',
