@@ -81,9 +81,9 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
             dispatch(createUser(userData))
               .unwrap()
               .then(async () => {
+                sessionStorage.setItem('justRegistered', 'true');
                 await dispatch(loginUser()).unwrap();
                 await dispatch(fetchUser()).unwrap();
-                sessionStorage.setItem('justRegistered', 'true');
                 onSuccess();
               })
               .catch((err) => {
