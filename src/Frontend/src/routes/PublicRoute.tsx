@@ -9,15 +9,12 @@ import Loader from '../components/UI/Loader/Loader';
 
 export default function PublicRoute() {
     const { user, status } = useAppSelector(state => state.user);
-    const location = useLocation();
 
     if (status === 'loading' || status === 'idle') {
         return <Loader className={s.height} />;
     }
 
-    const justRegistered = sessionStorage.getItem('justRegistered');
-
-    if (user && location.pathname === ROUTES.REGISTRATION && !justRegistered) {
+    if (user) {
         return <Navigate to={ROUTES.HOME} replace />;
     }
 

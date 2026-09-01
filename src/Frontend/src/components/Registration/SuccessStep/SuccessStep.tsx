@@ -9,7 +9,6 @@ export default function SuccessStep() {
   const navigate = useNavigate();
 
   const handleContinue = async () => {
-    sessionStorage.removeItem('justRegistered');
     navigate(ROUTES.INSTRUCTION);
   };
 
@@ -23,7 +22,6 @@ export default function SuccessStep() {
         to={ROUTES.HOME}
         onClick={async (e) => {
           e.preventDefault();
-          sessionStorage.removeItem('justRegistered');
           navigate(ROUTES.HOME);
         }}
       >ПРОПУСТИТЬ</Link>
