@@ -68,7 +68,6 @@ export default function FindErrorStep({ onEndGame }: FindErrorGameProps) {
   }
 
   const handleChoose = (index: number) => {
-    if (selectedLine !== null) return
     setSelectedLine(index)
   }
 
