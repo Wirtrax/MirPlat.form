@@ -1,7 +1,9 @@
 import s from './Modal.module.scss';
-import React, { useEffect } from 'react';
+
 import ReactDOM from 'react-dom';
 import clsx from 'clsx';
+
+import React, { useEffect } from 'react';
 
 import ModalOverlay from './ModalOverlay/ModalOverlay';
 import type { ModalProps } from './modalProp';

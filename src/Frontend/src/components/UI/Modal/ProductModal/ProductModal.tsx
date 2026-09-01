@@ -1,7 +1,11 @@
-import QRCode from 'react-qr-code';
 import s from './ProductModal.module.scss';
+
 import currency from '../../../../assets/ico/interface/currency.svg';
+
+import QRCode from 'react-qr-code';
+
 import Button from '../../Button/Button';
+
 import type { ProductModalProps } from '../modalProp';
 
 function ProductModal({ src, title, price, onClick, userBalance, code, received }: ProductModalProps) {

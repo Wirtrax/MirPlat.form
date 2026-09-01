@@ -1,4 +1,5 @@
 import s from './Radio.module.scss';
+
 import type { InputHTMLAttributes } from 'react';
 
 interface RadioProps extends InputHTMLAttributes<HTMLInputElement> {

@@ -1,13 +1,13 @@
-import s from './ITRebus.module.scss'
+import s from './ITRebus.module.scss';
 
 import Coin from '../../../assets/interface/coin.svg?react';
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '../../../routes/routes';
 
-import ResultStep from "../../UI/ResultStep/ResultStep";
-import ActivityLayout from "../ActivityLayout/ActivityLayout";
+import ResultStep from '../../UI/ResultStep/ResultStep';
+import ActivityLayout from '../ActivityLayout/ActivityLayout';
 import ProgressBar from './ProgressBar/ProgressBar';
 
 import type { ITRebusSuccessProps } from './itRebusType';

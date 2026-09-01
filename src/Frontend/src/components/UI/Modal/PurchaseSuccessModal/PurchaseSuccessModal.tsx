@@ -1,10 +1,12 @@
-import QRCode from 'react-qr-code';
 import s from './PurchaseSuccessModal.module.scss';
 
+import QRCode from 'react-qr-code';
 import { Link } from 'react-router-dom';
+
 import { ROUTES } from '../../../../routes/routes';
 
 import Button from '../../Button/Button';
+
 import type { PurchaseSuccessContentProps } from '../modalProp';
 
 function PurchaseSuccessContent({ qrValue }: PurchaseSuccessContentProps) {

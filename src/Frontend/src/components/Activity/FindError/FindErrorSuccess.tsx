@@ -1,17 +1,18 @@
-import s from './FindError.module.scss'
+import s from './FindError.module.scss';
 
-import smile_mascot from '../../../assets/mascot/smilingMascotWithSmilingEyes.webp'
+import smile_mascot from '../../../assets/mascot/smilingMascotWithSmilingEyes.webp';
 import Coin from '../../../assets/interface/coin.svg?react';
 
 import { Link, useNavigate } from 'react-router-dom';
+
+import { useAppSelector } from '../../../hooks/redux';
 import { ROUTES } from '../../../routes/routes';
 
-import ActivityLayout from "../ActivityLayout/ActivityLayout";
-import Timer from "../Timer/Timer";
+import ActivityLayout from '../ActivityLayout/ActivityLayout';
+import Timer from '../Timer/Timer';
 import ResultStep from '../../UI/ResultStep/ResultStep';
 
 import type { FindErrorSuccessProps } from './findErrorType';
-import { useAppSelector } from '../../../hooks/redux';
 
 export default function FindErrorSuccess({ status, reward, correctAnswers }: FindErrorSuccessProps) {
   const { codeLines } = useAppSelector(state => state.activity)

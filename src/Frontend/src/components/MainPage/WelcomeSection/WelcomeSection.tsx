@@ -1,9 +1,9 @@
 import s from './WelcomeSection.module.scss';
 
+import avatarIcon from '../../../assets/avatar/avatarIcon.webp';
+
 import clsx from 'clsx';
 import { memo } from 'react';
-
-import avatarIcon from '../../../assets/avatar/avatarIcon.webp';
 
 import BackgroundMain from './BackgroundMain';
 

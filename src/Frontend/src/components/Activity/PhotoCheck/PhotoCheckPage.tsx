@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { useActivityError } from "../../../hooks/useActivityError";
 import { fetchPhotoCheckStatus, submitPhotoCheck } from "../../../service/features/activity/activitySlice";
 
 import PhotoCheckSuccess from "./PhotoCheckSuccess";
 import PhotoCheck from "./PhotoCheck";
-
 import Loader from "../../UI/Loader/Loader";
 import Background from "../../UI/Background/Background";
-import { useActivityError } from "../../../hooks/useActivityError";
 
 
 export default function PhotoCheckPage() {

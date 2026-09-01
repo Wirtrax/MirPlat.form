@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
 
-import FourByFourRules from "./FourByFourRules"
-import FourByFourGame from "./FourByFourGame"
-import FourByFourSuccess from "./FourByFourSuccess"
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { useActivityError } from '../../../hooks/useActivityError';
+import { fetchCardGame, fetchFourGameStatus, fetchSubmitFourGame } from '../../../service/features/activity/activitySlice';
 
-import type { GameStep } from "../gameStep"
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux"
-import { fetchCardGame, fetchFourGameStatus, fetchSubmitFourGame } from "../../../service/features/activity/activitySlice"
-import { useActivityError } from "../../../hooks/useActivityError"
-import Background from "../../UI/Background/Background"
-import Loader from "../../UI/Loader/Loader"
+import Background from '../../UI/Background/Background';
+import Loader from '../../UI/Loader/Loader';
+import FourByFourRules from './FourByFourRules';
+import FourByFourGame from './FourByFourGame';
+import FourByFourSuccess from './FourByFourSuccess';
+
+import type { GameStep } from '../gameStep';
 
 export default function FourByFourPage() {
   const dispatch = useAppDispatch()

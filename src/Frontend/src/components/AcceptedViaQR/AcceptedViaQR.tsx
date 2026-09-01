@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
-import clsx from 'clsx';
 import s from './AcceptedViaQR.module.scss';
-import { acceptOrderViaCode, cancelOrderViaCode, getItemByIdItem, getOrderByCode } from '../../service/api';
-import type { OrderWithItemId } from '../../types/OrderResponseType';
+
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/redux';
+import clsx from 'clsx';
 import { toast } from 'sonner';
+
+import { useAppSelector } from '../../hooks/redux';
+import { acceptOrderViaCode, cancelOrderViaCode, getItemByIdItem, getOrderByCode } from '../../service/api';
+import { getFirstLetters } from '../../utils/firstLetters';
+
+import Loader from '../UI/Loader/Loader';
 import StatusBadge from '../UI/StatusBadge/StatusBadge';
 import Substrate from '../UI/Substrate/Substrate';
-import { getFirstLetters } from '../../utils/firstLetters';
-import Loader from '../UI/Loader/Loader';
+
+import type { OrderWithItemId } from '../../types/OrderResponseType';
 
 type OrderResult = 'accepted' | 'rejected' | null;
 

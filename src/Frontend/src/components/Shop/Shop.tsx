@@ -1,21 +1,23 @@
 import s from './Shop.module.scss';
+
 import currency from '../../assets/ico/interface/currency.svg';
+
 import clsx from 'clsx';
+import { useState, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { useState, useEffect } from 'react';
+import { createOrder } from '../../service/api';
 import { fetchProduct } from '../../service/features/shop/shopSlice';
 import { fetchUser } from '../../service/features/user/userSlice';
-import { showToast } from '../../utils/showToast';
-import { createOrder } from '../../service/api';
 import { getErrorMessage } from '../../utils/getErrorMessage';
+import { showToast } from '../../utils/showToast';
 
+import Background from '../UI/Background/Background';
 import Modal from '../UI/Modal/Modal';
 import ProductModal from '../UI/Modal/ProductModal/ProductModal';
 import PurchaseSuccessModal from '../UI/Modal/PurchaseSuccessModal/PurchaseSuccessModal';
-import ShopContent from './ShopContent';
-import Background from '../UI/Background/Background';
 import Substrate from '../UI/Substrate/Substrate';
+import ShopContent from './ShopContent';
 
 import type { Product } from '../../service/features/shop/shopType';
 

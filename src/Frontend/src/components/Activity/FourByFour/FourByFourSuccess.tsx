@@ -1,16 +1,17 @@
-import s from './FourByFour.module.scss'
+import s from './FourByFour.module.scss';
 
-import smile_mascot from '../../../assets/mascot/smilingMascotWithSmilingEyes.webp'
+import smile_mascot from '../../../assets/mascot/smilingMascotWithSmilingEyes.webp';
 import Coin from '../../../assets/interface/coin.svg?react';
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 
-import ResultStep from "../../UI/ResultStep/ResultStep";
+import { ROUTES } from '../../../routes/routes';
+
+import ResultStep from '../../UI/ResultStep/ResultStep';
 import ActivityLayout from '../ActivityLayout/ActivityLayout';
 import Timer from '../Timer/Timer';
 
 import type { FourByFourSuccessProps } from './fourByFourType';
-import { ROUTES } from '../../../routes/routes';
 
 export default function FourByFourSuccess({ coins }: FourByFourSuccessProps) {
   const navigate = useNavigate()
