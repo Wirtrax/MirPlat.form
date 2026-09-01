@@ -7,11 +7,13 @@ import { PurchaseService } from 'src/purchase/purchase.service';
 import { Purchase } from 'src/entities/purchase.entity';
 import { User } from 'src/entities/user.entity';
 import { PurchaseModule } from 'src/purchase/purchase.module';
+import { MediaModule } from 'src/media/media.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Item,User,Purchase]),
-    PurchaseModule
+    PurchaseModule,
+    MediaModule
   ],
   controllers: [ItemController],
   providers: [ItemService, PurchaseService],
