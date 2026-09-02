@@ -117,6 +117,16 @@ export class TetrisService {
                     },
                 )
 
+                const tetris_activity = await this.tetrisRepository.findOne({
+                    where: {
+                        name: this.TETRIS_NAME,
+                    }
+                })
+
+                if(!tetris_activity) {
+                    throw new NotFoundException(`Активность "${this.TETRIS_NAME}" не найдена`);
+                }
+ 
                 if(!tetris) {
                     throw new NotFoundException(`Активность "${this.TETRIS_NAME}" не найдена`);
                 }
@@ -133,7 +143,7 @@ export class TetrisService {
                     is_photo: true,
                     photo: photo_link,
                     status: AttemptStatus.WAITING,
-                    reward: 0,
+                    reward: tetris_activity.reward,
                     created_at: new Date(),
                 });
 
