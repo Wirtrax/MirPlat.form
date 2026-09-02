@@ -1,31 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { MoreThan, Repository } from 'typeorm';
 import { Item } from 'src/entities/item.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { MediaService } from 'src/media/media.service';
 
 @Injectable()
 export class ItemService {
   constructor(
     @InjectRepository(Item)
-    private itemRepo: Repository<Item>
+    private itemRepo: Repository<Item>,
+    private readonly mediaService: MediaService
   ){}
   create(createItemDto: CreateItemDto): Promise<Item> {
     const item = this.itemRepo.create(createItemDto);
     return this.itemRepo.save(item);
   }
 
-  findAll(): Promise<Item[]> {
-    return this.itemRepo.find();
+  async findAll() {
+    const items = await this.itemRepo.find();
+    return items.map(item => ({
+        ...item,
+        image: item.image ? this.mediaService.buildImageUrl(item.image) : null,
+    }));
   }
 
-  findAllPurchasable(): Promise<Item[]>{
-    return this.itemRepo.findBy({is_active: true, quantity: MoreThan(0)})
-  }
+  async findAllPurchasable() {
+    const items = await this.itemRepo.findBy({ is_active: true, quantity: MoreThan(0) });
+    return items.map(item => ({
+        ...item,
+        image: item.image ? this.mediaService.buildImageUrl(item.image) : null,
+    }));
+}
 
-  findOne(id: number) {
-    return this.itemRepo.findOneBy({id});
+  async findOne(id: number) {
+    const item = await this.itemRepo.findOneBy({id});
+    if(!item) {
+      throw new NotFoundException('Товар не найден');
+    }
+    return {
+      ...item,
+      image: item.image ? this.mediaService.buildImageUrl(item.image) : null,
+    };
   }
 
   update(id: number, updateItemDto: UpdateItemDto) {

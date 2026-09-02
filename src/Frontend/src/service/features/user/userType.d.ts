@@ -23,5 +23,6 @@ export interface User extends CreateUser {
 export interface UserState {
   user: User | null;
   status: 'idle' | 'loading' | 'success' | 'failed';
+  registrationStatus: 'idle' | 'loading' | 'success' | 'failed';
   error: string | null;
 }

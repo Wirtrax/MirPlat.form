@@ -3,6 +3,7 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { Attempt, AttemptStatus } from 'src/entities/attempt.entity';
 import { Repository, DataSource } from 'typeorm';
 import { User } from 'src/entities/user.entity';
+import { MediaService } from 'src/media/media.service';
 
 
 export interface OutputAllAttempts {
@@ -21,7 +22,7 @@ export interface OutputAttempt {
     activityName: string;
     attemptStatus: AttemptStatus;
     reward: number;
-    link: string;
+    link: string | null;
 }
 
 @Injectable()
@@ -29,6 +30,7 @@ export class AttemptsService {
     constructor(
         @InjectRepository(Attempt)
         private readonly attemptsRepo: Repository<Attempt>,
+        private readonly mediaService: MediaService,
 
         @InjectDataSource()
         private readonly dataSource: DataSource,
@@ -73,15 +75,15 @@ export class AttemptsService {
         }
 
         return {
-            attemptId: attempt.id,
-            userFullName: `${attempt.user.last_name} ${attempt.user.first_name} ${attempt.user.patronym ?? ''}`.trim(),
-            userPhoneNumber: attempt.user.phone_number,
-            userEmail: attempt.user.email,
-            activityName: attempt.activity.name,
-            attemptStatus: attempt.status,
-            reward: attempt.reward,
-            link: attempt.photo
-        }
+        attemptId: attempt.id,
+        userFullName: `${attempt.user.last_name} ${attempt.user.first_name} ${attempt.user.patronym ?? ''}`.trim(),
+        userPhoneNumber: attempt.user.phone_number,
+        userEmail: attempt.user.email,
+        activityName: attempt.activity.name,
+        attemptStatus: attempt.status,
+        reward: attempt.reward,
+        link: attempt.photo ? this.mediaService.buildImageUrl(attempt.photo) : null,
+        };
     }
 
     async getAttemptsByUserId(userId: number): Promise<OutputAttempt[]>{

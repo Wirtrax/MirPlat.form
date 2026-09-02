@@ -80,7 +80,7 @@ export default function RegistrationForm({ onSuccess, onError }: RegistrationFor
             };
             dispatch(createUser(userData))
               .unwrap()
-              .then(async () => {
+              .then(() => {
                 onSuccess();
               })
               .catch((err) => {

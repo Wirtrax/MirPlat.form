@@ -84,7 +84,7 @@ function Instruction() {
             </Slider>
           </div>
 
-          <Button onClick={handleNext}>ГОТОВО</Button>
+          <Button className={s.btn} onClick={handleNext}>ГОТОВО</Button>
         </div>
       </section>
     </Background>

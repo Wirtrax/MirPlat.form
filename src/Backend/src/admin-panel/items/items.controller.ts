@@ -11,7 +11,7 @@ import { join } from 'path';
 export class ItemsController {
     constructor (private readonly itemsService: ItemsService) {}
 
-    //@UseGuards(JwtGuard, RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Get()
     getAllItems(){
         console.log('MEDIA_PATH from env:', process.env.MEDIA_PATH);
@@ -19,24 +19,25 @@ export class ItemsController {
         return this.itemsService.getAllItems();
     }
 
-    //@UseGuards(JwtGuard, RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Get('images')
     getImages() {
         return this.itemsService.getImages();
     }
     
+    @UseGuards(JwtGuard, RolesGuard)
     @Get('search')
     searchItems(@Query('q') query: string) {
         return this.itemsService.searchItemsByName(query);
     }
 
-    //@UseGuards(JwtGuard, RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Patch(':id/status')
     changeStatus(@Param('id', ParseIntPipe) id: number, @Body('status') status: boolean) {
         return this.itemsService.changeStatusItem(id, status);
     }
 
-    //@UseGuards(JwtGuard, RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Patch(':id')
     @UseInterceptors(FileInterceptor('image'))
     updateItem(
@@ -55,7 +56,7 @@ export class ItemsController {
         return this.itemsService.updateItem(id, updateItemDto, image);
     }
 
-    //@UseGuards(JwtGuard, RolesGuard)
+    @UseGuards(JwtGuard, RolesGuard)
     @Post()
     @UseInterceptors(FileInterceptor('image'))
     addItem(
