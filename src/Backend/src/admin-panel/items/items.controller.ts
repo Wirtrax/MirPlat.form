@@ -45,7 +45,7 @@ export class ItemsController {
         @UploadedFile(
             new ParseFilePipeBuilder()
                 .addFileTypeValidator({ fileType: /(jpeg|png)/ })
-                .addMaxSizeValidator({ maxSize: 5 * 1024 * 1024 })
+                .addMaxSizeValidator({ maxSize: 25 * 1024 * 1024 })
                 .build({
                     fileIsRequired: false,
                     errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
@@ -63,7 +63,7 @@ export class ItemsController {
         @UploadedFile(
             new ParseFilePipeBuilder()
                 .addFileTypeValidator({ fileType: /(jpeg|png)/ })
-                .addMaxSizeValidator({ maxSize: 5 * 1024 * 1024 })
+                .addMaxSizeValidator({ maxSize: 25 * 1024 * 1024 })
                 .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY })
         ) image: Express.Multer.File,
         @Body() createItemDto: CreateItemDto,
