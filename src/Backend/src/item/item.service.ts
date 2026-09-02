@@ -26,9 +26,13 @@ export class ItemService {
     }));
   }
 
-  findAllPurchasable(): Promise<Item[]>{
-    return this.itemRepo.findBy({is_active: true, quantity: MoreThan(0)})
-  }
+  async findAllPurchasable() {
+    const items = await this.itemRepo.findBy({ is_active: true, quantity: MoreThan(0) });
+    return items.map(item => ({
+        ...item,
+        image: item.image ? this.mediaService.buildImageUrl(item.image) : null,
+    }));
+}
 
   async findOne(id: number) {
     const item = await this.itemRepo.findOneBy({id});
