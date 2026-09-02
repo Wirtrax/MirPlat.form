@@ -18,8 +18,12 @@ export class ItemService {
     return this.itemRepo.save(item);
   }
 
-  findAll(): Promise<Item[]> {
-    return this.itemRepo.find();
+  async findAll() {
+    const items = await this.itemRepo.find();
+    return items.map(item => ({
+        ...item,
+        image: item.image ? this.mediaService.buildImageUrl(item.image) : null,
+    }));
   }
 
   findAllPurchasable(): Promise<Item[]>{
